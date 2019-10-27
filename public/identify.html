@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>DiogenesWeb</title>
+  <link rel="stylesheet" type = "text/css" href="css/DiogenesWeb.css?v=1">
+  <script type="text/javascript" src="js/identify.js"></script>
+</head>
+<body>
+  <h1>DiogenesWeb</h1>
+  <p>
+    DiogenesWeb is an web application for reading XML files of Latin and Ancient Greek texts held in your private cloud storage.
+  </p>
+  <p>
+    Please indicate which category of user you belong to.  This information greatly helps the continued funding of the Diogenes project.
+  </p>
+  <div id="all-user-buttons">
+    <p><button class="user-button" name="acad-user" onclick="setUser('acad')">I am a professional academic (including doctoral students and post-docs)</button></p>
+    <p><button class="user-button" name="stud-user" onclick="setUser('stud')">I am a student (including masters, undergraduate and secondary school)</button></p>
+    <p><button class="user-button" name="other-user" onclick="setUser('other')">I am neither of the above</button></p>
+ </div>
+
+  <h2>Privacy Notice</h2>
+  <p>
+    DiogenesWeb begins by connecting to the website of your cloud storage provider, where you will have to enter your password.  DiogenesWeb never sees that password; it goes directly to your cloud provider, which responds with a token that permits DiogenesWeb to access only the folder called "DiogenesWeb" within your private storage.  That token is not stored on the DiogenesWeb server; it is stored in your browser, from whence it is passed as necessary to your provider.
+  </p>
+  <p>
+    By design, DiogenesWeb does not use cookies or store any user information on its server at all, apart from keeping statistics on the usage of the categories of user listed above.  All user information is kept in your browser's local storage.
+  </p>
+  <p>
+    If you would prefer not to say what category of user you belong to, <a id="none-button" onclick="setUser('none')"> click here</a>.
+  </p>
+</body>
+</html>

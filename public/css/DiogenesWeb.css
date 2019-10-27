@@ -1,0 +1,22 @@
+h1, h2 {
+  text-align: center;
+  padding-top: 20px;
+  color: #28709a;
+}
+
+#all-user-buttons {
+  text-align: center;
+}
+
+.user-button {
+  color: #28709a;
+  font-size: 100%;
+}
+
+#none-button:hover {
+  text-decoration: underline;
+}
+
+#connect-buttons {
+  text-align: center;
+}

@@ -12,8 +12,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
     console.log('dbx', dbx)
     //function getFile () {getFileDropbox()}
   }
-
-
   getFileDropbox(path)
 });
 
@@ -49,8 +47,6 @@ function parseXML (xmlDoc) {
   var parser = new DOMParser();
   var xml = parser.parseFromString(xmlDoc, "application/xml");
   console.log(xml)
-  // var body = xml.getElementsByTagName('body')[0];
-  // processXML(body)
   walkTheDOM(xml.getElementsByTagName('body')[0], function (node) {
     if (node.nodeType === 3) { // Is it a Text node?
       var text = node.data.trim();
@@ -64,20 +60,6 @@ function parseXML (xmlDoc) {
   });
 }
 
-function processXML (node) {
-  console.log(node.nodeName)
-  if (node.nodeType == 3) {
-    mainDiv.appendChild(node)
-    return
-  }
-  node.childNodes.forEach( function(child) {
-    // console.log(child.nodeValue)
-    processXML(child)
-    if (child.nodeType == 1 && child.nodeName == 'l') {
-      mainDiv.appendChild(document.createElement('br'))
-    }
-  })
-}
 
 function walkTheDOM(node, func) {
     func(node);
@@ -87,5 +69,3 @@ function walkTheDOM(node, func) {
         node = node.nextSibling;
     }
 }
-
-// Example usage: Process all Text nodes on the page

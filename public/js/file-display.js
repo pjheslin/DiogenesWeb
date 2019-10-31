@@ -64,14 +64,21 @@ function parseXML (xmlDoc) {
   processXML(xml)
 }
 
-var current
 function processXML (xml) {
   current = mainDiv
-  walkTheDOM(xml.getElementsByTagName('body')[0], processNode);
+  walkTheDOM(xml.getElementsByTagName('body')[0], processNode)
+  processingFinished()
 }
+
+var levels = {} // Current number of all div levels
+var labels = {} // Names of divs
+var level = 0 // Current level of div nesting
+var suppress // Suppress title divs until we encounter a proper div at this same level
+var current // Current HTML node to append to
 
 function walkTheDOM(node, func) {
   var oldCurrent = current
+  var oldLevel = level
   func(node)
   node = node.firstChild;
   while (node) {
@@ -79,11 +86,12 @@ function walkTheDOM(node, func) {
     node = node.nextSibling;
   }
   current = oldCurrent
+  level = oldLevel
 }
 
 const nodes = {
   l: function () {
-    if (this.firstChild && this.firstChild.nodeName == 'label') { return }
+    // if (this.firstChild && this.firstChild.nodeName == 'label') { return }
     var div = document.createElement('div')
     div.setAttribute('name', 'line')
     var num = this.getAttribute('n')
@@ -96,22 +104,60 @@ const nodes = {
     return div
   },
   div: function () {
-    // if (this.getAttribute('n') == 't') { return }
+    var type = this.getAttribute('type')
+    var n = this.getAttribute('n')
+    if (n == 't') {
+      suppress = type
+      return
+    }
+    if (suppress && suppress == type) {
+      suppress = ''
+    }
+    if (suppress) { return }
+
+    level++
+    labels[level] = type
+    levels[level] = n
     var div = document.createElement('div')
     if (this.hasAttributes) {
       Array.prototype.slice.call(this.attributes).forEach(function (item) {
         div.setAttribute(item.name, item.value)
       })
     }
+    div.setAttribute('class', 'content')
+    var button = document.createElement('button')
+    button.setAttribute('type', 'button')
+    button.setAttribute('class', 'collapsible')
+    var label = ''
+    for (let lev = 1; lev <= level; lev++) {
+      label = label + capitalizeFirstLetter(labels[lev]) + ' ' + levels[lev]
+      if (lev != level) {
+        label = label + ', '
+      } else {
+        label = label + '.'
+      }
+    }
+    button.appendChild(document.createTextNode(label))
+    current.appendChild(button)
     return div
   },
   label: function () {
-    var h1 = document.createElement('h1')
-    return h1
+    var type = this.getAttribute('type')
+    if (type == 'head') {
+      var h1 = document.createElement('h1')
+      return h1
+    }
+    else if (type == 'speaker') {
+      var span = document.createElement('span')
+      span.setAttribute('class', 'speaker')
+      return span
+    }
   }
 };
 
-
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
 
 function processNode (node) {
   // console.log(current)
@@ -144,5 +190,21 @@ function processNode (node) {
         }
       }
     }
+  }
+}
+
+function processingFinished () {
+  var coll = document.getElementsByClassName("collapsible")
+  var i
+  for (i = 0; i < coll.length; i++) {
+    coll[i].addEventListener("click", function() {
+      this.classList.toggle("active")
+      var content = this.nextElementSibling
+      if (content.style.display === "block") {
+        content.style.display = "none"
+      } else {
+        content.style.display = "block"
+      }
+    })
   }
 }

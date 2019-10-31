@@ -1,0 +1,16 @@
+h1 {
+  text-align: center;
+  font-size: large;
+  color: #28709a;
+}
+
+.lineNum {
+  float: right;
+}
+
+.indent2 {
+  text-indent: 1em;
+}
+.indent4 {
+  text-indent: 2em;
+}

@@ -61,27 +61,88 @@ function parseXML (xmlDoc) {
   var parser = new DOMParser();
   var xml = parser.parseFromString(xmlDoc, "application/xml");
   console.log(xml)
+  processXML(xml)
+}
+
+var current
+function processXML (xml) {
+  current = mainDiv
   walkTheDOM(xml.getElementsByTagName('body')[0], processNode);
 }
 
-
 function walkTheDOM(node, func) {
-    func(node);
-    node = node.firstChild;
-    while (node) {
-        walkTheDOM(node, func);
-        node = node.nextSibling;
-    }
+  var oldCurrent = current
+  func(node)
+  node = node.firstChild;
+  while (node) {
+    walkTheDOM(node, func);
+    node = node.nextSibling;
+  }
+  current = oldCurrent
 }
 
+const nodes = {
+  l: function () {
+    if (this.firstChild && this.firstChild.nodeName == 'label') { return }
+    var div = document.createElement('div')
+    div.setAttribute('name', 'line')
+    var num = this.getAttribute('n')
+    if (num && num % 5 === 0) {
+      var lineNum = document.createElement('span')
+      lineNum.setAttribute('class', 'lineNum')
+      lineNum.appendChild(document.createTextNode(num))
+      div.appendChild(lineNum)
+    }
+    return div
+  },
+  div: function () {
+    // if (this.getAttribute('n') == 't') { return }
+    var div = document.createElement('div')
+    if (this.hasAttributes) {
+      Array.prototype.slice.call(this.attributes).forEach(function (item) {
+        div.setAttribute(item.name, item.value)
+      })
+    }
+    return div
+  },
+  label: function () {
+    var h1 = document.createElement('h1')
+    return h1
+  }
+};
+
+
+
 function processNode (node) {
-  if (node.nodeType === 3) { // Is it a Text node?
+  // console.log(current)
+  if (node.nodeType === 3) {
     var text = node.data.trim();
-    if (text.length > 0) { // Does it have non white-space text content?
-      mainDiv.appendChild(node)
+    if (text.length > 0) {
+      current.appendChild(node)
     }
   }
-  else if (node.nodeType == 1 && node.nodeName == 'l') {
-    mainDiv.appendChild(document.createElement('br'))
+  else if (node.nodeType == 1) {
+    var name = node.nodeName
+    // console.log(name)
+    // console.log(current)
+    // console.log(nodes[str])
+    var htmlNode
+    if (nodes[name]) {
+      htmlNode = nodes[name].apply(node)
+      if (htmlNode) {
+        // console.log(htmlNode.nodeName)
+        var rend = node.getAttribute('rend')
+        if (rend) {
+          rend = rend.replace('(', '')
+          rend = rend.replace(')', '')
+          htmlNode.setAttribute('class', rend)
+        }
+        current.appendChild(htmlNode)
+        if (node.firstChild && htmlNode.nodeName != 'BR') {
+          // Make current element the new parent, unless XML node is empty or we want to force the htmlNode to be empty.
+          current = htmlNode
+        }
+      }
+    }
   }
 }

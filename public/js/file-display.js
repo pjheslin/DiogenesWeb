@@ -7,14 +7,28 @@ window.addEventListener('DOMContentLoaded', (event) => {
   path = document.getElementById('path').textContent
   mainDiv = document.getElementById('main')
 
-  if (host == "dropbox") {
+  if (path == "__test__") {
+    getFileLocal("test.xml")
+  }
+  else if (host == "dropbox") {
     dbx = new Dropbox.Dropbox({ accessToken: token });
     console.log('dbx', dbx)
     //function getFile () {getFileDropbox()}
+    getFileDropbox(path)
   }
-  getFileDropbox(path)
 });
 
+function reqListener () {
+  console.log(this.responseXML);
+  processXML(this.responseXML)
+}
+
+function getFileLocal (path) {
+  var req = new XMLHttpRequest();
+  req.addEventListener("load", reqListener);
+  req.open("GET", window.location.origin + "/" + path);
+  req.send();
+}
 
 function getFileDropbox (path) {
   dbx.filesDownload({path: path})

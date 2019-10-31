@@ -50,7 +50,7 @@ app.get('*', (req, res, next) => {
   if (req.query && req.query.user) {
     console.log('User type: ' + req.query.user)
     next()
-  } else if (req.path == '/auth') {
+  } else if (req.path == '/auth' || req.path == '/test.xml') {
     // Here are exceptions: pages that should be loaded without the user param.
     next()
   } else {
@@ -91,8 +91,9 @@ app.get('/auth', (req, res) => {
 })
 
 app.get('/fileDisplay', (req, res) => {
-  console.log('path! '+req.query.filePath)
-  res.render('file_display', {path: req.query.filePath})
+  var path = req.query.filePath
+  console.log('path! '+path)
+  res.render('file_display', {path: path})
 })
 
 // Send home page otherwise
@@ -101,6 +102,11 @@ app.get('/', (req, res) => {
   console.log("home!")
 })
 
+// For testing XML parsing
+app.get('/test.xml', (req, res) => {
+  res.sendFile('test.xml', sendFileOptions)
+  console.log("test")
+})
 
 
 // Parsing

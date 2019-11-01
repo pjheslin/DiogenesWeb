@@ -220,14 +220,13 @@ function capitalizeFirstLetter(string) {
 function processNode (node) {
   // console.log(current)
   if (node.nodeType === 3) {
-    var text = node.data.trim();
-    if (text.length > 0) {
-      current.appendChild(node)
-    }
+    var text = node.data;
+    // console.log(text)
+    current.appendChild(document.createTextNode(text))
   }
   else if (node.nodeType == 1) {
     var name = node.nodeName
-    // console.log(name)
+     // console.log('>'+name)
     // console.log(current)
     // console.log(nodes[str])
     var htmlNode

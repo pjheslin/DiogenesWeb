@@ -6,7 +6,6 @@ var dbx
 window.addEventListener('DOMContentLoaded', (event) => {
   path = document.getElementById('path').textContent
   mainDiv = document.getElementById('main')
-  hamburgerSetup()
 
   if (path == "__test__") {
     getFileLocal("test.xml")
@@ -19,18 +18,62 @@ window.addEventListener('DOMContentLoaded', (event) => {
   }
 });
 
-function hamburgerSetup () {
-  var hamburger = document.querySelector(".hamburger");
-  hamburger.addEventListener("click", function() {
-    // Toggle class "is-active"
-    hamburger.classList.toggle("is-active");
-    var menu = document.getElementById("menuItems");
-    if (menu.style.display === "block") {
-      menu.style.display = "none";
-    } else {
-      menu.style.display = "block";
-    }
-  });
+/* Set the width of the side navigation to 250px */
+function openNav () {
+  document.getElementById("mySidenav").style.width = "150px";
+}
+
+/* Set the width of the side navigation to 0 */
+function closeNav () {
+  document.getElementById("mySidenav").style.width = "0";
+}
+
+function setupFolding () {
+  var coll = document.getElementsByClassName("collapsible")
+  var i
+  for (i = 0; i < coll.length; i++) {
+    coll[i].addEventListener("click", function() {
+      this.classList.toggle("active")
+      var content = this.nextElementSibling
+      if (content.style.display === "block") {
+        content.style.display = "none"
+      } else {
+        content.style.display = "block"
+      }
+    })
+  }
+}
+
+function expandAll () {
+  var coll = document.getElementsByClassName("collapsible")
+  var i
+  for (i = 0; i < coll.length; i++) {
+    coll[i].classList.add("active")
+    var content = coll[i].nextElementSibling
+    content.style.display = "block"
+  }
+  closeNav ()
+}
+
+function collapseAll () {
+  var coll = document.getElementsByClassName("collapsible")
+  var i
+  for (i = 0; i < coll.length; i++) {
+    coll[i].classList.remove("active")
+    var content = coll[i].nextElementSibling
+    content.style.display = "none"
+  }
+  closeNav ()
+}
+
+function goHome () {
+  var href = window.location.origin + '/' +
+  "?user=" + localStorage.getItem("user")
+  window.location.href = href
+}
+
+function goSettings () {
+  // FIXME
 }
 
 function reqListener () {
@@ -209,17 +252,5 @@ function processNode (node) {
 }
 
 function processingFinished () {
-  var coll = document.getElementsByClassName("collapsible")
-  var i
-  for (i = 0; i < coll.length; i++) {
-    coll[i].addEventListener("click", function() {
-      this.classList.toggle("active")
-      var content = this.nextElementSibling
-      if (content.style.display === "block") {
-        content.style.display = "none"
-      } else {
-        content.style.display = "block"
-      }
-    })
-  }
+  setupFolding ()
 }

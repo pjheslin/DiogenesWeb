@@ -9,19 +9,28 @@
 </head>
 <body>
 <span style="display:none" id="path">{{path}}</span>
+
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  <a href="#" onclick="collapseAll()">Collapse&nbsp;All</a>
+  <a href="#" onclick="expandAll()">Expand&nbsp;All</a>
+  <a href="#" onclick="goHome()">Home&nbsp;Page</a>
+  <a href="#" onclick="goSettings()">Settings</a>
+</div>
+
+<!-- Use any element to open the sidenav -->
+<div class="hamburger" onclick="openNav()">
+  <div class="hamburger-bar"></div>
+  <div class="hamburger-bar"></div>
+  <div class="hamburger-bar"></div>
+</div>
+
 <div id="main">
-  <button class="hamburger hamburger--squeeze" type="button">
+  <!-- <button class="hamburger hamburger-squeeze" type="button">
   <span class="hamburger-box">
     <span class="hamburger-inner"></span>
   </span>
-</button>
-<div class="topnav">
-  <div id="menuItems">
-    <a href="#news">News</a>
-    <a href="#contact">Contact</a>
-    <a href="#about">About</a>
-  </div>
-</div>
+</button> -->
 
 </body>
 </html>

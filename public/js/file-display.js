@@ -210,7 +210,16 @@ const nodes = {
       span.setAttribute('class', 'speaker')
       return span
     }
-  }
+  },
+  hi: function () {
+     return document.createElement('span')
+  },
+  seg: function () {
+     return document.createElement('span')
+  },
+  p: function () {
+     return document.createElement('p')
+  },
 };
 
 function capitalizeFirstLetter(string) {
@@ -245,6 +254,9 @@ function processNode (node) {
           // Make current element the new parent, unless XML node is empty or we want to force the htmlNode to be empty.
           current = htmlNode
         }
+      }
+      else {
+         console.log('Unsupported element: ' + name)
       }
     }
   }

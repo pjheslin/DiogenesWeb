@@ -6,6 +6,7 @@ var dbx
 window.addEventListener('DOMContentLoaded', (event) => {
   path = document.getElementById('path').textContent
   mainDiv = document.getElementById('main')
+  hamburgerSetup()
 
   if (path == "__test__") {
     getFileLocal("test.xml")
@@ -17,6 +18,20 @@ window.addEventListener('DOMContentLoaded', (event) => {
     getFileDropbox(path)
   }
 });
+
+function hamburgerSetup () {
+  var hamburger = document.querySelector(".hamburger");
+  hamburger.addEventListener("click", function() {
+    // Toggle class "is-active"
+    hamburger.classList.toggle("is-active");
+    var menu = document.getElementById("menuItems");
+    if (menu.style.display === "block") {
+      menu.style.display = "none";
+    } else {
+      menu.style.display = "block";
+    }
+  });
+}
 
 function reqListener () {
   console.log(this.responseXML);

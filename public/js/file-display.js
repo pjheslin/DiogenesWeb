@@ -12,7 +12,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
   }
   else if (host == "dropbox") {
     dbx = new Dropbox.Dropbox({ accessToken: token });
-    console.log('dbx', dbx)
+    // console.log('dbx', dbx)
     //function getFile () {getFileDropbox()}
     getFileDropbox(path)
   }
@@ -77,7 +77,7 @@ function goSettings () {
 }
 
 function reqListener () {
-  console.log(this.responseXML);
+  // console.log(this.responseXML);
   processXML(this.responseXML)
 }
 
@@ -91,7 +91,7 @@ function getFileLocal (path) {
 function getFileDropbox (path) {
   dbx.filesDownload({path: path})
   .then(function(response) {
-    console.log('response', response)
+    // console.log('response', response)
     processFile(response);
     //console.log(response);
   })
@@ -101,7 +101,7 @@ function getFileDropbox (path) {
 }
 
 function processFile (data) {
-  console.log(data.fileBlob)
+  // console.log(data.fileBlob)
   // filBlob.text() is only implemented in Chrome
   // data.fileBlob.text()
   // .then()
@@ -118,7 +118,7 @@ function processFile (data) {
 function parseXML (xmlDoc) {
   var parser = new DOMParser();
   var xml = parser.parseFromString(xmlDoc, "application/xml");
-  console.log(xml)
+  // console.log(xml)
   processXML(xml)
 }
 

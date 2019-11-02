@@ -48,9 +48,12 @@ function expandAll () {
   var coll = document.getElementsByClassName("collapsible")
   var i
   for (i = 0; i < coll.length; i++) {
-    coll[i].classList.add("active")
-    var content = coll[i].nextElementSibling
-    content.style.display = "block"
+    var e = coll[i]
+    if (!e.classList.contains("active")) {
+      coll[i].classList.add("active")
+      var content = coll[i].nextElementSibling
+      content.style.display = "block"
+    }
   }
   closeNav ()
 }
@@ -59,9 +62,12 @@ function collapseAll () {
   var coll = document.getElementsByClassName("collapsible")
   var i
   for (i = 0; i < coll.length; i++) {
-    coll[i].classList.remove("active")
-    var content = coll[i].nextElementSibling
-    content.style.display = "none"
+    var e = coll[i]
+    if (e.classList.contains("active")) {
+      e.classList.remove("active")
+      var content = e.nextElementSibling
+      content.style.display = "none"
+    }
   }
   closeNav ()
 }

@@ -232,12 +232,27 @@ function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
+function smartquotesString(str) {
+  return str
+  .replace(/'''/g, '\u2034') // triple prime
+  .replace(/(\W|^)"(\S)/g, '$1\u201c$2')  // beginning "
+  .replace(/(\u201c[^"]*)"([^"]*$|[^\u201c"]*\u201c)/g, '$1\u201d$2') // ending "
+  .replace(/([^0-9])"/g,'$1\u201d')  // remaining " at end of word
+  .replace(/''/g, '\u2033') // double prime
+  .replace(/(\W|^)'(\S)/g, '$1\u2018$2') // beginning '
+  .replace(/([a-z])'([a-z])/ig, '$1\u2019$2') // conjunction's possession
+  .replace(/((\u2018[^']*)|[a-z])'([^0-9]|$)/ig, '$1\u2019$3') // ending '
+  .replace(/'/g, '\u2032');
+};
+
 function processNode (node) {
   // console.log(current)
   if (node.nodeType === 3) {
-    var text = node.data;
+    var text = smartquotesString(node.data)
+    var textNode = document.createTextNode(text)
+    // smartquotes(textNode)
     // console.log(text)
-    current.appendChild(document.createTextNode(text))
+    current.appendChild(textNode)
   }
   else if (node.nodeType == 1) {
     var name = node.nodeName

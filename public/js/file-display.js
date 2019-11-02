@@ -153,80 +153,112 @@ function walkTheDOM(node, func) {
   level = oldLevel
 }
 
-const nodes = {
-  l: function () {
-    // if (this.firstChild && this.firstChild.nodeName == 'label') { return }
-    var div = document.createElement('div')
-    div.setAttribute('name', 'line')
-    var num = this.getAttribute('n')
-    if (num && num % 5 === 0) {
-      var lineNum = document.createElement('span')
-      lineNum.setAttribute('class', 'lineNum')
-      lineNum.appendChild(document.createTextNode(num))
-      div.appendChild(lineNum)
+function translateNode (node) {
+  switch (node.nodeName) {
+    case 'l': {
+      // if (node.firstChild && node.firstChild.nodeName == 'label') { return }
+      var div = document.createElement('div')
+      div.setAttribute('name', 'line')
+      var num = node.getAttribute('n')
+      if (num && num % 5 === 0) {
+        var lineNum = document.createElement('span')
+        lineNum.setAttribute('class', 'lineNum')
+        lineNum.appendChild(document.createTextNode(num))
+        div.appendChild(lineNum)
+      }
+      return div
     }
-    return div
-  },
-  div: function () {
-    var type = this.getAttribute('type')
-    var n = this.getAttribute('n')
-    if (n == 't') {
-      suppress = type
-      return
-    }
-    if (suppress && suppress == type) {
-      suppress = ''
-    }
-    if (suppress) { return }
+    case 'div': {
+      var type = node.getAttribute('type')
+      var n = node.getAttribute('n')
+      if (n == 't') {
+        suppress = type
+        return
+      }
+      if (suppress && suppress == type) {
+        suppress = ''
+      }
+      if (suppress) { return }
 
-    level++
-    labels[level] = type
-    levels[level] = n
-    var div = document.createElement('div')
-    if (this.hasAttributes) {
-      Array.prototype.slice.call(this.attributes).forEach(function (item) {
-        div.setAttribute(item.name, item.value)
-      })
+      level++
+      labels[level] = type
+      levels[level] = n
+      var div = document.createElement('div')
+      if (node.hasAttributes) {
+        Array.prototype.slice.call(node.attributes).forEach(function (item) {
+          div.setAttribute(item.name, item.value)
+        })
+      }
+      var button = document.createElement('button')
+      button.setAttribute('type', 'button')
+      if (type === 'Section' || type === 'section') {
+        button.setAttribute('class', 'uncollapsible')
+      }
+      else {
+        button.setAttribute('class', 'collapsible')
+        div.setAttribute('class', 'content')
+      }
+      var label = ''
+      for (let lev = 1; lev <= level; lev++) {
+        label = label + capitalizeFirstLetter(labels[lev]) + ' ' + levels[lev]
+        if (lev != level) {
+          label = label + ', '
+        } else {
+          label = label + '.'
+        }
+      }
+      button.appendChild(document.createTextNode(label))
+      current.appendChild(button)
+      return div
     }
-    div.setAttribute('class', 'content')
-    var button = document.createElement('button')
-    button.setAttribute('type', 'button')
-    button.setAttribute('class', 'collapsible')
-    var label = ''
-    for (let lev = 1; lev <= level; lev++) {
-      label = label + capitalizeFirstLetter(labels[lev]) + ' ' + levels[lev]
-      if (lev != level) {
-        label = label + ', '
-      } else {
-        label = label + '.'
+    case 'label': {
+      var type = node.getAttribute('type')
+      if (type == 'head') {
+        var h1 = document.createElement('h1')
+        return h1
+      }
+      else if (type == 'speaker') {
+        var span = document.createElement('span')
+        span.setAttribute('class', 'speaker')
+        return span
       }
     }
-    button.appendChild(document.createTextNode(label))
-    current.appendChild(button)
-    return div
-  },
-  label: function () {
-    var type = this.getAttribute('type')
-    if (type == 'head') {
-      var h1 = document.createElement('h1')
-      return h1
+    case 'space': {
+      var q = node.getAttribute('quantity') || 1
+      var sp = '\u00A0'
+      var str = sp.repeat(q)
+      return document.createTextNode(str)
     }
-    else if (type == 'speaker') {
-      var span = document.createElement('span')
-      span.setAttribute('class', 'speaker')
-      return span
+    case 'hi': {
+      return document.createElement('span')
     }
-  },
-  hi: function () {
-     return document.createElement('span')
-  },
-  seg: function () {
-     return document.createElement('span')
-  },
-  p: function () {
-     return document.createElement('p')
-  },
-};
+    case 'seg': {
+      return document.createElement('span')
+    }
+    case 'p': {
+      return document.createElement('p')
+    }
+    case 'lb': {
+      return document.createElement('br')
+    }
+    case 'cb': {
+      return document.createElement('br')
+    }
+    case 'g': {
+      return document.createTextNode('[?]')
+    }
+    case 'body': {
+      return
+    }
+    case 'pb': {
+      return
+    }
+    default: {
+      console.log('Unsupported element: ' + node.nodeName)
+      return
+    }
+  }
+}
 
 function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
@@ -260,24 +292,19 @@ function processNode (node) {
     // console.log(current)
     // console.log(nodes[str])
     var htmlNode
-    if (nodes[name]) {
-      htmlNode = nodes[name].apply(node)
-      if (htmlNode) {
-        // console.log(htmlNode.nodeName)
-        var rend = node.getAttribute('rend')
-        if (rend) {
-          rend = rend.replace('(', '')
-          rend = rend.replace(')', '')
-          htmlNode.setAttribute('class', rend)
-        }
-        current.appendChild(htmlNode)
-        if (node.firstChild && htmlNode.nodeName != 'BR') {
-          // Make current element the new parent, unless XML node is empty or we want to force the htmlNode to be empty.
-          current = htmlNode
-        }
+    htmlNode = translateNode(node)
+    if (htmlNode) {
+      // console.log(htmlNode.nodeName)
+      var rend = node.getAttribute('rend')
+      if (rend) {
+        rend = rend.replace('(', '')
+        rend = rend.replace(')', '')
+        htmlNode.setAttribute('class', rend)
       }
-      else {
-         console.log('Unsupported element: ' + name)
+      current.appendChild(htmlNode)
+      if (node.firstChild && htmlNode.nodeName != 'BR') {
+        // Make current element the new parent, unless XML node is empty or we want to force the htmlNode to be empty.
+        current = htmlNode
       }
     }
   }

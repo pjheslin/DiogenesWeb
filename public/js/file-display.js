@@ -199,7 +199,9 @@ function translateNode (node) {
         div.setAttribute('class', 'content')
       }
       var label = ''
+      var indent = ''
       for (let lev = 1; lev <= level; lev++) {
+        indent = indent + '\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0'
         label = label + capitalizeFirstLetter(labels[lev]) + ' ' + levels[lev]
         if (lev != level) {
           label = label + ', '
@@ -207,6 +209,7 @@ function translateNode (node) {
           label = label + '.'
         }
       }
+      label = indent + label
       button.appendChild(document.createTextNode(label))
       current.appendChild(button)
       return div

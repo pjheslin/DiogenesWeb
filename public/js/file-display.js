@@ -212,19 +212,19 @@ function translateNode (node) {
       levels[level] = n
       var div = document.createElement('div')
       if (node.hasAttributes) {
-        Array.prototype.slice.call(node.attributes).forEach(function (item) {
+        node.attributes.forEach(function (item) {
           div.setAttribute(item.name, item.value)
         })
       }
       var button = document.createElement('button')
       button.setAttribute('type', 'button')
-      if (type === 'Section' || type === 'section') {
-        button.setAttribute('class', 'uncollapsible')
-      }
-      else {
+      // if (type === 'Section' || type === 'section') {
+      //   button.setAttribute('class', 'uncollapsible')
+      // }
+      // else {
         button.setAttribute('class', 'collapsible')
         div.setAttribute('class', 'content')
-      }
+      // }
       var label = ''
       var indent = ''
       for (let lev = 1; lev <= level; lev++) {

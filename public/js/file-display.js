@@ -188,6 +188,13 @@ function translateNode (node) {
       }
       return div
     }
+    case 'div1':
+    case 'div2':
+    case 'div3':
+    case 'div4':
+    case 'div5':
+    case 'div6':
+    case 'div7':
     case 'div': {
       var type = node.getAttribute('type')
       var n = node.getAttribute('n')

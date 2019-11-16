@@ -165,11 +165,36 @@ img.prev {
   padding-left: 2em;
 }
 
-h1 {
+.xml-header {
   text-align: center;
+  color: #28709a;
+}
+
+sourceDesc {
+  color: grey;
+}
+sourceDesc author {
+  font-weight: bold;
+}
+sourceDesc author::after {
+  content: "\00a0\00a0";
+}
+sourceDesc title {
+  font-style: italic;
+}
+sourceDesc title::after {
+  content: "\00a0\00a0";
+}
+
+h1 {
   font-size: large;
   color: #28709a;
 }
+
+h2 {
+  color: #28709a;
+}
+
 
 .speaker {
   color: #28709a;

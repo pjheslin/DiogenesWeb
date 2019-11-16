@@ -108,6 +108,12 @@ app.get('/', (req, res) => {
   console.log("home!")
 })
 
+app.get('/home', (req, res) => {
+  res.sendFile('home.html', sendFileOptions)
+  console.log("home!")
+})
+
+
 // For testing XML parsing
 app.get('/test.xml', (req, res) => {
   res.sendFile('test.xml', sendFileOptions)

@@ -1,0 +1,1 @@
+/* Generate home page with list of local files from template */

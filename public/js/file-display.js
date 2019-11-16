@@ -172,12 +172,13 @@ function walkTheDOM(node, func) {
   level = oldLevel
 }
 
+/* Process each XML node and return an HTML node */
 function translateNode (node) {
   switch (node.nodeName) {
     case 'l': {
       // if (node.firstChild && node.firstChild.nodeName == 'label') { return }
       var div = document.createElement('div')
-      div.setAttribute('name', 'line')
+      div.setAttribute('class', 'line')
       var num = node.getAttribute('n')
       if (num && num % 5 === 0) {
         var lineNum = document.createElement('span')

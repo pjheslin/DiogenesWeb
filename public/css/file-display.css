@@ -159,6 +159,11 @@ img.prev {
 .lineNum {
   float: right;
 }
+/* For turnover on long lines */
+.line {
+  text-indent: -2em;
+  padding-left: 2em;
+}
 
 h1 {
   text-align: center;

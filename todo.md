@@ -1,11 +1,8 @@
-# Add find-in-page
+# Add Perseus files
+# Add Digilib files
 # Add Gentium
 
-# Add Logion short defs and parses to desktop Diogenes
-# Convert analyses and lexica to sqlite files
-# Add sliding panel from bottom for parses
-# Add search function for Dropbox
-# Add lexicon and inflection lookup
+# Add search function for Dropbox?
 
-# Test Perseus files
-# Test Digilib files
+# Fix bugs
+- Logeion link

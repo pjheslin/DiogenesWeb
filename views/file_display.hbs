@@ -6,12 +6,15 @@
   <link rel="stylesheet" type = "text/css" href="css/file-display.css?v=1">
   <script src="https://unpkg.com/dropbox/dist/Dropbox-sdk.min.js"></script>
   <script type="text/javascript" src="js/file-display.js?v=1"></script>
+  <script type="text/javascript" src="js/file-sidebar.js?v=1"></script>
 </head>
 <body>
 <span style="display:none" id="path">{{path}}</span>
 
 <div id="mySidenav" class="sidenav">
-  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  <a href="javascript:void(0)" id="navCloseBtn"
+  onclick="closeNav()">&times;</a>
+  <a href="#" onclick="showSidebar()">Redisplay&nbsp;Parse</a>
   <a href="#" onclick="collapseAll()">Collapse&nbsp;All</a>
   <a href="#" onclick="expandAll()">Expand&nbsp;All</a>
   <a href="#" onclick="findInPage()">Find&nbsp;in&nbsp;Page</a>
@@ -20,18 +23,14 @@
 </div>
 
 <!-- Use any element to open the sidenav -->
-<div class="hamburger" onclick="openNav()">
+<div class="hamburger" id="hamburger" onclick="openNav()">
   <div class="hamburger-bar"></div>
   <div class="hamburger-bar"></div>
   <div class="hamburger-bar"></div>
 </div>
 
-<div id="main">
-  <!-- <button class="hamburger hamburger-squeeze" type="button">
-  <span class="hamburger-box">
-    <span class="hamburger-inner"></span>
-  </span>
-</button> -->
+<div id="sidebar"></div>
+<div id="main"></div>
 
 </body>
 </html>

@@ -20,12 +20,27 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
 /* Set the width of the side navigation to 250px */
 function openNav () {
-  document.getElementById("mySidenav").style.width = "150px";
+  document.getElementById("mySidenav").style.width = "150px"
+  document.getElementById("navCloseBtn").style.display = "inline"
 }
 
 /* Set the width of the side navigation to 0 */
 function closeNav () {
   document.getElementById("mySidenav").style.width = "0";
+  document.getElementById("navCloseBtn").style.display = "none";
+}
+
+function isVisible (el) {
+    var rect = el.getBoundingClientRect()
+    var elemTop = rect.top
+    var elemBottom = rect.bottom
+
+    // Only completely visible elements return true:
+    // var isVisible = (elemTop >= 0) && (elemBottom <= window.innerHeight);
+    // Partially visible elements return true:
+    var isVisible = elemTop < window.innerHeight && elemBottom >= 0
+    console.log(isVisible)
+    return isVisible
 }
 
 function setupFolding () {
@@ -39,6 +54,10 @@ function setupFolding () {
         content.style.display = "none"
       } else {
         content.style.display = "block"
+      }
+      // If uncollape action scrolls section out of view, put it at top of screen.
+      if (!isVisible(this)) {
+        this.scrollIntoView({block: "start"})
       }
     })
   }
@@ -280,14 +299,31 @@ function smartquotesString(str) {
   .replace(/'/g, '\u2032');
 };
 
+/* Create parsing links for each word */
+const latinRegex = /[a-zA-Z]+/g
+const greekRegex = /[\u0370-\u03FF\u1F00-\u1FFF]+/g
+function parseReplace (match) {
+  // return '<a onclick="parse_'+parseLang+'(\''+match+'\')">'+match+'</a>'
+  return '<a onclick="p(this)">'+match+'</a>'
+}
+function addParseLinks (text) {
+  text = text.replace(latinRegex, parseReplace)
+  text = text.replace(greekRegex, parseReplace)
+  var span = document.createElement('span')
+  span.setAttribute('class', 'text')
+  span.innerHTML = text
+  return span
+}
+
 function processNode (node) {
   // console.log(current)
   if (node.nodeType === 3) {
     var text = smartquotesString(node.data)
-    var textNode = document.createTextNode(text)
+    var span = addParseLinks(text)
+    // var textNode = document.createTextNode(text)
     // smartquotes(textNode)
     // console.log(text)
-    current.appendChild(textNode)
+    current.appendChild(span)
   }
   else if (node.nodeType == 1) {
     var name = node.nodeName

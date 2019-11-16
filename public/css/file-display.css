@@ -85,24 +85,73 @@
 }
 
 /* Position and style the close button (top right corner) */
-.sidenav .closebtn {
-  position: absolute;
+#navCloseBtn {
+  position: fixed;
   top: 0px;
   right: 24px;
   font-size: 28px;
   margin-left: 50px;
+  display: none;
+  transition: 0.5s;
+  padding: 4px 4px 4px 16px;
+  text-decoration: none;
+  color: #818181;
+}
+#parseCloseBtn {
+  position: fixed;
+  top: 0px;
+  right: 24px;
+  font-size: 28px;
+  margin-left: 50px;
+  padding: 4px 4px 4px 16px;
+  text-decoration: none;
+  color: #818181;
 }
 
+
 /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
-/* #main {
+#main {
   transition: margin-left .5s;
   padding: 20px;
-} */
+  /* resize: horizontal;
+  overflow: scroll; */
+  overflow-x:hidden;
+}
 
 /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
 @media screen and (max-height: 450px) {
   .sidenav {padding-top: 15px;}
   .sidenav a {font-size: 18px;}
+}
+
+/* The morphology and lexicon panel */
+
+#sidebar {
+  height: 100%; /* 100% Full-height */
+  width: 0; /* 0 width - change this with JavaScript */
+  position: fixed; /* Stay in place */
+  z-index: 2; /* Stay on top */
+  top: 0; /* Stay at the top */
+  right: 0;
+  opacity: 1;
+  overflow-x: hidden; /* Disable horizontal scroll */
+  padding-top: 10px;
+  padding-bottom: 60px;
+  transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+  /* resize:horizontal;
+  border: 1px solid black; */
+  overflow: scroll;
+}
+
+.highlighted-word {
+  background-color: lightgrey;
+}
+
+img.next {
+         float: right;
+}
+img.prev {
+         float: left;
 }
 
 /* Elements */

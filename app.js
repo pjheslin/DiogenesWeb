@@ -1,11 +1,10 @@
 "use strict"
 const path = require('path')
-
 const express = require('express')
 const app = express()
 const port = 8989
-
 const handlebars = require('handlebars')
+
 app.set('views', './views')
 app.set('view engine', 'hbs')
 var fs = require('fs') // this engine requires the fs module
@@ -43,6 +42,8 @@ var sendFileOptions = {
 
 // For misc assets
 app.use(express.static('public'))
+// For sidebar
+app.use('/images', express.static(path.join(__dirname, 'public/images')))
 
 // Send user identification page unless param set
 app.get('*', (req, res, next) => {
@@ -106,13 +107,6 @@ app.get('/', (req, res) => {
 app.get('/test.xml', (req, res) => {
   res.sendFile('test.xml', sendFileOptions)
   console.log("test")
-})
-
-
-// Parsing
-app.get('/parse/:form', (req, res) => {
-  // function to do actual parsing here
-  res.render('parser', req.params)
 })
 
 // Settings (set on client side)

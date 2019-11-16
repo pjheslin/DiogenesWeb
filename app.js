@@ -21,16 +21,6 @@ app.engine('hbs', function (filePath, options, callback) { // define the templat
 
 require('dotenv').config()
 
-// OAuth authorization pages
-var authURL = {}
-// Where to tell cloud host to redirect after authentication
-// Do we need to urlencode this?
-var authRedirect = "http://localhost:8989/auth"
-
-// Dropbox config
-var dropboxClientId = process.env.DROPBOX_APP_KEY;
-authURL['dropbox'] = "https://www.dropbox.com/oauth2/authorize?client_id=" + dropboxClientId + "&response_type=token&redirect_uri=" + authRedirect
-
 var sendFileOptions = {
   root: path.join(__dirname, 'public'),
   dotfiles: 'deny',
@@ -71,9 +61,24 @@ app.get('/authRedirect', (req, res, next) => {
   if (req.query && req.query.host) {
     var host = req.query.host
     // console.log(host)
-    var u = authURL[host]
-    // console.log(u)
-    res.redirect(u)
+    // Where to tell cloud host to redirect after authentication
+    // Do we need to urlencode this?
+    // var authRedirect = "http://localhost:8989/auth"
+    var protocol = 'https'
+    if (req.get('Host').match(/localhost/)) {
+      protocol = 'http'
+    }
+    var origUrl = protocol + '://' + req.get('Host');
+    console.log('orig: '+origUrl)
+    var authURL
+    if (host == 'dropbox') {
+      var authRedirect = origUrl+'/auth'
+      var dropboxClientId = process.env.DROPBOX_APP_KEY;
+      var dropboxAuthURL = "https://www.dropbox.com/oauth2/authorize?client_id=" + dropboxClientId + "&response_type=token&redirect_uri=" + authRedirect
+      authURL = dropboxAuthURL
+  }
+  // console.log(authURL)
+  res.redirect(authURL)
   }
 })
 

@@ -1,3 +1,6 @@
+NodeList.prototype.forEach = Array.prototype.forEach
+NamedNodeMap.prototype.forEach = Array.prototype.forEach
+
 var token = localStorage.getItem("access_token")
 var host = localStorage.getItem("cloudHost")
 var filePath
@@ -147,7 +150,41 @@ function parseXML (xmlDoc) {
   processXML(xml)
 }
 
+function makeTitle (xml) {
+  var author = xml.getElementsByTagName('author')[0].textContent
+  var title = xml.getElementsByTagName('title')[0].textContent
+  if (author || title) {
+    var button = document.createElement('button')
+    button.setAttribute('type', 'button')
+    button.setAttribute('class', 'collapsible xml-header')
+    //h1.setAttribute('class', 'xml-header')
+    if (author) {
+      button.appendChild(document.createTextNode(author))
+    }
+    if (author && title) {
+      button.appendChild(document.createTextNode(', '))
+    }
+    if (title) {
+      var span = document.createElement('span')
+      span.setAttribute('class', 'italic')
+      span.appendChild(document.createTextNode(title))
+      button.appendChild(span)
+    }
+    var div = document.createElement('div')
+    div.setAttribute('class', 'content')
+    var source = xml.getElementsByTagName('sourceDesc')[0]
+    if (source) {
+      div.appendChild(source)
+    } else {
+      div.appendChild(document.createTextNode('No source-text description available.'))
+    }
+    mainDiv.appendChild(button)
+    mainDiv.appendChild(div)
+  }
+}
+
 function processXML (xml) {
+  makeTitle(xml)
   current = mainDiv
   walkTheDOM(xml.getElementsByTagName('body')[0], processNode)
   processingFinished()
@@ -294,6 +331,7 @@ function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
+/* Adapted from the smartquotes.js library */
 function smartquotesString(str) {
   return str
   .replace(/'''/g, '\u2034') // triple prime

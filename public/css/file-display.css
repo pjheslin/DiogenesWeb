@@ -177,9 +177,11 @@ h2 {
 }
 .superscript {
   vertical-align: super;
+  font-size: 75%;
 }
 .subscript {
   vertical-align: sub;
+  font-size: 75%;
 }
 .small-caps {
   text-transform: uppercase;
@@ -235,4 +237,15 @@ h2 {
 }
 .space:after {
   content: "\00a0\00a0";
+}
+
+/* Don't strikethru */
+del {
+  text-decoration: none;
+}
+del::before {
+  content: "["
+}
+del::after {
+  content: "]"
 }

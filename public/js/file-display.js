@@ -235,6 +235,18 @@ function translateNode (node) {
     case 'pb': {
       return
     }
+    case 'del': {
+      return document.createElement('del')
+    }
+    case 'quote':
+    case 'q': {
+      if (node.getAttribute('rend') == 'blockquote') {
+        return document.createElement('blockquote')
+      }
+      else {
+        return document.createElement('q')
+      }
+    }
     default: {
       console.log('Unsupported element: ' + node.nodeName)
       return
@@ -254,10 +266,11 @@ function smartquotesString(str) {
   .replace(/(\u201c[^"]*)"([^"]*$|[^\u201c"]*\u201c)/g, '$1\u201d$2') // ending "
   .replace(/([^0-9])"/g,'$1\u201d')  // remaining " at end of word
   .replace(/''/g, '\u2033') // double prime
-  .replace(/(\W|^)'(\S)/g, '$1\u2018$2') // beginning '
-  .replace(/([a-z])'([a-z])/ig, '$1\u2019$2') // conjunction's possession
-  .replace(/((\u2018[^']*)|[a-z])'([^0-9]|$)/ig, '$1\u2019$3') // ending '
-  .replace(/'/g, '\u2032');
+  // .replace(/(\W|^)'(\S)/g, '$1\u2018$2') // beginning '
+  // .replace(/([a-z])'([a-z])/ig, '$1\u2019$2') // conjunction's possession
+  // .replace(/((\u2018[^']*)|[a-z])'([^0-9]|$)/ig, '$1\u2019$3') // ending '
+  // .replace(/'/g, '\u2032');
+  .replace(/'/g, '\u2019'); // mark of elision
 };
 
 /* Create parsing links for each word */

@@ -177,21 +177,18 @@ function translateNode (node) {
       //   button.setAttribute('class', 'uncollapsible')
       // }
       // else {
-        button.setAttribute('class', 'collapsible')
+        button.setAttribute('class', 'collapsible '+'divLevel'+level)
         div.setAttribute('class', 'content')
       // }
       var label = ''
-      var indent = ''
       for (let lev = 1; lev <= level; lev++) {
-        indent = indent + '\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0'
-        label = label + capitalizeFirstLetter(labels[lev]) + ' ' + levels[lev]
+        label = label + capitalizeFirstLetter(labels[lev]) + '\u00A0' + levels[lev]
         if (lev != level) {
           label = label + ', '
         } else {
           label = label + '.'
         }
       }
-      label = indent + label
       button.appendChild(document.createTextNode(label))
       current.appendChild(button)
       return div

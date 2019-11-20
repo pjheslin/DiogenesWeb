@@ -56,6 +56,32 @@ img.prev {
          float: left;
 }
 
+.divLevel1 {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+.divLevel2 {
+  padding-left: 25px;
+  padding-right: 5px;
+}
+.divLevel3 {
+  padding-left: 45px;
+  padding-right: 5px;
+}
+.divLevel4 {
+  padding-left: 65px;
+  padding-right: 5px;
+}
+.divLevel5 {
+  padding-left: 85px;
+  padding-right: 5px;
+}
+.divLevel6 {
+  padding-left: 105px;
+  padding-right: 5px;
+}
+
+
 /* Elements */
 
 .lineNum {

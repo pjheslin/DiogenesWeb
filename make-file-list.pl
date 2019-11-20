@@ -1,0 +1,246 @@
+#!/usr/bin/perl -w
+use strict;
+use warnings;
+use feature qw/say/;
+use XML::LibXML qw(:libxml);
+use open qw( :utf8 :std );
+
+my @corpora = ('Perseus_Greek', 'Perseus_Latin', 'DigiLibLT', 'Misc');
+# my @corpora = ('Perseus_Latin');
+my %fileRegex = (
+Perseus_Greek => '-grc\\d*\\.xml$',
+Perseus_Latin => '-lat\\d*\\.xml$',
+DigiLibLT => '/dlt.*\\.xml$',
+Misc => '\\.xml$'
+);
+my %missing_authors = (
+'public/texts/DigiLibLT/dlt000007/dlt000007.xml' => 'Corpus Hermeticum',
+'public/texts/DigiLibLT/dlt000036/dlt000036.xml' => 'Grammatici Latini',
+'public/texts/DigiLibLT/dlt000037/dlt000037.xml' => 'Grammatici Latini',
+'public/texts/DigiLibLT/dlt000097/dlt000097.xml' => 'Anonymous',
+'public/texts/DigiLibLT/dlt000116/dlt000116.xml' => 'Rhetores Latini Minores',
+'public/texts/DigiLibLT/dlt000143/dlt000143.xml' => 'Anonymous',
+'public/texts/DigiLibLT/dlt000149/dlt000149.xml' => 'Grammatici Latini',
+'public/texts/DigiLibLT/dlt000178/dlt000178.xml' => 'Rhetores Latini Minores',
+'public/texts/DigiLibLT/dlt000180/dlt000180.xml' => 'Anonymous',
+'public/texts/DigiLibLT/dlt000196/dlt000196.xml' => 'Grammatici Latini',
+'public/texts/DigiLibLT/dlt000207/dlt000207.xml' => 'Grammatici Latini',
+'public/texts/DigiLibLT/dlt000208/dlt000208.xml' => 'Grammatici Latini',
+'public/texts/DigiLibLT/dlt000209/dlt000209.xml' => 'Grammatici Latini',
+'public/texts/DigiLibLT/dlt000214/dlt000214.xml' => 'Grammatici Latini',
+'public/texts/DigiLibLT/dlt000219/dlt000219.xml' => 'Grammatici Latini',
+'public/texts/DigiLibLT/dlt000220/dlt000220.xml' => 'Grammatici Latini',
+'public/texts/DigiLibLT/dlt000221/dlt000221.xml' => 'Grammatici Latini',
+'public/texts/DigiLibLT/dlt000253/dlt000253.xml' => 'Anonymous',
+'public/texts/DigiLibLT/dlt000292/dlt000292.xml' => 'Anonymous',
+'public/texts/DigiLibLT/dlt000296/dlt000296.xml' => 'Anonymous',
+'public/texts/DigiLibLT/dlt000298/dlt000298.xml' => 'Anonymous',
+'public/texts/DigiLibLT/dlt000300/dlt000300.xml' => 'Anonymous',
+'public/texts/DigiLibLT/dlt000344/dlt000344.xml' => 'Mallius Theodorus',
+'public/texts/DigiLibLT/dlt000364/dlt000364.xml' => 'Vatican Mythographer',
+'public/texts/DigiLibLT/dlt000374/dlt000374.xml' => 'Geographi latini minores',
+'public/texts/DigiLibLT/dlt000386/dlt000386.xml' => 'Panegyrici Latini',
+'public/texts/DigiLibLT/dlt000390/dlt000390.xml' => 'Panegyrici Latini',
+'public/texts/DigiLibLT/dlt000391/dlt000391.xml' => 'Panegyrici Latini',
+'public/texts/DigiLibLT/dlt000392/dlt000392.xml' => 'Panegyrici Latini',
+'public/texts/DigiLibLT/dlt000394/dlt000394.xml' => 'Panegyrici Latini',
+'public/texts/DigiLibLT/dlt000397/dlt000397.xml' => 'Panegyrici Latini',
+'public/texts/DigiLibLT/dlt000405/dlt000405.xml' => 'Egeria',
+'public/texts/DigiLibLT/dlt000406/dlt000406.xml' => '[Livy]',
+'public/texts/DigiLibLT/dlt000410/dlt000410.xml' => 'Physiologus latinus',
+'public/texts/DigiLibLT/dlt000426/dlt000426.xml' => '[Priscian]',
+'public/texts/DigiLibLT/dlt000431/dlt000431.xml' => 'Geographi latini minores',
+'public/texts/DigiLibLT/dlt000433/dlt000433.xml' => 'Rufinus',
+'public/texts/DigiLibLT/dlt000444/dlt000444.xml' => 'Scholia',
+'public/texts/DigiLibLT/dlt000452/dlt000452.xml' => 'Scholia',
+'public/texts/DigiLibLT/dlt000453/dlt000453.xml' => 'Scholia',
+'public/texts/DigiLibLT/dlt000454/dlt000454.xml' => 'Scholia',
+'public/texts/DigiLibLT/dlt000458/dlt000458.xml' => 'Scholia',
+'public/texts/DigiLibLT/dlt000459/dlt000459.xml' => 'Scholia',
+'public/texts/DigiLibLT/dlt000463/dlt000463.xml' => 'Lactantius Placidus',
+'public/texts/DigiLibLT/dlt000470/dlt000470.xml' => 'Servius',
+'public/texts/DigiLibLT/dlt000487/dlt000487.xml' => 'Anonymous',
+'public/texts/DigiLibLT/dlt000493/dlt000493.xml' => 'Gromatici Veteres',
+'public/texts/DigiLibLT/dlt000524/dlt000524.xml' => 'Anonymous',
+'public/texts/DigiLibLT/dlt000538/dlt000538.xml' => 'Probus',
+'public/texts/DigiLibLT/dlt000542/dlt000542.xml' => 'Anonymous',
+'public/texts/DigiLibLT/dlt000544/dlt000544.xml' => 'Justin',
+'public/texts/DigiLibLT/dlt000555/dlt000555.xml' => 'Scholia',
+'public/texts/DigiLibLT/dlt000566/dlt000566.xml' => 'Vatican Mythographer',
+'public/texts/DigiLibLT/dlt000573/dlt000573.xml' => '[Augustine]',
+'public/texts/DigiLibLT/dlt000579/dlt000579.xml' => 'Rufinus',
+'public/texts/DigiLibLT/dlt000583/dlt000583.xml' => 'Scholia',
+'public/texts/DigiLibLT/dlt000592/dlt000592.xml' => 'Perpetua',
+'public/texts/DigiLibLT/dlt000595/dlt000595.xml' => 'Anonymous',
+'public/texts/DigiLibLT/dlt000603/dlt000603.xml' => 'Grammatici Latini',
+'public/texts/DigiLibLT/dlt000604/dlt000604.xml' => 'Grammatici Latini',
+'public/texts/DigiLibLT/dlt000605/dlt000605.xml' => 'Grammatici Latini',
+'public/texts/DigiLibLT/dlt000610/dlt000610.xml' => 'Anonymous',
+
+);
+
+sub natural_sort {
+  my @a = split /(\d+)/, $a;
+  my @b = split /(\d+)/, $b;
+  my $M = @a > @b ? @a : @b;
+  my $res = 0;
+  for (my $i = 0; $i < $M; $i++) {
+    return -1 if ! defined $a[$i];
+    return 1 if  ! defined $b[$i];
+    if ($a[$i] =~ /\d/) {
+      $res = $a[$i] <=> $b[$i];
+    } else {
+      $res = $a[$i] cmp $b[$i];
+    }
+    last if $res;
+  }
+  $res;
+}
+
+# Traverse the directories, collecting files
+my %paths;
+foreach my $corpus (@corpora) {
+  my $regex = $fileRegex{$corpus};
+  my %seen;
+  my @dirs = ("public/texts/$corpus");
+  while (my $pwd = shift @dirs) {
+    opendir(DIR,"$pwd") or die "Cannot open $pwd\n";
+    my @files = readdir(DIR);
+    closedir(DIR);
+    foreach my $file (@files) {
+      next if $file =~ /^\.\.?$/;
+      my $path = "$pwd/$file";
+      if (-d $path) {
+        next if $seen{$path};
+        $seen{$path} = 1;
+        push @dirs, $path;
+      }
+      else {
+        next unless ($path =~ m#$regex#);
+        # print $path, "\n";
+        $paths{$corpus}{$path}++;
+      }
+    }
+  }
+}
+
+# Remove older versions of Perseus texts
+foreach my $corpus ('Perseus_Greek', 'Perseus_Latin') {
+  foreach my $path (sort keys %{ $paths{$corpus} }) {
+    # For the Greek Anthology, the numbered files indicate Loeb volumes rather than file versions (!)
+    next if $path =~ m/tlg7000.tlg001.perseus-grc\d.xml$/;
+    if ($path =~ m/perseus-(?:lat|grc)(\d+)\.xml$/) {
+      my $num = $1;
+      my $newer = $path;
+      my $higher = $num + 1;
+      $newer =~ s/(\d+).xml$/$higher.xml/;
+      if (exists $paths{$corpus}{$newer}) {
+        delete $paths{$corpus}{$path};
+        # print "Deleting $path\n"
+      }
+      else {
+        # print "Keeping $path\n"
+      }
+    }
+  }
+}
+
+my %titles;
+# Read TEI header of each file; presumes some sanity of markup
+foreach my $corpus (@corpora) {
+  foreach my $path (sort keys %{ $paths{$corpus} }) {
+    my $header = '';
+    open my $fh, "<$path" or die "$!";
+    while (my $line = <$fh>) {
+      # Get rid of namespaces to make xpath easier
+      $line =~ s/\s+xmlns="[^"]*"//g;
+      if ($line =~ m!</teiHeader>!) {
+        $line =~ s!(</teiHeader>).*$!$1!;
+        $header .= $line;
+        last;
+      }
+      else {
+        $header .= $line;
+      }
+    }
+    # Close root element
+    $header =~ m/<(TEI[^\s>]*)/;
+    my $root = $1;
+    $header .= "</$root>";
+    # print "root: <$root>\n";
+    # print "$header\n";
+
+    # say $path;
+    # parse header
+    # my $dom = XML::LibXML->load_xml(string => $header, load_ext_dtd => 0, expand_entities => 0, suppress_errors => 1, supress_warnings => 1, recover => 1);
+    my $dom = XML::LibXML->load_xml(string => $header, no_network => 1, recover => 2);
+    my ($author, $title);
+    foreach my $author_node ($dom->findnodes("//titleStmt/author")) {
+      $author = $author_node->to_literal();
+    }
+    unless ($author) {
+      if (exists $missing_authors{$path}) {
+        $author = $missing_authors{$path};
+      }
+    }
+    unless ($author) {
+      my $other_title = $dom->findnodes("//sourceDesc//title")->[0]->to_literal;
+      # print "other: $other_title\n";
+      if ($other_title) {
+        $author = 'Homer' if $other_title =~ m/Homeric Hymns/;
+        $author = 'New Testament' if $other_title =~ m/New Testament/;
+        $author = 'Greek Anthology' if $other_title =~ m/Greek Anthology/;
+        $author = 'Scriptores Historiae Augustae' if $other_title =~ m/Scriptores Historiae Augustae/;
+      }
+    }
+    $author = 'Servius' if $author eq 'Seruius';
+    die "No author: $path" unless $author;
+    chomp $author;
+    # say "Author: $author";
+
+    foreach my $title_node ($dom->findnodes("//titleStmt/title")) {
+      # Skip subtitles (except for Sallust and Seneca, where the title is the subtitle)
+      next if ($title_node->hasAttribute('type') and $title_node->getAttribute('type') eq 'sub' and $author ne 'Sallust' and $author ne 'Seneca');
+      $title = $title_node->to_literal();
+      $title =~ s/Machine readable text//i;
+      last if $title;
+    }
+    die "No title: $path" unless $title;
+    chomp $title;
+    # say "Title: $title";
+    # print "\n";
+    # die unless $title_string;
+    $titles{$corpus}{$author}{$title} = $path;
+  }
+}
+
+my $out = '';
+# Now we have authors and titles, so we output the list
+foreach my $corpus (@corpora) {
+  $out .= qq{<button type="button" class="collapsible">$corpus</button>\n};
+  $out .= qq{<div type="corpus" class="content">\n};
+  foreach my $author (sort natural_sort keys %{ $titles{$corpus} }) {
+    $out .= qq{<button type="button" class="collapsible">&nbsp;&nbsp;&nbsp;&nbsp;$author</button>\n};
+    $out .= qq{<div type="author" class="content">\n};
+    foreach my $title (sort natural_sort keys %{ $titles{$corpus}{$author} }) {
+      $out .= qq{<a href="#" onClick="openFile('$titles{$corpus}{$author}{$title}')">
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$title</a>\n};
+    }
+    $out .= qq{</div>\n};
+  }
+  $out .= qq{</div>\n};
+}
+
+# print $out;
+my $template_file = 'file-list-template.html';
+open my $fh, "<$template_file" or die $!;
+my $template;
+{
+  local $/ = undef;
+  $template = <$fh>;
+}
+close $fh;
+my ($prefix, $suffix) = split /INSERT HERE/, $template;
+open $fh, ">public/file-list-public.html" or die $!;
+print $fh $prefix, $out, $suffix;
+close $fh;

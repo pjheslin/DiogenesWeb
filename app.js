@@ -32,6 +32,8 @@ var sendFileOptions = {
 
 // For misc assets
 app.use(express.static('public'))
+// For texts (previous rule would look in public/public)
+app.use('/public/texts', express.static(path.join(__dirname, 'public/texts')))
 // For sidebar
 app.use('/images', express.static(path.join(__dirname, 'public/images')))
 
@@ -111,14 +113,6 @@ app.get('/', (req, res) => {
 app.get('/home', (req, res) => {
   res.sendFile('home.html', sendFileOptions)
   console.log("home!")
-})
-
-// For Ajax requests
-app.get('/serveXml', (req, res) => {
-  var path = req.query.xmlPath
-  path = path.replace(/^public\//, '')
-  console.log('path$ '+path)
-  res.sendFile(path, sendFileOptions)
 })
 
 // Settings (set on client side)

@@ -27,7 +27,8 @@ function reqListener () {
 function getFileLocal (path) {
   var req = new XMLHttpRequest();
   req.addEventListener("load", reqListener);
-  var url = window.location.origin + '/serveXml' + "?user=" + localStorage.getItem("user") + '&xmlPath=' + path
+  // var url = window.location.origin + '/serveXml' + "?user=" + localStorage.getItem("user") + '&xmlPath=' + path
+  var url = window.location.origin + '/' + path + "?user=" + localStorage.getItem("user")
   console.log(url)
   req.open("GET", url);
   req.send();

@@ -104,7 +104,7 @@ app.get('/fileDisplay', (req, res) => {
 
 // Send home page otherwise
 app.get('/', (req, res) => {
-  res.sendFile('list-files.html', sendFileOptions)
+  res.sendFile('file-list-public.html', sendFileOptions)
   console.log("home!")
 })
 

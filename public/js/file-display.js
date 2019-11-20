@@ -7,7 +7,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
   path = document.getElementById('path').textContent
   mainDiv = document.getElementById('main')
 
-  console.log(path)
+  // console.log(path)
   if (path.match(/^public\/texts/)) {
     getFileLocal(path)
   }
@@ -29,7 +29,7 @@ function getFileLocal (path) {
   req.addEventListener("load", reqListener);
   // var url = window.location.origin + '/serveXml' + "?user=" + localStorage.getItem("user") + '&xmlPath=' + path
   var url = window.location.origin + '/' + path + "?user=" + localStorage.getItem("user")
-  console.log(url)
+  // console.log(url)
   req.open("GET", url);
   req.send();
 }

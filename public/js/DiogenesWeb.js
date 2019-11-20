@@ -94,7 +94,6 @@ function isVisible (el) {
     // var isVisible = (elemTop >= 0) && (elemBottom <= window.innerHeight);
     // Partially visible elements return true:
     var isVisible = elemTop < window.innerHeight && elemBottom >= 0
-    console.log(isVisible)
     return isVisible
 }
 

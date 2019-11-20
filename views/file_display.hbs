@@ -4,30 +4,14 @@
   <meta charset="utf-8">
   <title>DiogenesWeb</title>
   <link rel="stylesheet" type = "text/css" href="css/file-display.css?v=1">
+  <script type="text/javascript" src="js/DiogenesWeb.js?v=1"></script>
   <script src="https://unpkg.com/dropbox/dist/Dropbox-sdk.min.js"></script>
-  <script type="text/javascript" src="js/file-display.js?v=1"></script>
   <script type="text/javascript" src="js/file-sidebar.js?v=1"></script>
 </head>
 <body>
 <span style="display:none" id="path">{{path}}</span>
 
-<div id="mySidenav" class="sidenav">
-  <a href="javascript:void(0)" id="navCloseBtn"
-  onclick="closeNav()">&times;</a>
-  <a href="#" onclick="showSidebar()">Redisplay&nbsp;Parse</a>
-  <a href="#" onclick="collapseAll()">Collapse&nbsp;All</a>
-  <a href="#" onclick="expandAll()">Expand&nbsp;All</a>
-  <a href="#" onclick="findInPage()">Find&nbsp;in&nbsp;Page</a>
-  <a href="#" onclick="goHome()">Home</a>
-  <a href="#" onclick="goSettings()">Settings</a>
-</div>
-
-<!-- Use any element to open the sidenav -->
-<div class="hamburger" id="hamburger" onclick="openNav()">
-  <div class="hamburger-bar"></div>
-  <div class="hamburger-bar"></div>
-  <div class="hamburger-bar"></div>
-</div>
+<div id="hamburger-navbar"></div>
 
 <div id="sidebar"></div>
 <div id="main"></div>

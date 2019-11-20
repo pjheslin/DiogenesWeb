@@ -113,11 +113,12 @@ app.get('/home', (req, res) => {
   console.log("home!")
 })
 
-
-// For testing XML parsing
-app.get('/test.xml', (req, res) => {
-  res.sendFile('test.xml', sendFileOptions)
-  console.log("test")
+// For Ajax requests
+app.get('/serveXml', (req, res) => {
+  var path = req.query.xmlPath
+  path = path.replace(/^public\//, '')
+  console.log('path$ '+path)
+  res.sendFile(path, sendFileOptions)
 })
 
 // Settings (set on client side)

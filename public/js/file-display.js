@@ -7,8 +7,9 @@ window.addEventListener('DOMContentLoaded', (event) => {
   path = document.getElementById('path').textContent
   mainDiv = document.getElementById('main')
 
-  if (path == "__test__") {
-    getFileLocal("test.xml")
+  console.log(path)
+  if (path.match(/^public\/texts/)) {
+    getFileLocal(path)
   }
   else if (host == "dropbox") {
     dbx = new Dropbox.Dropbox({ accessToken: token });
@@ -26,7 +27,9 @@ function reqListener () {
 function getFileLocal (path) {
   var req = new XMLHttpRequest();
   req.addEventListener("load", reqListener);
-  req.open("GET", window.location.origin + "/" + path);
+  var url = window.location.origin + '/serveXml' + "?user=" + localStorage.getItem("user") + '&xmlPath=' + path
+  console.log(url)
+  req.open("GET", url);
   req.send();
 }
 

@@ -120,3 +120,17 @@ function makeHamburgerMenu () {
     burger.innerHTML = hamburgerNavbar
   }
 }
+
+function openLocalFile (path) {
+  console.log('path:'+path)
+  var href
+  if (localStorage.getItem("user")) {
+    href = window.location.origin + '/fileDisplay' +
+    "?user=" + localStorage.getItem("user") +
+    '&filePath='+path
+  }
+  else {
+    href = window.location.origin + '/'
+  }
+  window.location.href = href
+}

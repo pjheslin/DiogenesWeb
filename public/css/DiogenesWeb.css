@@ -11,6 +11,13 @@
   outline: none;
   font-size: medium;
 }
+.authorName {
+  padding-left: 20px;
+}
+.fileName {
+  background-color: white;
+  padding-left: 40px;
+}
 
 .collapsible:after {
   content: '\02795'; /* Unicode character for "plus" sign (+) */
@@ -33,11 +40,14 @@
 .content {
   /* padding: 0 18px; */
   display: none;
+  border: none;
   overflow: hidden;
-  margin-top: 4px;
+  /* margin-top: 4px; */
   /* margin-bottom: 4px; */
-
   /* background-color: #f1f1f1; */
+}
+.show {
+  display: block;
 }
 
 /* Hamburger menu */
@@ -97,9 +107,18 @@
   color: #818181;
 }
 
-h1, h2 {
+h1 {
   text-align: center;
   padding-top: 20px;
+  color: #28709a;
+  font-size: large;
+}
+h2 {
+  text-align: center;
+  padding-top: 20px;
+  color: #28709a;
+}
+h3 {
   color: #28709a;
 }
 
@@ -116,6 +135,10 @@ h1, h2 {
   text-decoration: underline;
 }
 
-#connect-buttons {
+.connectButtons {
+  color: #28709a;
+  font-size: 100%;
+}
+.centering {
   text-align: center;
 }

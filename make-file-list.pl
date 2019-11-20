@@ -17,12 +17,12 @@ my %missing_authors = (
 'public/texts/DigiLibLT/dlt000007/dlt000007.xml' => 'Corpus Hermeticum',
 'public/texts/DigiLibLT/dlt000036/dlt000036.xml' => 'Grammatici Latini',
 'public/texts/DigiLibLT/dlt000037/dlt000037.xml' => 'Grammatici Latini',
-'public/texts/DigiLibLT/dlt000097/dlt000097.xml' => 'Anonymous',
+'public/texts/DigiLibLT/dlt000097/dlt000097.xml' => 'Anonymus',
 'public/texts/DigiLibLT/dlt000116/dlt000116.xml' => 'Rhetores Latini Minores',
-'public/texts/DigiLibLT/dlt000143/dlt000143.xml' => 'Anonymous',
+'public/texts/DigiLibLT/dlt000143/dlt000143.xml' => 'Anonymus',
 'public/texts/DigiLibLT/dlt000149/dlt000149.xml' => 'Grammatici Latini',
 'public/texts/DigiLibLT/dlt000178/dlt000178.xml' => 'Rhetores Latini Minores',
-'public/texts/DigiLibLT/dlt000180/dlt000180.xml' => 'Anonymous',
+'public/texts/DigiLibLT/dlt000180/dlt000180.xml' => 'Anonymus',
 'public/texts/DigiLibLT/dlt000196/dlt000196.xml' => 'Grammatici Latini',
 'public/texts/DigiLibLT/dlt000207/dlt000207.xml' => 'Grammatici Latini',
 'public/texts/DigiLibLT/dlt000208/dlt000208.xml' => 'Grammatici Latini',
@@ -31,11 +31,11 @@ my %missing_authors = (
 'public/texts/DigiLibLT/dlt000219/dlt000219.xml' => 'Grammatici Latini',
 'public/texts/DigiLibLT/dlt000220/dlt000220.xml' => 'Grammatici Latini',
 'public/texts/DigiLibLT/dlt000221/dlt000221.xml' => 'Grammatici Latini',
-'public/texts/DigiLibLT/dlt000253/dlt000253.xml' => 'Anonymous',
-'public/texts/DigiLibLT/dlt000292/dlt000292.xml' => 'Anonymous',
-'public/texts/DigiLibLT/dlt000296/dlt000296.xml' => 'Anonymous',
-'public/texts/DigiLibLT/dlt000298/dlt000298.xml' => 'Anonymous',
-'public/texts/DigiLibLT/dlt000300/dlt000300.xml' => 'Anonymous',
+'public/texts/DigiLibLT/dlt000253/dlt000253.xml' => 'Anonymus',
+'public/texts/DigiLibLT/dlt000292/dlt000292.xml' => 'Anonymus',
+'public/texts/DigiLibLT/dlt000296/dlt000296.xml' => 'Anonymus',
+'public/texts/DigiLibLT/dlt000298/dlt000298.xml' => 'Anonymus',
+'public/texts/DigiLibLT/dlt000300/dlt000300.xml' => 'Anonymus',
 'public/texts/DigiLibLT/dlt000344/dlt000344.xml' => 'Mallius Theodorus',
 'public/texts/DigiLibLT/dlt000364/dlt000364.xml' => 'Vatican Mythographer',
 'public/texts/DigiLibLT/dlt000374/dlt000374.xml' => 'Geographi latini minores',
@@ -59,11 +59,11 @@ my %missing_authors = (
 'public/texts/DigiLibLT/dlt000459/dlt000459.xml' => 'Scholia',
 'public/texts/DigiLibLT/dlt000463/dlt000463.xml' => 'Lactantius Placidus',
 'public/texts/DigiLibLT/dlt000470/dlt000470.xml' => 'Servius',
-'public/texts/DigiLibLT/dlt000487/dlt000487.xml' => 'Anonymous',
+'public/texts/DigiLibLT/dlt000487/dlt000487.xml' => 'Anonymus',
 'public/texts/DigiLibLT/dlt000493/dlt000493.xml' => 'Gromatici Veteres',
-'public/texts/DigiLibLT/dlt000524/dlt000524.xml' => 'Anonymous',
+'public/texts/DigiLibLT/dlt000524/dlt000524.xml' => 'Anonymus',
 'public/texts/DigiLibLT/dlt000538/dlt000538.xml' => 'Probus',
-'public/texts/DigiLibLT/dlt000542/dlt000542.xml' => 'Anonymous',
+'public/texts/DigiLibLT/dlt000542/dlt000542.xml' => 'Anonymus',
 'public/texts/DigiLibLT/dlt000544/dlt000544.xml' => 'Justin',
 'public/texts/DigiLibLT/dlt000555/dlt000555.xml' => 'Scholia',
 'public/texts/DigiLibLT/dlt000566/dlt000566.xml' => 'Vatican Mythographer',
@@ -71,17 +71,20 @@ my %missing_authors = (
 'public/texts/DigiLibLT/dlt000579/dlt000579.xml' => 'Rufinus',
 'public/texts/DigiLibLT/dlt000583/dlt000583.xml' => 'Scholia',
 'public/texts/DigiLibLT/dlt000592/dlt000592.xml' => 'Perpetua',
-'public/texts/DigiLibLT/dlt000595/dlt000595.xml' => 'Anonymous',
+'public/texts/DigiLibLT/dlt000595/dlt000595.xml' => 'Anonymus',
 'public/texts/DigiLibLT/dlt000603/dlt000603.xml' => 'Grammatici Latini',
 'public/texts/DigiLibLT/dlt000604/dlt000604.xml' => 'Grammatici Latini',
 'public/texts/DigiLibLT/dlt000605/dlt000605.xml' => 'Grammatici Latini',
-'public/texts/DigiLibLT/dlt000610/dlt000610.xml' => 'Anonymous',
+'public/texts/DigiLibLT/dlt000610/dlt000610.xml' => 'Anonymus',
 
 );
 
 sub natural_sort {
-  my @a = split /(\d+)/, $a;
-  my @b = split /(\d+)/, $b;
+  # Case insensitive
+  my $aa = lc $a;
+  my $bb = lc $b;
+  my @a = split /(\d+)/, $aa;
+  my @b = split /(\d+)/, $bb;
   my $M = @a > @b ? @a : @b;
   my $res = 0;
   for (my $i = 0; $i < $M; $i++) {
@@ -194,8 +197,10 @@ foreach my $corpus (@corpora) {
       }
     }
     $author = 'Servius' if $author eq 'Seruius';
+    $author = 'Donatus, Aelius' if $author eq 'Aelius Donatus';
     die "No author: $path" unless $author;
-    chomp $author;
+    $author =~ s/^\s+//;
+    $author =~ s/\s+$//;
     # say "Author: $author";
 
     foreach my $title_node ($dom->findnodes("//titleStmt/title")) {
@@ -206,7 +211,10 @@ foreach my $corpus (@corpora) {
       last if $title;
     }
     die "No title: $path" unless $title;
-    chomp $title;
+    $title =~ s/^\s+//;
+    $title =~ s/\s+$//;
+    $title =~ s/Ab urbe condita,/Ab Urbe Condita,/g;
+
     # say "Title: $title";
     # print "\n";
     # die unless $title_string;
@@ -217,14 +225,15 @@ foreach my $corpus (@corpora) {
 my $out = '';
 # Now we have authors and titles, so we output the list
 foreach my $corpus (@corpora) {
-  $out .= qq{<button type="button" class="collapsible">$corpus</button>\n};
+  my $corpus_display = $corpus;
+  $corpus_display =~ s/_/ /g;
+  $out .= qq{<button type="button" class="collapsible">$corpus_display</button>\n};
   $out .= qq{<div type="corpus" class="content">\n};
   foreach my $author (sort natural_sort keys %{ $titles{$corpus} }) {
-    $out .= qq{<button type="button" class="collapsible">&nbsp;&nbsp;&nbsp;&nbsp;$author</button>\n};
+    $out .= qq{<button type="button" class="collapsible authorName">$author</button>\n};
     $out .= qq{<div type="author" class="content">\n};
     foreach my $title (sort natural_sort keys %{ $titles{$corpus}{$author} }) {
-      $out .= qq{<a href="#" onClick="openFile('$titles{$corpus}{$author}{$title}')">
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$title</a>\n};
+      $out .= qq{<button type="button" class="uncollapsible fileName"  onClick="openLocalFile('$titles{$corpus}{$author}{$title}')">$title</button>\n};
     }
     $out .= qq{</div>\n};
   }

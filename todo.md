@@ -1,8 +1,9 @@
-# Add Perseus files
+# Add Perseus English translation files
 # Add Digilib files
 # Add Gentium
 
-# Add search function for Dropbox?
-
 # Fix bugs
 - Logeion link
+
+# Longer term
+- Add search server

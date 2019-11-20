@@ -70,8 +70,14 @@ function collapseAll () {
 }
 
 function goHome () {
-  var href = window.location.origin + '/' +
-  "?user=" + localStorage.getItem("user")
+  var href
+  if (localStorage.getItem("user")) {
+    href = window.location.origin + '/' +
+    "?user=" + localStorage.getItem("user")
+  }
+  else {
+    href = window.location.origin + '/'
+  }
   window.location.href = href
 }
 
@@ -98,7 +104,6 @@ var hamburgerNavbar =
   onclick="closeNav()">&times;</a>
   <a href="#" onclick="collapseAll()">Collapse&nbsp;All</a>
   <a href="#" onclick="expandAll()">Expand&nbsp;All</a>
-  <a href="#" onclick="findInPage()">Find&nbsp;in&nbsp;Page</a>
   <a href="#" onclick="goHome()">Home</a>
   <a href="#" onclick="goSettings()">Settings</a>
 </div>

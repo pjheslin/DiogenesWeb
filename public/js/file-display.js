@@ -7,7 +7,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
   path = document.getElementById('path').textContent
   mainDiv = document.getElementById('main')
 
-  // console.log(path)
+  console.log(path)
   if (path.match(/^public\/texts/)) {
     getFileLocal(path)
   }
@@ -75,8 +75,14 @@ function parseXML (xmlDoc) {
 }
 
 function makeTitle (xml) {
-  var author = xml.getElementsByTagName('author')[0].textContent
-  var title = xml.getElementsByTagName('title')[0].textContent
+  var author
+  if (xml.getElementsByTagName('author')[0]) {
+    author = xml.getElementsByTagName('author')[0].textContent
+  }
+  var title
+  if (xml.getElementsByTagName('title')[0]) {
+    title = xml.getElementsByTagName('title')[0].textContent
+  }
   if (author || title) {
     var button = document.createElement('button')
     button.setAttribute('type', 'button')
@@ -108,6 +114,7 @@ function makeTitle (xml) {
 }
 
 function processXML (xml) {
+  console.log(xml)
   makeTitle(xml)
   current = mainDiv
   walkTheDOM(xml.getElementsByTagName('body')[0], processNode)
@@ -126,7 +133,10 @@ function walkTheDOM(node, func) {
   func(node)
   node = node.firstChild;
   while (node) {
-    walkTheDOM(node, func);
+    // Some nodes we want to suppress with all children
+    if (node.nodeName != 'note') {
+      walkTheDOM(node, func);
+    }
     node = node.nextSibling;
   }
   current = oldCurrent
@@ -136,8 +146,12 @@ function walkTheDOM(node, func) {
 /* Process each XML node and return an HTML node */
 function translateNode (node) {
   switch (node.nodeName) {
+    case 'milestone':
     case 'l': {
       // if (node.firstChild && node.firstChild.nodeName == 'label') { return }
+      if (node.nodeName == 'milestone' && node.getAttribute('unit') != 'line' && node.getAttribute('unit') != 'verse') {
+        return
+      }
       var div = document.createElement('div')
       div.setAttribute('class', 'line')
       var num = node.getAttribute('n')
@@ -158,7 +172,14 @@ function translateNode (node) {
     case 'div7':
     case 'div': {
       var type = node.getAttribute('type')
+      var subtype = node.getAttribute('subtype')
       var n = node.getAttribute('n')
+      if (!n && !subtype) {
+        return
+      }
+      if (n && n.match(/^urn:cts/)) {
+        return
+      }
       if (n == 't') {
         suppress = type
         return
@@ -169,8 +190,15 @@ function translateNode (node) {
       if (suppress) { return }
 
       level++
-      labels[level] = type
-      levels[level] = n
+      // Perseus idiosyncracy
+      if (subtype && type == 'textpart') {
+        labels[level] = subtype
+        levels[level] = n || ''
+      }
+      else {
+        labels[level] = type
+        levels[level] = n || subtype
+      }
       var div = document.createElement('div')
       if (node.hasAttributes) {
         node.attributes.forEach(function (item) {
@@ -188,7 +216,13 @@ function translateNode (node) {
       // }
       var label = ''
       for (let lev = 1; lev <= level; lev++) {
-        label = label + capitalizeFirstLetter(labels[lev]) + '\u00A0' + levels[lev]
+        label = label + capitalizeFirstLetter(labels[lev])
+        if (levels[lev] && labels[lev]) {
+          label = label + '\u00A0' + levels[lev]
+        }
+        else if (levels[lev]) {
+          label = levels[lev]
+        }
         if (lev != level) {
           label = label + ', '
         } else {
@@ -211,6 +245,18 @@ function translateNode (node) {
         return span
       }
     }
+    case 'speaker': {
+      var span = document.createElement('span')
+      span.setAttribute('class', 'speaker')
+      return span
+    }
+    case 'head': {
+      var h1 = document.createElement('h1')
+      return h1
+    }
+    case 'sp': {
+      return
+    }
     case 'space': {
       var q = node.getAttribute('quantity') || 1
       var sp = '\u00A0'
@@ -224,6 +270,9 @@ function translateNode (node) {
       return document.createElement('span')
     }
     case 'p': {
+      return document.createElement('p')
+    }
+    case 'lg': {
       return document.createElement('p')
     }
     case 'lb': {
@@ -241,8 +290,26 @@ function translateNode (node) {
     case 'pb': {
       return
     }
+    // case 'milestone': {
+    //   return
+    // }
     case 'del': {
       return document.createElement('del')
+    }
+    case 'add':
+    case 'supplied': {
+      var span = document.createElement('span')
+      span.setAttribute('class', 'supplied')
+      return span
+    }
+    case 'sic':
+    case 'unclear': {
+      var span = document.createElement('span')
+      span.setAttribute('class', 'unclear')
+      return span
+    }
+    case 'gap': {
+      return document.createTextNode('[...]')
     }
     case 'quote':
     case 'q': {
@@ -253,6 +320,16 @@ function translateNode (node) {
         return document.createElement('q')
       }
     }
+    case 'figure': {
+      return
+    }
+    case 'graphic': {
+      var img = document.createElement('img')
+      var url = fixDltUrl(node.getAttribute('url'))
+      img.setAttribute('src', url)
+      img.setAttribute('class', 'dlt-img')
+      return img
+    }
     default: {
       console.log('Unsupported element: ' + node.nodeName)
       return
@@ -260,8 +337,15 @@ function translateNode (node) {
   }
 }
 
+function fixDltUrl (url) {
+  var num = url.match(/dlt\d\d\d\d\d\d/)[0]
+  return 'texts/DigiLibLT/'+num+'\/'+url
+}
+
 function capitalizeFirstLetter(string) {
+  if (string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
+  }
 }
 
 /* Adapted from the smartquotes.js library */

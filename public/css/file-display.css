@@ -86,12 +86,19 @@ img.prev {
 
 .lineNum {
   float: right;
+  margin-right:0px;
+  text-align:right;
+  width: 30px;
 }
+
 /* For turnover on long lines */
 .line {
   text-indent: -2em;
   padding-left: 2em;
 }
+/* .line .text {
+  margin-right:10em;
+} */
 
 .xml-header {
   text-align: center;
@@ -225,6 +232,10 @@ h2 {
 .letter-spacing {
   letter-spacing: 0.2em;
 }
+/* digilib */
+.expanded {
+  letter-spacing: 0.2em;
+}
 .boxed {
   outline: medium solid black;
 }
@@ -248,4 +259,19 @@ del::before {
 }
 del::after {
   content: "]"
+}
+.supplied::before {
+  content: "["
+}
+.supplied::after {
+  content: "]"
+}
+.unclear::before {
+  content: "†"
+}
+.unclear::after {
+  content: "†"
+}
+.dlt-img {
+  max-width: 100%;
 }

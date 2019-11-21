@@ -20,16 +20,22 @@ window.addEventListener('DOMContentLoaded', (event) => {
 });
 
 function reqListener () {
-  // console.log(this.responseXML);
+  // if (xhr.status === 200) {
+  //       console.log("Image retrieved");
+  //       blob = xhr.response;
+  //       console.log("blob: " + blob);
+  //   }
+  console.log(this.responseXML);
   processXML(this.responseXML)
+  // parseXML(this.responseXML)
 }
 
 function getFileLocal (path) {
   var req = new XMLHttpRequest();
   req.addEventListener("load", reqListener);
-  // var url = window.location.origin + '/serveXml' + "?user=" + localStorage.getItem("user") + '&xmlPath=' + path
-  var url = window.location.origin + '/' + path + "?user=" + localStorage.getItem("user")
-  // console.log(url)
+  var url = window.location.origin + '/serveXml' + "?user=" + localStorage.getItem("user") + '&xmlPath=' + path
+  // var url = window.location.origin + '/' + path + "?user=" + localStorage.getItem("user")
+  console.log(url)
   req.open("GET", url);
   req.send();
 }

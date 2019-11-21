@@ -30,16 +30,21 @@ var sendFileOptions = {
   }
 }
 
+app.use(function (req, res, next) {
+  console.log("Request: "+req.url);
+  next();
+});
+
 // For misc assets
 app.use(express.static('public'))
 // For texts (previous rule would look in public/public)
-app.use('/public/texts', express.static(path.join(__dirname, 'public/texts')))
+// app.use('/public/texts', express.static(path.join(__dirname, 'public/texts')))
 // For sidebar
 app.use('/images', express.static(path.join(__dirname, 'public/images')))
 
 // Send user identification page unless param set
 app.get('*', (req, res, next) => {
-  console.log('Getting: ' + req.path)
+  // console.log('Getting: ' + req.path)
   if (req.query && req.query.user) {
     console.log('User type: ' + req.query.user)
     next()
@@ -100,7 +105,7 @@ app.get('/auth', (req, res) => {
 
 app.get('/fileDisplay', (req, res) => {
   var path = req.query.filePath
-  console.log('path! '+path)
+  // console.log('path! '+path)
   res.render('file_display', {path: path})
 })
 
@@ -118,6 +123,20 @@ app.get('/home', (req, res) => {
 // Settings (set on client side)
 app.get('/settings', (req, res) => {
   res.sendFile('settings.html', sendFileOptions)
+})
+
+// For Ajax requests
+app.get('/serveXml', (req, res) => {
+  var path = req.query.xmlPath
+  path = path.replace(/^public\//, '')
+  res.sendFile(path, sendFileOptions, function (err) {
+    if (err) {
+      console.log(err)
+      next(err)
+    } else {
+      console.log('Sent:'+path)
+    }
+  })
 })
 
 // Get author and work names from list of filenames.

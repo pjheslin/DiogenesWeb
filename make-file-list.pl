@@ -5,11 +5,13 @@ use feature qw/say/;
 use XML::LibXML qw(:libxml);
 use open qw( :utf8 :std );
 
-my @corpora = ('Perseus_Greek', 'Perseus_Latin', 'DigiLibLT', 'Misc');
+my @corpora = ('Perseus_Greek', 'Perseus_Latin', 'Perseus_Translations', 'DigiLibLT', 'Misc');
 # my @corpora = ('Perseus_Latin');
 my %fileRegex = (
+# Perseus_Greek => '-grc\\d*\\.xml$',
 Perseus_Greek => '-grc\\d*\\.xml$',
 Perseus_Latin => '-lat\\d*\\.xml$',
+Perseus_Translations => '-eng\\d*\\.xml$',
 DigiLibLT => '/dlt.*\\.xml$',
 Misc => '\\.xml$'
 );
@@ -105,7 +107,13 @@ my %paths;
 foreach my $corpus (@corpora) {
   my $regex = $fileRegex{$corpus};
   my %seen;
-  my @dirs = ("public/texts/$corpus");
+  my @dirs;
+  if ($corpus eq 'Perseus_Translations') {
+    @dirs = ('public/texts/Perseus_Greek', 'public/texts/Perseus_Latin');
+  }
+  else {
+    @dirs = ("public/texts/$corpus");
+  }
   while (my $pwd = shift @dirs) {
     opendir(DIR,"$pwd") or die "Cannot open $pwd\n";
     my @files = readdir(DIR);
@@ -127,7 +135,7 @@ foreach my $corpus (@corpora) {
   }
 }
 
-# Remove older versions of Perseus texts
+# Remove older versions of Perseus Lat/Grc texts.  Varian English texts are more often entirely different translations.
 foreach my $corpus ('Perseus_Greek', 'Perseus_Latin') {
   foreach my $path (sort keys %{ $paths{$corpus} }) {
     # For the Greek Anthology, the numbered files indicate Loeb volumes rather than file versions (!)
@@ -179,25 +187,38 @@ foreach my $corpus (@corpora) {
     my $dom = XML::LibXML->load_xml(string => $header, no_network => 1, recover => 2);
     my ($author, $title);
     foreach my $author_node ($dom->findnodes("//titleStmt/author")) {
+      next unless $author_node->to_literal();
       $author = $author_node->to_literal();
     }
+    # say $author;
+    # say $path;
     unless ($author) {
       if (exists $missing_authors{$path}) {
         $author = $missing_authors{$path};
       }
     }
     unless ($author) {
-      my $other_title = $dom->findnodes("//sourceDesc//title")->[0]->to_literal;
+      my $other_title_nodes = $dom->findnodes("//sourceDesc//title");
+      my $other_title;
+      if ($other_title_nodes && $other_title_nodes->[0]) {
+        $other_title = $other_title_nodes->[0]->to_literal;
+      }
       # print "other: $other_title\n";
       if ($other_title) {
         $author = 'Homer' if $other_title =~ m/Homeric Hymns/;
+        $author = 'Bible' if $other_title =~ m/Bible/;
         $author = 'New Testament' if $other_title =~ m/New Testament/;
         $author = 'Greek Anthology' if $other_title =~ m/Greek Anthology/;
         $author = 'Scriptores Historiae Augustae' if $other_title =~ m/Scriptores Historiae Augustae/;
+        $author = 'Virgil' if $other_title =~ m/Appendix Vergiliana/;
+        $author = 'Anonymous' if $other_title =~ m/Apostolic Fathers/;
+        $author = 'Zonaras, Iohannes' if $other_title =~ m/IOANNIS ZONARAE/;
       }
     }
     $author = 'Servius' if $author eq 'Seruius';
     $author = 'Donatus, Aelius' if $author eq 'Aelius Donatus';
+    $author = 'Boethius' if $author eq 'Boethius (Anicius Manlius Seuerinus Boethius)';
+    $author = 'Cassiodorus' if $author eq 'Cassiodorus (Flauius Magnus Aurelius Cassiodorus Senator)';
     die "No author: $path" unless $author;
     $author =~ s/^\s+//;
     $author =~ s/\s+$//;

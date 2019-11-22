@@ -19,12 +19,13 @@ window.addEventListener('DOMContentLoaded', (event) => {
   }
 });
 
+var XMLurl;
 function reqListener () {
-  // if (xhr.status === 200) {
-  //       console.log("Image retrieved");
-  //       blob = xhr.response;
-  //       console.log("blob: " + blob);
-  //   }
+  // responseXML runs the parser
+  if (this.responseXML === null) {
+    // Errors in parsing XML
+    mainDiv.innerHTML = `<h1>Error</h1><p class="centering">An error occurred when parsing this XML file.</p>.<p class="centering"><a href="${XMLurl}">Inspect XML file</a></p>`
+  }
   console.log(this.responseXML);
   processXML(this.responseXML)
   // parseXML(this.responseXML)
@@ -36,6 +37,7 @@ function getFileLocal (path) {
   var url = window.location.origin + '/serveXml' + "?user=" + localStorage.getItem("user") + '&xmlPath=' + path
   // var url = window.location.origin + '/' + path + "?user=" + localStorage.getItem("user")
   console.log(url)
+  XMLurl = url
   req.open("GET", url);
   req.send();
 }

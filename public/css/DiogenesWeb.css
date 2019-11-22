@@ -1,3 +1,7 @@
+body.waiting, body.waiting *{
+    cursor: wait !important;
+}
+
 /* Style the button that is used to open and close the collapsible content */
 .collapsible, .uncollapsible {
   background-color: #eee;

@@ -415,4 +415,6 @@ function processNode (node) {
 
 function processingFinished () {
   setupFolding ()
+  var body = document.getElementsByTagName("BODY")[0];
+  body.classList.remove("waiting");
 }

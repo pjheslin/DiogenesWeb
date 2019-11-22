@@ -121,6 +121,9 @@ function makeHamburgerMenu () {
 }
 
 function openLocalFile (path) {
+  var body = document.getElementsByTagName("BODY")[0];
+  body.classList.add("waiting");
+
   console.log('path:'+path)
   var href
   if (localStorage.getItem("user")) {

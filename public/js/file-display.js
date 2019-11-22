@@ -133,8 +133,9 @@ function walkTheDOM(node, func) {
   func(node)
   node = node.firstChild;
   while (node) {
+    name = node.nodeName
     // Some nodes we want to suppress with all children
-    if (node.nodeName != 'note') {
+    if (name != 'note' && name != 'bibl' && name != 'ref') {
       walkTheDOM(node, func);
     }
     node = node.nextSibling;
@@ -266,6 +267,14 @@ function translateNode (node) {
     case 'hi': {
       return document.createElement('span')
     }
+    case 'i':
+    case 'emph':
+    case 'term':
+    case 'title': {
+      var span = document.createElement('span')
+      span.setAttribute('class', 'italic')
+      return span
+    }
     case 'seg': {
       return document.createElement('span')
     }
@@ -297,6 +306,7 @@ function translateNode (node) {
       return document.createElement('del')
     }
     case 'add':
+    case 'corr':
     case 'supplied': {
       var span = document.createElement('span')
       span.setAttribute('class', 'supplied')
@@ -320,15 +330,20 @@ function translateNode (node) {
         return document.createElement('q')
       }
     }
-    case 'figure': {
-      return
-    }
     case 'graphic': {
       var img = document.createElement('img')
       var url = fixDltUrl(node.getAttribute('url'))
       img.setAttribute('src', url)
       img.setAttribute('class', 'dlt-img')
       return img
+    }
+    case 'figure':
+    case 'choice':
+    case 'surname':
+    case 'persName':
+    case 'placeName':
+    case 'foreign': {
+      return
     }
     default: {
       console.log('Unsupported element: ' + node.nodeName)
@@ -396,8 +411,8 @@ function processNode (node) {
     // console.log(nodes[str])
     var htmlNode
     htmlNode = translateNode(node)
-    if (htmlNode) {
-      // console.log(htmlNode.nodeName)
+    if (htmlNode && htmlNode.nodeType != 3) {
+      // console.log(htmlNode.nodeName, htmlNode.nodeType, node.nodeName)
       var rend = node.getAttribute('rend')
       if (rend) {
         rend = rend.replace('(', '')

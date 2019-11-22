@@ -261,10 +261,10 @@ del::after {
   content: "]"
 }
 .supplied::before {
-  content: "["
+  content: "<"
 }
 .supplied::after {
-  content: "]"
+  content: ">"
 }
 .unclear::before {
   content: "†"

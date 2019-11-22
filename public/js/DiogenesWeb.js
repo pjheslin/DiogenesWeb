@@ -120,6 +120,18 @@ function makeHamburgerMenu () {
   }
 }
 
+function connectDropbox () {
+  var newUrl = window.location.origin + "/authorizeDropbox"
+  if (localStorage.getItem("user")) {
+    newUrl = newUrl + "?user=" + localStorage.getItem("user")
+  }
+  else {
+    newUrl = window.location.origin + '/'
+  }
+  console.log(newUrl)
+  window.location.href = newUrl
+}
+
 function openLocalFile (path) {
   var body = document.getElementsByTagName("BODY")[0];
   body.classList.add("waiting");
@@ -129,7 +141,8 @@ function openLocalFile (path) {
   if (localStorage.getItem("user")) {
     href = window.location.origin + '/fileDisplay' +
     "?user=" + localStorage.getItem("user") +
-    '&filePath='+path
+    '&host=local' +
+    '&filePath=' + path
   }
   else {
     href = window.location.origin + '/'

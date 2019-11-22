@@ -1,13 +1,10 @@
 var fileList = []
 
 var token = localStorage.getItem("access_token")
-var host = localStorage.getItem("cloudHost")
+var dbx = new Dropbox.Dropbox({ accessToken: token });
+console.log('dbx', dbx)
+refreshListDropbox()
 
-if (host == "dropbox") {
-  var dbx = new Dropbox.Dropbox({ accessToken: token });
-  console.log('dbx', dbx)
-  refreshListDropbox()
-}
 
 function refreshListDropbox () {
   dbx.filesListFolder({path: '', recursive: true, include_deleted: false})
@@ -28,6 +25,7 @@ function displayFiles(files) {
      li = document.createElement('li');
      var href = window.location.origin + '/fileDisplay' +
      "?user=" + localStorage.getItem("user") +
+     '&host=dropbox' + 
      '&filePath=' + files[i].path_lower
      var a = document.createElement('a')
      a.setAttribute('href', href)

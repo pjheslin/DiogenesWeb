@@ -1,14 +1,14 @@
 var token = localStorage.getItem("access_token")
-var host = localStorage.getItem("cloudHost")
 var filePath
 var mainDiv
 var dbx
 window.addEventListener('DOMContentLoaded', (event) => {
+  host = document.getElementById('host').textContent
   path = document.getElementById('path').textContent
   mainDiv = document.getElementById('main')
 
   console.log(path)
-  if (path.match(/^public\/texts/)) {
+  if (host == 'local') {
     getFileLocal(path)
   }
   else if (host == "dropbox") {
@@ -17,20 +17,12 @@ window.addEventListener('DOMContentLoaded', (event) => {
     //function getFile () {getFileDropbox()}
     getFileDropbox(path)
   }
+  else {
+    console.log('Unknown host! '+host)
+  }
 });
 
 var XMLurl;
-function reqListener () {
-  // responseXML runs the parser
-  if (this.responseXML === null) {
-    // Errors in parsing XML
-    mainDiv.innerHTML = `<h1>Error</h1><p class="centering">An error occurred when parsing this XML file.</p>.<p class="centering"><a href="${XMLurl}">Inspect XML file</a></p>`
-  }
-  console.log(this.responseXML);
-  processXML(this.responseXML)
-  // parseXML(this.responseXML)
-}
-
 function getFileLocal (path) {
   var req = new XMLHttpRequest();
   req.addEventListener("load", reqListener);
@@ -40,6 +32,16 @@ function getFileLocal (path) {
   XMLurl = url
   req.open("GET", url);
   req.send();
+}
+function reqListener () {
+  // responseXML runs the parser
+  if (this.responseXML === null) {
+    // Errors in parsing XML
+    mainDiv.innerHTML = `<h1>Error</h1><p class="centering">An error occurred when parsing this XML file.</p>.<p class="centering"><a href="${XMLurl}">Inspect XML file</a></p>`
+  }
+  console.log(this.responseXML);
+  processXML(this.responseXML)
+  // parseXML(this.responseXML)
 }
 
 function getFileDropbox (path) {

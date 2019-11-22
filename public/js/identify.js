@@ -13,7 +13,8 @@ var lsTest = function () {
 function setUser (type) {
   if (lsTest === true) {
     localStorage.setItem("user", type)
-    var newUrl = window.location.origin + "/authOptions?user=" + type
+    // var newUrl = window.location.origin + "/authOptions?user=" + type
+    var newUrl = window.location.origin + "/?user=" + type
     window.location.replace(newUrl)
   } else {
     alert("Error: DiogenesWeb will not work with this browser, as Local Storage is not available.")

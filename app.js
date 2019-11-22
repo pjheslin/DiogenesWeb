@@ -5,6 +5,7 @@ const app = express()
 const port = 8989
 const handlebars = require('handlebars')
 
+// Set up handlebars
 app.set('views', './views')
 app.set('view engine', 'hbs')
 var fs = require('fs') // this engine requires the fs module
@@ -19,6 +20,7 @@ app.engine('hbs', function (filePath, options, callback) { // define the templat
   })
 })
 
+// Get environment variables
 require('dotenv').config()
 
 var sendFileOptions = {
@@ -30,6 +32,7 @@ var sendFileOptions = {
   }
 }
 
+// Log all requests first
 app.use(function (req, res, next) {
   console.log("Request: "+req.url);
   next();
@@ -37,8 +40,6 @@ app.use(function (req, res, next) {
 
 // For misc assets
 app.use(express.static('public'))
-// For texts (previous rule would look in public/public)
-// app.use('/public/texts', express.static(path.join(__dirname, 'public/texts')))
 // For sidebar
 app.use('/images', express.static(path.join(__dirname, 'public/images')))
 
@@ -48,49 +49,40 @@ app.get('*', (req, res, next) => {
   if (req.query && req.query.user) {
     console.log('User type: ' + req.query.user)
     next()
-  } else if (req.path == '/auth' || req.path == '/test.xml') {
-    // Here are exceptions: pages that should be loaded without the user param.
+  }
+  else if (req.path == '/authDropbox') {
+    // Any pages that should be loaded without the user param.
     next()
-  } else {
+  }
+  else {
     console.log("No user type given")
     res.sendFile('identify.html', sendFileOptions)
   }
 })
 
 // We are sent here from user id page
-app.get('/authOptions', (req, res, next) => {
-  //  res.render('connect', connections)
-  res.sendFile('connect.html', sendFileOptions)
-})
+// app.get('/authOptions', (req, res, next) => {
+//   //  res.render('connect', connections)
+//   res.sendFile('connect.html', sendFileOptions)
+// })
 
 // We are sent here after choosing cloud host, to which we now redirect
-app.get('/authRedirect', (req, res, next) => {
-  if (req.query && req.query.host) {
-    var host = req.query.host
-    // console.log(host)
-    // Where to tell cloud host to redirect after authentication
-    // Do we need to urlencode this?
-    // var authRedirect = "http://localhost:8989/auth"
-    var protocol = 'https'
-    if (req.get('Host').match(/localhost/)) {
-      protocol = 'http'
-    }
-    var origUrl = protocol + '://' + req.get('Host');
-    console.log('orig: '+origUrl)
-    var authURL
-    if (host == 'dropbox') {
-      var authRedirect = origUrl+'/auth'
-      var dropboxClientId = process.env.DROPBOX_APP_KEY;
-      var dropboxAuthURL = "https://www.dropbox.com/oauth2/authorize?client_id=" + dropboxClientId + "&response_type=token&redirect_uri=" + authRedirect
-      authURL = dropboxAuthURL
+app.get('/authorizeDropbox', (req, res, next) => {
+  var protocol = 'https'
+  if (req.get('Host').match(/localhost/)) {
+    protocol = 'http'
   }
+  var origUrl = protocol + '://' + req.get('Host');
+  console.log('origURL: '+origUrl)
+  var authRedirect = origUrl+'/authDropbox'
+  var dropboxClientId = process.env.DROPBOX_APP_KEY;
+  var dropboxAuthURL = "https://www.dropbox.com/oauth2/authorize?client_id=" + dropboxClientId + "&response_type=token&redirect_uri=" + authRedirect
   // console.log(authURL)
-  res.redirect(authURL)
-  }
+  res.redirect(dropboxAuthURL)
 })
 
 // We are redirected here after authorizing
-app.get('/auth', (req, res) => {
+app.get('/authDropbox', (req, res) => {
   // console.log("auth!")
   if (req.query.error) {
     res.render('auth_error', {error: req.query.error, desc: req.query.error_description})
@@ -99,25 +91,24 @@ app.get('/auth', (req, res) => {
   } else {
     //    console.log(req.query.access_token)
     //    res.render('auth_success', {token: req.query.access_token})
-    res.sendFile('auth_success.html', sendFileOptions)
+    res.sendFile('dropbox_success.html', sendFileOptions)
   }
 })
 
+app.get('/listDropbox', (req, res) => {
+  res.sendFile('file-list-dropbox.html', sendFileOptions)
+})
+
 app.get('/fileDisplay', (req, res) => {
+  var host = req.query.host
   var path = req.query.filePath
   // console.log('path! '+path)
-  res.render('file_display', {path: path})
+  res.render('file_display', {host: host, path: path})
 })
 
 // Send home page otherwise
 app.get('/', (req, res) => {
   res.sendFile('file-list-public.html', sendFileOptions)
-  console.log("home!")
-})
-
-app.get('/home', (req, res) => {
-  res.sendFile('home.html', sendFileOptions)
-  console.log("home!")
 })
 
 // Settings (set on client side)
@@ -125,7 +116,7 @@ app.get('/settings', (req, res) => {
   res.sendFile('settings.html', sendFileOptions)
 })
 
-// For Ajax requests
+// For Ajax requests of XML files
 app.get('/serveXml', (req, res) => {
   var path = req.query.xmlPath
   path = path.replace(/^public\//, '')

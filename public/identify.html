@@ -9,10 +9,10 @@
 <body>
   <h1>DiogenesWeb</h1>
   <p>
-    DiogenesWeb is an web application for reading XML files of Latin and Ancient Greek texts held in your private cloud storage.
+    DiogenesWeb is an web application for reading XML files of Latin and Ancient Greek.  These can be open-access files or can be files held in your private cloud storage.
   </p>
   <p>
-    Please indicate which category of user you belong to.  This information greatly helps the continued funding of the Diogenes project.
+    Before starting to use DiogenesWeb, please indicate which category of user you belong to.  This information helps ensure the continued funding of the Diogenes project.
   </p>
   <div id="all-user-buttons">
     <p><button class="user-button" name="acad-user" onclick="setUser('acad')">I am a professional academic (including doctoral students and post-docs)</button></p>
@@ -22,10 +22,10 @@
 
   <h2>Privacy Notice</h2>
   <p>
-    DiogenesWeb begins by connecting to the website of your cloud storage provider, where you will have to enter your password.  DiogenesWeb never sees that password; it goes directly to your cloud provider, which responds with a token that permits DiogenesWeb to access only the folder called "DiogenesWeb" within your private storage.  That token is not stored on the DiogenesWeb server; it is stored in your browser, from whence it is passed as necessary to your provider.
+    DiogenesWeb does not use cookies or store any user information whatsoever on its server; all user information is kept in your browser's local storage.  Each time you access DiogenesWeb, the server logs the category of user, nothing more.
   </p>
   <p>
-    By design, DiogenesWeb does not use cookies or store any user information on its server at all, apart from keeping statistics on the usage of the categories of user listed above.  All user information is kept in your browser's local storage.
+    When you connect to the website of your cloud storage provider, you will have to enter your password.  DiogenesWeb never sees that password; it goes directly to your cloud provider.  Your provider sends back a time-limited token that permits access only to the DiogenesWeb folder within your private storage.  That token is stored in your browser.
   </p>
   <p>
     If you would prefer not to say what category of user you belong to, <a id="none-button" onclick="setUser('none')"> click here</a>.

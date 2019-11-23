@@ -15,6 +15,8 @@ use warnings;
 use utf8;
 use open qw(:utf8);
 
+chdir "../" or die $!;
+
 my %entities = (
 "&AElig;" => "Æ",
 "&Aacute;" => "Á",

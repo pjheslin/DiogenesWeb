@@ -5,6 +5,8 @@ use feature qw/say/;
 use XML::LibXML qw(:libxml);
 use open qw( :utf8 :std );
 
+chdir "../" or die $!;
+
 my @corpora = ('Perseus_Greek', 'Perseus_Latin', 'Perseus_Translations', 'DigiLibLT', 'Misc');
 # my @corpora = ('Perseus_Latin');
 my %fileRegex = (
@@ -262,7 +264,7 @@ foreach my $corpus (@corpora) {
 }
 
 # print $out;
-my $template_file = 'file-list-template.html';
+my $template_file = 'utils/file-list-template.html';
 open my $fh, "<$template_file" or die $!;
 my $template;
 {

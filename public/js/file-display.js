@@ -91,6 +91,8 @@ function makeTitle (xml) {
     var button = document.createElement('button')
     button.setAttribute('type', 'button')
     button.setAttribute('class', 'collapsible xml-header')
+    button.setAttribute('onClick', 'toggleFold(this)')
+    
     //h1.setAttribute('class', 'xml-header')
     if (author) {
       button.appendChild(document.createTextNode(author))
@@ -217,6 +219,7 @@ function translateNode (node) {
       // }
       // else {
         button.setAttribute('class', 'collapsible '+'divLevel'+level)
+        button.setAttribute('onClick', 'toggleFold(this)')
         div.setAttribute('class', 'content')
       // }
       var label = ''

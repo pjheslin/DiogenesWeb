@@ -250,10 +250,10 @@ my $out = '';
 foreach my $corpus (@corpora) {
   my $corpus_display = $corpus;
   $corpus_display =~ s/_/ /g;
-  $out .= qq{<button type="button" class="collapsible">$corpus_display</button>\n};
+  $out .= qq{<button type="button" class="collapsible" onClick="toggleFold(this)">$corpus_display</button>\n};
   $out .= qq{<div type="corpus" class="content">\n};
   foreach my $author (sort natural_sort keys %{ $titles{$corpus} }) {
-    $out .= qq{<button type="button" class="collapsible authorName">$author</button>\n};
+    $out .= qq{<button type="button" class="collapsible authorName" onClick="toggleFold(this)">$author</button>\n};
     $out .= qq{<div type="author" class="content">\n};
     foreach my $title (sort natural_sort keys %{ $titles{$corpus}{$author} }) {
       $out .= qq{<button type="button" class="uncollapsible fileName"  onClick="openLocalFile('$titles{$corpus}{$author}{$title}')">$title</button>\n};

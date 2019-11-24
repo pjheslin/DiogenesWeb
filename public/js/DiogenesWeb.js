@@ -5,7 +5,7 @@ NamedNodeMap.prototype.forEach = Array.prototype.forEach
 window.addEventListener('DOMContentLoaded', (event) => {
   makeHamburgerMenu();
   // We may need to do this again after modifying the DOM.
-  setupFolding();
+  // setupFolding();
 })
 
 /* Set the width of the side navigation to 250px */
@@ -20,27 +20,29 @@ function closeNav () {
   document.getElementById("navCloseBtn").style.display = "none";
 }
 
-
-function setupFolding () {
-  var coll = document.getElementsByClassName("collapsible")
-  var i
-  for (i = 0; i < coll.length; i++) {
-    coll[i].addEventListener("click", function() {
-      this.classList.toggle("active")
-      var content = this.nextElementSibling
-      if (content.style.display === "block") {
-        content.style.display = "none"
-      } else {
-        content.style.display = "block"
-      }
-      // If uncollape action scrolls section out of view, put it at top of screen.
-      if (!isVisible(this)) {
-        this.scrollIntoView({block: "start"})
-      }
-    })
+function toggleFold (el) {
+  console.log(el.classList)
+  el.classList.toggle("active")
+  var content = el.nextElementSibling
+  if (content.style.display === "block") {
+    content.style.display = "none"
+  } else {
+    content.style.display = "block"
+  }
+  // If uncollape action scrolls section out of view, put it at top of screen.
+  if (!isVisible(el)) {
+    el.scrollIntoView({block: "start"})
   }
 }
 
+// function setupFolding () {
+//   var coll = document.getElementsByClassName("collapsible")
+//   var i
+//   for (i = 0; i < coll.length; i++) {
+//     coll[i].addEventListener("click", function () {toggleFold(this)})
+//   }
+// }
+//
 function expandAll () {
   var coll = document.getElementsByClassName("collapsible")
   var i

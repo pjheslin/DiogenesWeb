@@ -21,7 +21,7 @@ foreach my $authtab (@authtabs) {
   my $doc = $parser->parse_string($contents);
   my $root = $doc->documentElement();
   my $corpus = $root->getAttribute('corpus');
-  $out .= qq{"$corpus": \{\n};
+  # $out .= qq{"$corpus": \{\n};
   foreach my $auth_node ($root->childNodes) {
     next if $auth_node->nodeType == 3; # text (whitespace)
     die $auth_node->nodeName unless $auth_node->nodeName eq 'author';
@@ -41,9 +41,11 @@ foreach my $authtab (@authtabs) {
       $out .= qq{"$filename": ["$auth_name", "$work_name"],\n};
     }
   }
-  $out .= "},\n";
+  # $out .= "},\n";
 }
-$out .= "}\n";
+# remove trailing comma
+$out =~ s/,\n$//;
+$out .= "\n}\n";
 
 open my $fh, ">index.json" or die $!;
 print $fh $out;

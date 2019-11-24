@@ -1,14 +1,18 @@
 "use strict"
+// Handlebars also requires the fs module
+const fs = require('fs');
 const path = require('path')
 const express = require('express')
 const app = express()
 const port = 8989
 const handlebars = require('handlebars')
 
+// Read metadata index
+var index = JSON.parse(fs.readFileSync('utils/index.json', 'utf8'))
+
 // Set up handlebars
 app.set('views', './views')
 app.set('view engine', 'hbs')
-var fs = require('fs') // this engine requires the fs module
 app.engine('hbs', function (filePath, options, callback) { // define the template engine
   fs.readFile(filePath, function (err, content) {
     if (err) return callback(err)
@@ -42,6 +46,8 @@ app.use(function (req, res, next) {
 app.use(express.static('public'))
 // For sidebar
 app.use('/images', express.static(path.join(__dirname, 'public/images')))
+// For metdata
+app.use(express.json());
 
 // Send user identification page unless param set
 app.get('*', (req, res, next) => {
@@ -131,12 +137,25 @@ app.get('/serveXml', (req, res) => {
 })
 
 // Get author and work names from list of filenames.
-// app.use(express.json())
-// app.post('/getAuthsAndWorks', (req, res) => {
-//   // function to get list here
-//   // var authsAndWorks = getAuthsAndWorks(req.body)
-//   var authsAndWorks
-//   res.json(authsAndWorks)
-// })
+app.post('/getMetadata', (req, res) => {
+  var files = req.body
+  console.log(req.body)
+  var metadata = []
+  files.forEach(fullPath => {
+    var filename = path.parse(fullPath).base;
+    var data
+    if (index[filename]) {
+      data = index[filename].slice() // clone array
+      console.log('D: '+data)
+    }
+    else {
+      data = ["???", "???"]
+    }
+    data.unshift(fullPath)
+    metadata.push(data)
+  })
+  console.log(JSON.stringify(metadata))
+  res.json(JSON.stringify(metadata))
+})
 
 app.listen(port, () => console.log(`DiogenesWeb listening on port ${port}!`))

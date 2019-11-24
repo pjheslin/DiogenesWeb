@@ -28,8 +28,12 @@ function getListDropbox () {
   .then (function(response) {
     console.log('response', response)
     // console.log(response.entries);
+    // Filter out folders
+    var entries = response.entries.filter(ent => {return ent[".tag"] == "file"})
+    // Filter out non-XML files
+    entries = entries.filter(ent => {return ent.name.match(/\.xml$/)})
     // Is path_display the right feature to extract?
-    var filenames = response.entries.map(file => file.path_display)
+    var filenames = entries.map(file => file.path_display)
     return getMetadata(filenames);
   })
   .then (function (metadata) {

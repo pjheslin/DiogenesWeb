@@ -1,14 +1,29 @@
-var fileList = []
+const corpusNames = {
+  phi: "PHI Latin Texts",
+  tlg: "TLG Texts",
+  misc: "Misc PHI Texts",
+  unknown: "Texts of Unknown Provenance"
+}
 
-var token = localStorage.getItem("access_token")
-var dbx = new Dropbox.Dropbox({ accessToken: token });
-console.log('dbx', dbx)
+var fileList
+window.addEventListener('DOMContentLoaded', (event) => {
+  fileList = document.getElementById('fileList');
+  showSavedDropbox()
+})
 
-// showSavedDropbox()
-getListDropbox()
-
+function showSavedDropbox () {
+  if (localStorage.getItem('dropboxFileList')) {
+    showDropboxList(JSON.parse(localStorage.getItem('dropboxFileList')))
+  }
+  else {
+    getListDropbox()
+  }
+}
 
 function getListDropbox () {
+  var token = localStorage.getItem("access_token")
+  var dbx = new Dropbox.Dropbox({ accessToken: token });
+
   return dbx.filesListFolder({path: '', recursive: true, include_deleted: false})
   .then (function(response) {
     console.log('response', response)
@@ -100,28 +115,17 @@ function sortFiles (files) {
   }
   console.log(JSON.stringify(sortedArr))
 
-  showSavedDropbox(sortedArr)
   localStorage.setItem('dropboxFileList', JSON.stringify(sortedArr))
+  showDropboxList(sortedArr)
 }
 
-const corpusNames = {
-  phi: "PHI Latin Texts",
-  tlg: "TLG Texts",
-  misc: "Misc PHI Texts",
-  unknown: "Texts of Unknown Provenance"
-}
-
-function showSavedDropbox (sortedArr) {
-  if (!sortedArr) {
-    sortedArr = JSON.parse(localStorage.getItem('dropboxFileList'))
-  }
-  if (!sortedArr) {console.log('Missing dropboxFileList!')}
+function showDropboxList (sortedArr) {
   console.log(JSON.stringify(sortedArr))
   var html = ''
   sortedArr.forEach(corpusArr => {
     var corpus = corpusArr.shift()
     corpus_display = corpusNames[corpus];
-    html += `<button type="button" class="collapsible">${corpus_display}</button>\n`
+    html += `<button type="button" class="collapsible" onClick="toggleFold(this)">${corpus_display}</button>\n`
     html += `<div type="corpus" class="content">\n`
     if (corpus == "unknown") {
       corpusArr.foreach(filename => {
@@ -131,7 +135,7 @@ function showSavedDropbox (sortedArr) {
     }
     corpusArr.forEach(authorArr => {
       var author = authorArr.shift()
-      html += `<button type="button" class="collapsible authorName">${author}</button>\n`
+      html += `<button type="button" class="collapsible authorName" onClick="toggleFold(this)">${author}</button>\n`
       html += `<div type="author" class="content">\n`
       authorArr.forEach(workArr => {
         var [work, filename] = workArr
@@ -141,9 +145,8 @@ function showSavedDropbox (sortedArr) {
     })
     html += `</div>\n`
   })
-  var fileList = document.getElementById('fileList');
   fileList.innerHTML = html
-  setupFolding()
+  // innerHTML can take too long, so we cannot use setupFolding here
 }
 
 function openDropboxFile (path) {

@@ -92,7 +92,7 @@ function makeTitle (xml) {
     button.setAttribute('type', 'button')
     button.setAttribute('class', 'collapsible xml-header')
     button.setAttribute('onClick', 'toggleFold(this)')
-    
+
     //h1.setAttribute('class', 'xml-header')
     if (author) {
       button.appendChild(document.createTextNode(author))
@@ -436,7 +436,7 @@ function processNode (node) {
 }
 
 function processingFinished () {
-  setupFolding ()
+  // setupFolding ()
   var body = document.getElementsByTagName("BODY")[0];
   body.classList.remove("waiting");
 }

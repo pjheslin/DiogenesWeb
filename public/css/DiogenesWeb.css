@@ -1,9 +1,10 @@
+/* Font size for mobile devices */
 body {
-  /* font-size: 20px; */
-  font-size: 20px;
+  font-size: calc(16px + 0.5vw);
 }
+/* These do not seem to inherit from body */
 button {
-  font-size: 20px;
+  font-size: calc(16px + 0.5vw);
 }
 
 
@@ -16,7 +17,7 @@ body.waiting, body.waiting *{
   background-color: #eee;
   color: #444;
   cursor: pointer;
-  padding: 4px;
+  padding-top: 4px;
   margin-top: 4px;
   width: 100%;
   border: none;

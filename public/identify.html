@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>DiogenesWeb</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DiogenesWeb Introduction</title>
   <link rel="stylesheet" type = "text/css" href="css/DiogenesWeb.css?v=1">
   <script type="text/javascript" src="js/identify.js"></script>
 </head>
@@ -12,20 +13,20 @@
     DiogenesWeb is an web application for reading XML files of Latin and Ancient Greek.  These can be open-access files or can be files held in your private cloud storage.
   </p>
   <p>
-    Before starting to use DiogenesWeb, please indicate which category of user you belong to.  This information helps ensure the continued funding of the Diogenes project.
+    Before starting to use DiogenesWeb, please indicate which category of user you belong to.  This information helps ensure continued support for the Diogenes project.
   </p>
   <div id="all-user-buttons">
-    <p><button class="user-button" name="acad-user" onclick="setUser('acad')">I am a professional academic (including doctoral students and post-docs)</button></p>
-    <p><button class="user-button" name="stud-user" onclick="setUser('stud')">I am a student (including masters, undergraduate and secondary school)</button></p>
-    <p><button class="user-button" name="other-user" onclick="setUser('other')">I am neither of the above</button></p>
+    <p><button class="user-button" name="acad-user" type="button" onclick="setUser('acad')">Academics and PhD candidates</button><br/>(including  post-docs)</p>
+    <p><button class="user-button" name="stud-user" type="button" onclick="setUser('stud')">Students</button><br/> (including masters, undergraduate, and secondary school)</p>
+    <p><button class="user-button" name="other-user" type="button" onclick="setUser('other')">General public</button><br/>(neither of the above)</p>
  </div>
 
   <h2>Privacy Notice</h2>
   <p>
-    DiogenesWeb does not use cookies or store any user information whatsoever on its server; all user information is kept in your browser's local storage.  Each time you access DiogenesWeb, the server logs the category of user, nothing more.
+    DiogenesWeb does not use cookies or store any user information whatsoever on its server; all user information is kept in your browser's local storage.  Each time you access DiogenesWeb, the server logs the category of user (as identified above) making the request, nothing more.
   </p>
   <p>
-    When you connect to the website of your cloud storage provider, you will have to enter your password.  DiogenesWeb never sees that password; it goes directly to your cloud provider.  Your provider sends back a time-limited token that permits access only to the DiogenesWeb folder within your private storage.  That token is stored in your browser.
+    When you connect to the Dropbox website of your cloud storage provider (e.g. Dropbox), you have to enter your password.  DiogenesWeb never sees that password.  Your provider sends back a time-limited token that permits access only to the DiogenesWeb folder within your private storage.  That token is stored in your browser.
   </p>
   <p>
     If you would prefer not to say what category of user you belong to, <a id="none-button" onclick="setUser('none')"> click here</a>.

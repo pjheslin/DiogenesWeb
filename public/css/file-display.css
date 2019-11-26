@@ -14,7 +14,10 @@
 /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
 #main {
   transition: margin-left .5s;
-  padding: 20px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  /* border between main and sidebar */
+  padding-right: 5px;
   /* resize: horizontal;
   overflow: scroll; */
   overflow-x:hidden;
@@ -40,9 +43,9 @@
   padding-top: 10px;
   padding-bottom: 60px;
   transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
-  /* resize:horizontal;
-  border: 1px solid black; */
-  overflow: scroll;
+  /* to enable momentum scrolling on iOS */
+  overflow-y: scroll; /* has to be scroll, not auto */
+  -webkit-overflow-scrolling: touch;
 }
 
 .highlighted-word {

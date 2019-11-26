@@ -47,8 +47,8 @@ function initializeSidebar () {
 function showSidebar () {
   if (!sidebarOpen) {
     closeNav()
-    sidebar.style.width = "250px"
-    document.getElementById("main").style.marginRight = "250px";
+    sidebar.style.width = "50%"
+    document.getElementById("main").style.marginRight = "50%";
     document.getElementById("hamburger").style.display = "none";
     document.getElementById("parseCloseBtn").style.display = "inline";
     // When sidebar opens, main text reflows and often hides the word clicked

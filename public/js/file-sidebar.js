@@ -1,4 +1,5 @@
-const parseURL = 'http://localhost:8990/parse?'
+// const parseURL = 'http://localhost:8990/parse?'
+const parseURL = window.origin.replace(':8989', ':8990') + '/parse?'
 
 /* Send Ajax request to Perseus data server */
 var req

@@ -32,6 +32,8 @@ function getListDropbox () {
     var entries = response.entries.filter(ent => {return ent[".tag"] == "file"})
     // Filter out non-XML files
     entries = entries.filter(ent => {return ent.name.match(/\.xml$/)})
+    entries = entries.filter(ent => {return !ent.name.match(/^authtab\.xml$/)})
+
     // Is path_display the right feature to extract?
     var filenames = entries.map(file => file.path_display)
     return getMetadata(filenames);
@@ -78,9 +80,17 @@ var tree = () => new Proxy({}, { get: (target, name) => name in target ? target[
 function sortFiles (files) {
   var presortObj = tree()
   for (var i = 0; i < files.length; i++) {
-    console.log(files[1])
+    console.log(files[i])
     var [filename, author, work] = files[i]
-    var corpus = filename.match(/([a-z]+)\d+\.xml$/)[1]
+    var corpus
+    var res = filename.match(/([a-z]+)\d+\.xml$/);
+    if (res) {
+      corpus = res[1]
+    }
+    else {
+      corpus = 'unknown'
+      author = filename
+    }
     if (author == "???" & work == "???") {
       corpus = "unknown"
       author = filename

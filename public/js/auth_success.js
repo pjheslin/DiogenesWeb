@@ -4,7 +4,7 @@ localStorage.setItem("access_token", params.access_token)
 
 function showDropbox () {
   if (localStorage.getItem("user")) {
-    var url = window.location.origin + "/listDropbox"
+    var url = window.location.origin + "/web/listDropbox"
     url = url + "?user=" + localStorage.getItem("user")
     window.location.href = url
   }

@@ -56,7 +56,7 @@ app.get('*', (req, res, next) => {
     console.log('User type: ' + req.query.user)
     next()
   }
-  else if (req.path == '/authDropbox') {
+  else if (req.path == '/web/authDropbox') {
     // Any pages that should be loaded without the user param.
     next()
   }
@@ -73,22 +73,23 @@ app.get('*', (req, res, next) => {
 // })
 
 // We are sent here after choosing cloud host, to which we now redirect
-app.get('/authorizeDropbox', (req, res, next) => {
+app.get('/web/authorizeDropbox', (req, res, next) => {
   var protocol = 'https'
   if (req.get('Host').match(/localhost/)) {
     protocol = 'http'
   }
-  var origUrl = protocol + '://' + req.get('Host');
-  console.log('origURL: '+origUrl)
-  var authRedirect = origUrl+'/authDropbox'
+  // var origUrl = protocol + '://' + req.get('Host');
+  // console.log('origURL: '+origUrl)
+  // var authRedirect = origUrl+'/authDropbox'
+  var authRedirect = 'https://d.iogen.es/web/authDropbox'
   var dropboxClientId = process.env.DROPBOX_APP_KEY;
   var dropboxAuthURL = "https://www.dropbox.com/oauth2/authorize?client_id=" + dropboxClientId + "&response_type=token&redirect_uri=" + authRedirect
-  // console.log(authURL)
+  console.log(dropboxAuthURL)
   res.redirect(dropboxAuthURL)
 })
 
 // We are redirected here after authorizing
-app.get('/authDropbox', (req, res) => {
+app.get('/web/authDropbox', (req, res) => {
   // console.log("auth!")
   if (req.query.error) {
     res.render('auth_error', {error: req.query.error, desc: req.query.error_description})
@@ -101,11 +102,11 @@ app.get('/authDropbox', (req, res) => {
   }
 })
 
-app.get('/listDropbox', (req, res) => {
+app.get('/web/listDropbox', (req, res) => {
   res.sendFile('file-list-dropbox.html', sendFileOptions)
 })
 
-app.get('/fileDisplay', (req, res) => {
+app.get('/web/fileDisplay', (req, res) => {
   var host = req.query.host
   var path = req.query.filePath
   // console.log('path! '+path)
@@ -113,17 +114,17 @@ app.get('/fileDisplay', (req, res) => {
 })
 
 // Send home page otherwise
-app.get('/', (req, res) => {
+app.get('/web/', (req, res) => {
   res.sendFile('file-list-public.html', sendFileOptions)
 })
 
 // Settings (set on client side)
-app.get('/settings', (req, res) => {
+app.get('/web/settings', (req, res) => {
   res.sendFile('settings.html', sendFileOptions)
 })
 
 // For Ajax requests of XML files
-app.get('/serveXml', (req, res) => {
+app.get('/web/serveXml', (req, res) => {
   var path = req.query.xmlPath
   path = path.replace(/^public\//, '')
   res.sendFile(path, sendFileOptions, function (err) {
@@ -137,7 +138,7 @@ app.get('/serveXml', (req, res) => {
 })
 
 // Get author and work names from list of filenames.
-app.post('/getMetadata', (req, res) => {
+app.post('/web/getMetadata', (req, res) => {
   var files = req.body
   console.log(req.body)
   var metadata = []

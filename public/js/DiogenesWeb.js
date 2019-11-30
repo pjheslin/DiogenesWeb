@@ -74,11 +74,11 @@ function collapseAll () {
 function goHome () {
   var href
   if (localStorage.getItem("user")) {
-    href = window.location.origin + '/' +
+    href = window.location.origin + '/web' +
     "?user=" + localStorage.getItem("user")
   }
   else {
-    href = window.location.origin + '/'
+    href = window.location.origin + '/web'
   }
   window.location.href = href
 }
@@ -123,12 +123,12 @@ function makeHamburgerMenu () {
 }
 
 function connectDropbox () {
-  var newUrl = window.location.origin + "/authorizeDropbox"
+  var newUrl = window.location.origin + "/web/authorizeDropbox"
   if (localStorage.getItem("user")) {
     newUrl = newUrl + "?user=" + localStorage.getItem("user")
   }
   else {
-    newUrl = window.location.origin + '/'
+    newUrl = window.location.origin + '/web'
   }
   console.log(newUrl)
   window.location.href = newUrl
@@ -141,13 +141,13 @@ function openLocalFile (path) {
   console.log('path:'+path)
   var href
   if (localStorage.getItem("user")) {
-    href = window.location.origin + '/fileDisplay' +
+    href = window.location.origin + '/web/fileDisplay' +
     "?user=" + localStorage.getItem("user") +
     '&host=local' +
     '&filePath=' + path
   }
   else {
-    href = window.location.origin + '/'
+    href = window.location.origin + '/web'
   }
   window.location.href = href
 }

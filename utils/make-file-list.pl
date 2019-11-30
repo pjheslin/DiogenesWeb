@@ -3,11 +3,12 @@ use strict;
 use warnings;
 use feature qw/say/;
 use XML::LibXML qw(:libxml);
+use File::Path qw(remove_tree);
 use open qw( :utf8 :std );
 
-chdir "../" or die $!;
+# chdir "../" or die $!;
 
-my @corpora = ('Perseus_Greek', 'Perseus_Latin', 'Perseus_Translations', 'DigiLibLT', 'Misc');
+my @corpora = ('Perseus_Greek', 'Perseus_Latin', 'Perseus_Translations', 'DigiLibLT');
 # my @corpora = ('Perseus_Latin');
 my %fileRegex = (
 # Perseus_Greek => '-grc\\d*\\.xml$',
@@ -129,9 +130,10 @@ foreach my $corpus (@corpora) {
         push @dirs, $path;
       }
       else {
-        next unless ($path =~ m#$regex#);
-        # print $path, "\n";
-        $paths{$corpus}{$path}++;
+        if ($path =~ m#$regex#) {
+          # print $path, "\n";
+          $paths{$corpus}{$path}++;
+        }
       }
     }
   }
@@ -164,6 +166,9 @@ foreach my $corpus (@corpora) {
   foreach my $path (sort keys %{ $paths{$corpus} }) {
     my $header = '';
     open my $fh, "<$path" or die "$!";
+    # For d.iogen.es
+    my $real_path = $path;
+    $real_path =~ s/^public\///;
     while (my $line = <$fh>) {
       # Get rid of namespaces to make xpath easier
       $line =~ s/\s+xmlns="[^"]*"//g;
@@ -241,7 +246,7 @@ foreach my $corpus (@corpora) {
     # say "Title: $title";
     # print "\n";
     # die unless $title_string;
-    $titles{$corpus}{$author}{$title} = $path;
+    $titles{$corpus}{$author}{$title} = $real_path;
   }
 }
 

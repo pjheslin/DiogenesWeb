@@ -158,8 +158,9 @@ app.post('/getMetadata', (req, res) => {
   res.json(JSON.stringify(metadata))
 })
 
-var os = require( 'os' );
-var networkInterfaces = os.networkInterfaces();
-var ipAddr = networkInterfaces['en0'][1]['address']
+// var os = require( 'os' );
+// var networkInterfaces = os.networkInterfaces();
+// var ipAddr = networkInterfaces['en0'][1]['address']
+// app.listen(port, ipAddr, () => console.log(`DiogenesWeb listening on ${ipAddr}:${port}!`))
 
-app.listen(port, ipAddr, () => console.log(`DiogenesWeb listening on ${ipAddr}:${port}!`))
+app.listen(port, '0.0.0.0', () => console.log(`DiogenesWeb listening on ${port}!`))

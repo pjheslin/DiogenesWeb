@@ -1,0 +1,25 @@
+{
+    "name": "DiogenesWeb",
+    "description": "An environment for reading Latin and Greek online",
+    "version": "0.8.0",
+    "main": "app.js",
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/pjheslin/DiogenesWeb"
+    },
+    "keywords": ["Latin", "Greek", "XML", "Morphology", "Lexica"],
+    "author": "Peter Heslin <p.j.heslin@durham.ac.uk>",
+    "license": "GPL-3.0-or-later",
+    "bugs": {
+      "url": "https://github.com/pjheslin/DiogenesWeb/issues"
+    },
+    "homepage": "https://d.iogen.es/web",
+    "scripts": {
+      "start": "node app.js"
+    },
+    "dependencies": {
+      "express": "^4.17.1",
+      "handlebars": "^4.5.2",
+      "dotenv": "8.1.0"
+    }
+  }

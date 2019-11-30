@@ -1,6 +1,6 @@
+const parseURL = window.origin + '/parse?'
 // const parseURL = 'http://localhost:8990/parse?'
-const parseURL = window.origin.replace(':8989', ':8990') + '/parse?'
-
+// const parseURL = 'https://d.iogen.es/parse?'
 /* Send Ajax request to Perseus data server */
 var req
 function sendRequest(action, lang, query, enc) {

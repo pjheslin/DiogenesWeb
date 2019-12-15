@@ -42,9 +42,9 @@ app.use(function (req, res, next) {
   next();
 });
 
-// For misc assets
+// For misc assets (still used?)
 app.use(express.static('public'))
-// For sidebar
+// For sidebar (not used anymore)
 app.use('/images', express.static(path.join(__dirname, 'public/images')))
 // For metdata
 app.use(express.json());

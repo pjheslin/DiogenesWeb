@@ -1,32 +1,21 @@
+# Important
+Make sure EC2 logs are kept!  Make sure they are on S3
+Auto download them
+
 # Features
 * English dictionary for transl and parse_eng
-* Add Gentium
-
-# Building
-* Makefile
-* Make package.json for npm start
-* Try Docker
-2 separate containers: node and perl with tini (or with --init flag)
-EXPOSE 8989
-ENTRYPOINT npm start
-* Test with full corpora
-* Remove misc
+* Add Gentium?
 
 # Perseus
 * Ensure Perseus server enforces and records user type
-* Try without keepalive
+* Try without keepalive?
 
-# Fix bugs
-* Logeion link
-* Occasional mojibake: eg first word of Ach Tatius 1.1.2
-Words begining with a capital vowel and leading diacrits.
-Problem with utf8 to beta conversion?
-* Get rid of OLD/TLL links in Perseus output
-* Add spinning cursor on dropbox refresh
-* No sidepanel on mobile
+# Fixes
+* Get rid of spinning cursor (pointless on tablets) and put "loading ..." text instead
 
-# Settings
-* Font size in pixels ??
+Remove debugging output from client side and servers
+
+
 
 # FAQs
 * Other cloud hosts
@@ -38,12 +27,7 @@ Problem with utf8 to beta conversion?
 * JumpTo not implemented yet.
 
 # Before release
-* Move assets to CDN
-Put all XML files, json and static js/css assets into a bucket.
-dw-static
-Keep static html on node server to record user type
-Remove unindexed files from Perseus trees (also .git dirs)
-restrict s3 cors to d.iogen.es
+restrict s3 cors to d.iogen.es?
 
 # Longer term
 * Add search server

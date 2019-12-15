@@ -26,3 +26,7 @@ upload:
 
 upload-texts:
 	rclone -v --include "*[^_].xml" copy public/texts diogenes-s3:d.iogen.es/static/texts
+
+deploy:
+	zip -r Dockerrun.zip Dockerrun.aws.json .ebextensions
+	

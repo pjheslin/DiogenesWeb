@@ -1,4 +1,6 @@
 /.env
+/.ebextensions/env.config
 /public/texts
 /public/file-list-public.html
 /utils/index.json
+/Dockerrun.zip

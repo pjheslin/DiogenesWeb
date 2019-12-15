@@ -80,7 +80,10 @@ function p (element) {
   current_parse.classList.add("highlighted-word");
   // console.log(element)
   var word = element.textContent
-  if  (word.match(/[\u0370-\u03FF\u1F00-\u1FFF]/)) {
+  if (path.match(/perseus-eng/)) {
+    sendRequest("parse", "eng", word, 'utf8')
+  }
+  else if  (word.match(/[\u0370-\u03FF\u1F00-\u1FFF]/)) {
     sendRequest("parse", "grk", word, 'utf8')
   }
   else {

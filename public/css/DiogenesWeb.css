@@ -9,7 +9,7 @@ button {
 
 
 body.waiting, body.waiting *{
-    cursor: wait !important;
+    /* cursor: wait !important; */
 }
 
 /* Style the button that is used to open and close the collapsible content */

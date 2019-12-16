@@ -2,19 +2,18 @@
 Make sure EC2 logs are kept!  Make sure they are on S3
 Auto download them
 
-# Features
-* English dictionary for transl and parse_eng
-* Add Gentium?
-
-# Perseus
 * Ensure Perseus server enforces and records user type
-* Try without keepalive?
+* Increase number of preforks?
+
+Ask dropbox to move out of development
+
+Don't authenticate with dropbox if we already have a token.
 
 # Fixes
-* Get rid of spinning cursor (pointless on tablets) and put "loading ..." text instead
-
 Remove debugging output from client side and servers
 
+# Features
+* collapse based on length of text?
 
 
 # FAQs

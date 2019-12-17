@@ -138,7 +138,7 @@ function connectDropbox () {
   else {
     newUrl = window.location.origin + '/web'
   }
-  console.log(newUrl)
+  // console.log(newUrl)
   window.location.href = newUrl
 }
 
@@ -146,7 +146,7 @@ function openLocalFile (path) {
   var body = document.getElementsByTagName("BODY")[0];
   body.classList.add("waiting");
 
-  console.log('path:'+path)
+  // console.log('path:'+path)
   var href
   if (localStorage.getItem("user")) {
     href = window.location.origin + '/web/fileDisplay' +

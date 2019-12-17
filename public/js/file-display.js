@@ -28,7 +28,7 @@ function getFileLocal (path) {
   req.addEventListener("load", reqListener);
   // var url = window.location.origin + '/serveXml' + "?user=" + localStorage.getItem("user") + '&xmlPath=' + path
   var url = 'https://d.iogen.es/static/' + path
-  console.log(url)
+  // console.log(url)
   XMLurl = url
   req.open("GET", url);
   req.send();
@@ -39,7 +39,7 @@ function reqListener () {
     // Errors in parsing XML
     mainDiv.innerHTML = `<h1>Error</h1><p class="centering">An error occurred when parsing this XML file.</p>.<p class="centering"><a href="${XMLurl}">Inspect XML file</a></p>`
   }
-  console.log(this.responseXML);
+  // console.log(this.responseXML);
   processXML(this.responseXML)
   // parseXML(this.responseXML)
 }
@@ -150,6 +150,7 @@ function walkTheDOM(node, func) {
   level = oldLevel
 }
 
+var unsupported = {}
 /* Process each XML node and return an HTML node */
 function translateNode (node) {
   switch (node.nodeName) {
@@ -349,11 +350,16 @@ function translateNode (node) {
     case 'surname':
     case 'persName':
     case 'placeName':
+    case 'name':
     case 'foreign': {
       return
     }
     default: {
-      console.log('Unsupported element: ' + node.nodeName)
+      // Only complain once
+      if (!unsupported[node.nodeName]) {
+        console.log('Unsupported element: ' + node.nodeName)
+      }
+      unsupported[node.nodeName] = true
       return
     }
   }

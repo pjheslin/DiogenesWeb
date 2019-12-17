@@ -26,7 +26,6 @@ function getListDropbox () {
 
   return dbx.filesListFolder({path: '', recursive: true, include_deleted: false})
   .then (function(response) {
-    console.log('response', response)
     // console.log(response.entries);
     // Filter out folders
     var entries = response.entries.filter(ent => {return ent[".tag"] == "file"})
@@ -39,12 +38,12 @@ function getListDropbox () {
     return getMetadata(filenames);
   })
   .then (function (metadata) {
-    console.log(metadata)
+    // console.log(metadata)
     sortFiles(metadata)
     //??
   })
   .catch (function(error) {
-    console.error(error);
+    // console.error(error);
   });
 }
 
@@ -54,7 +53,7 @@ function getMetadata (files) {
     req.onreadystatechange = function () {
       if (req.readyState !== 4) return;
       if (req.status >= 200 && req.status < 300) {
-        console.log(req.response)
+        // console.log(req.response)
         resolve(JSON.parse(req.response))
       } else {
         // If failed
@@ -76,11 +75,9 @@ function getMetadata (files) {
 // For Perl-style autovivification
 var tree = () => new Proxy({}, { get: (target, name) => name in target ? target[name] : target[name] = tree() })
 
-// Test:
 function sortFiles (files) {
   var presortObj = tree()
   for (var i = 0; i < files.length; i++) {
-    console.log(files[i])
     var [filename, author, work] = files[i]
     var corpus
     var res = filename.match(/([a-z]+)\d+\.xml$/);
@@ -95,10 +92,9 @@ function sortFiles (files) {
       corpus = "unknown"
       author = filename
     }
-    console.log(author, work, corpus)
     presortObj[corpus][author][work] = filename
   }
-  console.log(presortObj)
+  // console.log(presortObj)
   var sortedArr = []
   var unknownArr
   Object.keys(presortObj).sort().forEach(function (corpus) {
@@ -111,23 +107,16 @@ function sortFiles (files) {
       var authorArr = [author]
       Object.keys(presortObj[corpus][author]).sort().forEach(function (work) {
         var workArr = [work, presortObj[corpus][author][work]]
-        console.log(JSON.stringify(authorArr))
         authorArr.push(workArr)
-        // authorArr[1] = workArr
-        console.log(JSON.stringify(authorArr))
       })
       corpusArr.push(authorArr)
-      console.log(JSON.stringify(corpusArr))
     })
-    console.log(corpusArr)
-    console.log(JSON.stringify(sortedArr))
     sortedArr.push(corpusArr)
-    console.log(JSON.stringify(sortedArr))
   })
   if (unknownArr) {
     sortedArr.push(unknownArr)
   }
-  console.log(JSON.stringify(sortedArr))
+  // console.log(JSON.stringify(sortedArr))
 
   localStorage.setItem('dropboxFileList', JSON.stringify(sortedArr))
   showDropboxList(sortedArr)
@@ -164,7 +153,7 @@ function showDropboxList (sortedArr) {
 }
 
 function openDropboxFile (path) {
-  console.log(path)
+  // console.log(path)
   var body = document.getElementsByTagName("BODY")[0];
   body.classList.add("waiting");
 

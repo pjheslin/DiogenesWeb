@@ -1,4 +1,5 @@
-const parseURL = window.origin + '/parse?'
+const parseURL = window.origin + '/parse' + "?user=" + localStorage.getItem("user")
+
 // const parseURL = 'http://localhost:8990/parse?'
 // const parseURL = 'https://d.iogen.es/parse?'
 /* Send Ajax request to Perseus data server */
@@ -16,7 +17,7 @@ function sendRequest(action, lang, query, enc) {
   req.onreadystatechange = stateHandler;
   // For safety, we should really use encodeURIComponent() to
   // encode these params and then decode them in Perseus.cgi.
-  var uri = parseURL + "dweb=1&do=" + action + "&lang=" + lang + "&q="+ query
+  var uri = parseURL + "&dweb=1&do=" + action + "&lang=" + lang + "&q="+ query
   if (enc) {
     // Send utf8 from user input (as opposed to text links, which use transliteration)
     uri = uri + "&inp_enc=" + enc

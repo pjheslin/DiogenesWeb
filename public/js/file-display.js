@@ -7,7 +7,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
   path = document.getElementById('path').textContent
   mainDiv = document.getElementById('main')
 
-  console.log(path)
+  // console.log(path)
   if (host == 'local') {
     getFileLocal(path)
   }
@@ -120,7 +120,7 @@ function makeTitle (xml) {
 }
 
 function processXML (xml) {
-  console.log(xml)
+  // console.log(xml)
   makeTitle(xml)
   current = mainDiv
   walkTheDOM(xml.getElementsByTagName('body')[0], processNode)

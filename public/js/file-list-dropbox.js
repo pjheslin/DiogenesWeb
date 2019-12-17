@@ -134,7 +134,7 @@ function sortFiles (files) {
 }
 
 function showDropboxList (sortedArr) {
-  console.log(JSON.stringify(sortedArr))
+  // console.log(JSON.stringify(sortedArr))
   var html = ''
   sortedArr.forEach(corpusArr => {
     var corpus = corpusArr.shift()

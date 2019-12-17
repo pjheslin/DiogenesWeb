@@ -21,7 +21,7 @@ function closeNav () {
 }
 
 function toggleFold (el) {
-  console.log(el.classList)
+  // console.log(el.classList)
   el.classList.toggle("active")
   var content = el.nextElementSibling
   if (content.style.display === "block") {

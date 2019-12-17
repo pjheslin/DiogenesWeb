@@ -329,7 +329,9 @@ function translateNode (node) {
     case 'gap': {
       return document.createTextNode('[...]')
     }
-    case 'quote':
+    case 'quote': {
+      return document.createElement('blockquote')
+    }
     case 'q': {
       if (node.getAttribute('rend') == 'blockquote') {
         return document.createElement('blockquote')

@@ -123,7 +123,15 @@ function makeHamburgerMenu () {
 }
 
 function connectDropbox () {
-  var newUrl = window.location.origin + "/web/authorizeDropbox"
+  var token = localStorage.getItem("dropbox_token")
+  var newUrl
+  if (token === null) {
+    newUrl = window.location.origin + "/web/authorizeDropbox"
+  }
+  else {
+    newUrl = window.location.origin + "/web/listDropbox"
+  }
+
   if (localStorage.getItem("user")) {
     newUrl = newUrl + "?user=" + localStorage.getItem("user")
   }

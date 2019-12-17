@@ -1,4 +1,4 @@
-var token = localStorage.getItem("access_token")
+var token = localStorage.getItem("dropbox_token")
 var filePath
 var mainDiv
 var dbx
@@ -12,7 +12,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     getFileLocal(path)
   }
   else if (host == "dropbox") {
-    dbx = new Dropbox.Dropbox({ accessToken: token });
+    dbx = new Dropbox.Dropbox({ accessToken: token, fetch: fetch });
     // console.log('dbx', dbx)
     //function getFile () {getFileDropbox()}
     getFileDropbox(path)

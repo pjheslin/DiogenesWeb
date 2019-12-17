@@ -93,11 +93,11 @@ app.get('/web/authDropbox', (req, res) => {
   // console.log("auth!")
   if (req.query.error) {
     res.render('auth_error', {error: req.query.error, desc: req.query.error_description})
-  } else if (typeof req.query.access_token === undefined) {
+  } else if (typeof req.query.dropbox_token === undefined) {
     res.render('auth_error', {error: 0, desc: "Unknown Error"})
   } else {
-    //    console.log(req.query.access_token)
-    //    res.render('auth_success', {token: req.query.access_token})
+    //    console.log(req.query.dropbox_token)
+    //    res.render('auth_success', {token: req.query.dropbox_token})
     res.sendFile('dropbox_success.html', sendFileOptions)
   }
 })
@@ -116,11 +116,6 @@ app.get('/web/fileDisplay', (req, res) => {
 // Send home page otherwise
 app.get('/web/', (req, res) => {
   res.sendFile('file-list-public.html', sendFileOptions)
-})
-
-// Settings (set on client side)
-app.get('/web/settings', (req, res) => {
-  res.sendFile('settings.html', sendFileOptions)
 })
 
 // For Ajax requests of XML files

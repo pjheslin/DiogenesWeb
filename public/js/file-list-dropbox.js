@@ -21,8 +21,8 @@ function showSavedDropbox () {
 }
 
 function getListDropbox () {
-  var token = localStorage.getItem("access_token")
-  var dbx = new Dropbox.Dropbox({ accessToken: token });
+  var token = localStorage.getItem("dropbox_token")
+  var dbx = new Dropbox.Dropbox({ accessToken: token, fetch: fetch });
 
   return dbx.filesListFolder({path: '', recursive: true, include_deleted: false})
   .then (function(response) {

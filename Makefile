@@ -29,4 +29,4 @@ upload-texts:
 
 deploy:
 	zip -r Dockerrun.zip Dockerrun.aws.json .ebextensions
-	
+	eb deploy

@@ -4,3 +4,9 @@
 /public/file-list-public.html
 /utils/index.json
 /Dockerrun.zip
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
+!.elasticbeanstalk/config.yml

@@ -1,0 +1,22 @@
+branch-defaults:
+  master:
+    environment: Diogenesweb-2
+deploy:
+  artifact: Dockerrun.zip
+environment-defaults:
+  Diogenesweb-2:
+    branch: null
+    repository: null
+global:
+  application_name: DiogenesWeb
+  default_ec2_keyname: null
+  default_platform: arn:aws:elasticbeanstalk:eu-west-2::platform/Docker running on
+    64bit Amazon Linux/2.14.0
+  default_region: eu-west-2
+  include_git_submodules: true
+  instance_profile: null
+  platform_name: null
+  platform_version: null
+  profile: null
+  sc: git
+  workspace_type: Application

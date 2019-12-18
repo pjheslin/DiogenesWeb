@@ -1,3 +1,6 @@
+var token = localStorage.getItem("dropbox_token")
+var dbx = new Dropbox.Dropbox({ accessToken: token, fetch: fetch })
+
 const corpusNames = {
   phi: "PHI Latin Texts",
   tlg: "TLG Texts",
@@ -20,31 +23,52 @@ function showSavedDropbox () {
   }
 }
 
-function getListDropbox () {
-  var token = localStorage.getItem("dropbox_token")
-  var dbx = new Dropbox.Dropbox({ accessToken: token, fetch: fetch });
+// A better design might make this much more efficient and parallelized.  To make sure that all of the calls to Dropbox and to the DiogenesWeb metadata server are finished before sorting the files, I had to put in lots of awaits.  But refreshing the filelist should be a relatively rare operation, so it will do.
 
-  return dbx.filesListFolder({path: '', recursive: true, include_deleted: false})
-  .then (function(response) {
-    // console.log(response.entries);
-    // Filter out folders
-    var entries = response.entries.filter(ent => {return ent[".tag"] == "file"})
-    // Filter out non-XML files
-    entries = entries.filter(ent => {return ent.name.match(/\.xml$/)})
-    entries = entries.filter(ent => {return !ent.name.match(/^authtab\.xml$/)})
+var dbxMetadata = []
+const addEntries = async (entries) => {
+  // Filter out folders
+  entries = entries.filter(ent => {return ent[".tag"] == "file"})
+  // Filter out non-XML files
+  entries = entries.filter(ent => {return ent.name.match(/\.xml$/)})
+  entries = entries.filter(ent => {return !ent.name.match(/^authtab\.xml$/)})
+  // Is path_display the right feature to extract?
+  var filenames = entries.map(file => file.path_display)
+  // console.log(filenames)
+  var metadata = await getMetadata(filenames)
+  dbxMetadata = dbxMetadata.concat(metadata)
+}
 
-    // Is path_display the right feature to extract?
-    var filenames = entries.map(file => file.path_display)
-    return getMetadata(filenames);
-  })
-  .then (function (metadata) {
-    // console.log(metadata)
-    sortFiles(metadata)
-    //??
-  })
-  .catch (function(error) {
-    // console.error(error);
-  });
+const getMoreFiles = async (cursor) => {
+  fileList.innerHTML += '<div class="centering">Loading more entries ...<br/></div>'
+  var response = await dbx.filesListFolderContinue({ cursor })
+
+  await addEntries(response.entries)
+
+  // Recursive call
+  if (response.has_more) {
+    await getMoreFiles(response.cursor)
+  }
+}
+
+const getFiles = async () => {
+  var response = await dbx.filesListFolder({path: '', recursive: true, include_deleted: false})
+
+  await addEntries(response.entries)
+
+  if (response.has_more) {
+    await getMoreFiles(response.cursor)
+  }
+}
+
+// return dbx.filesListFolderContinue({cursor: cursor})
+const getListDropbox = async () => {
+  fileList.innerHTML = '<div class="centering">Loading entries ...<br/></div>'
+
+  await getFiles()
+
+  // console.log(dbxMetadata)
+  sortFiles(dbxMetadata)
 }
 
 function getMetadata (files) {
@@ -64,7 +88,6 @@ function getMetadata (files) {
       }
     }
     var url = window.location.origin + '/web/getMetadata' + "?user=" + localStorage.getItem("user")
-    // console.log(url)
     req.open("POST", url);
     req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
     req.responseType = 'json'

@@ -233,7 +233,8 @@ function translateNode (node) {
       var button = document.createElement('button')
       button.setAttribute('type', 'button')
       // if (type === 'Section' || type === 'section') {
-      //   button.setAttribute('class', 'uncollapsible')
+      // if (node.textContent.length < 500) {
+        // button.setAttribute('class', 'uncollapsible')
       // }
       // else {
         button.setAttribute('class', 'collapsible '+'divLevel'+level)

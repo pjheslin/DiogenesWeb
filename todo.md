@@ -4,15 +4,9 @@ Auto download them
 
 Ask dropbox to move out of development
 
-
-# Fixes
-Remove debugging output from client side and servers
-
-# Features
-* collapse based on length of text?
-
 # FAQs
 * Other cloud hosts
+* How to search in page
 * Formatting problems
 * What Dropbox folder
 * How to refresh
@@ -25,3 +19,5 @@ restrict s3 cors to d.iogen.es?
 
 # Longer term
 * Add search server
+* Add Logeion morphology
+* Add LemLat and du Cange

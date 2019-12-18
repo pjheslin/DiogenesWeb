@@ -114,13 +114,30 @@ function makeTitle (xml) {
     } else {
       div.appendChild(document.createTextNode('No source-text description available.'))
     }
+    var link = document.createElement('a')
+    link.setAttribute('onclick', 'showRawXML()')
+    link.setAttribute('class', 'xmlLink')
+    link.appendChild(document.createTextNode(' [Show raw XML]'))
+    div.appendChild(link)
     mainDiv.appendChild(button)
     mainDiv.appendChild(div)
   }
 }
 
+var rawXML
+// Very slow on large files
+function showRawXML () {
+  var serializer = new XMLSerializer();
+  var xmlstring = serializer.serializeToString(rawXML);
+  let blob = new Blob([xmlstring], {type: 'text/xml'});
+  let url = URL.createObjectURL(blob);
+  window.open(url);
+  URL.revokeObjectURL(url); //Releases the resources
+}
+
 function processXML (xml) {
   // console.log(xml)
+  rawXML = xml
   makeTitle(xml)
   current = mainDiv
   walkTheDOM(xml.getElementsByTagName('body')[0], processNode)

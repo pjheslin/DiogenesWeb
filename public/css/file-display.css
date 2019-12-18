@@ -123,6 +123,9 @@ sourceDesc title {
 sourceDesc title::after {
   content: "\00a0\00a0";
 }
+.xmlLink {
+  color: grey;  
+}
 
 h1 {
   font-size: large;

@@ -49,6 +49,11 @@ app.use('/images', express.static(path.join(__dirname, 'public/images')))
 // For metdata
 app.use(express.json());
 
+// Doesn't work for increasing post limit
+// var bodyParser = require('body-parser');
+// app.use(bodyParser.json({limit: "50mb"}));
+// app.use(bodyParser.urlencoded({limit: "50mb", extended: true, parameterLimit:50000}));
+
 // Send user identification page unless param set
 app.get('*', (req, res, next) => {
   // console.log('Getting: ' + req.path)

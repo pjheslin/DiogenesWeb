@@ -71,12 +71,6 @@ app.get('*', (req, res, next) => {
   }
 })
 
-// We are sent here from user id page
-// app.get('/authOptions', (req, res, next) => {
-//   //  res.render('connect', connections)
-//   res.sendFile('connect.html', sendFileOptions)
-// })
-
 // We are sent here after choosing cloud host, to which we now redirect
 app.get('/web/authorizeDropbox', (req, res, next) => {
   var protocol = 'https'

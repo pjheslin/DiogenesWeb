@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About DiogenesWeb</title>
+  <link rel="stylesheet" type = "text/css" href="https://d.iogen.es/static/css/DiogenesWeb.css">
+</head>
+<body>
+  <h1>Frequently Asked Questions</h1>
+
+  <h2>How is DiogenesWeb related to Diogenes?</h2>
+  <p>
+    DiogenesWeb is an offshoot of the <a href="https://d.iogen.es/d">Diogenes desktop application</a>, and uses the same code for the sidebar with morphological data and lexicon entries.  The XML files exported by the Diogenes desktop app can be uploaded to your private Dropbox cloud storage and read from there by DiogenesWeb.
+  </p>
+
+  <h2>What additional features may be implemented in the future?</h2>
+  <ul>
+    <li>Searching for words across texts and corpora</li>
+    <li>Navigating to a passage by entering a numerical citation</li>
+    <li>Jumping from a lexicon entry to the context of a passage cited in that entry</li>
+    <li>Intergrating Logeion's improved Greek morphology database</li>
+    <li>Integrating other Latin morphological parsers, such as LemLat</li>
+    <li>Integrating other lexica, such as du Cange.
+  </ul>
+
+  <h2>Why Dropbox?</h2>
+  <p>
+    Dropbox is a mature, widely-used cloud hosting provider which offers a generous amount of free storage to new users.  Other cloud hosts (e.g. Google Drive, Box) could be added to DiogenesWeb if there is sufficient demand.  This excludes, however, Apple's iCloud offering, which currently does not support the industry standard OAuth protocol for third-party authentication.
+  </p>
+
+  <h2>Where do I put my XML files in Dropbox?</h2>
+  <p>
+    When you create your Dropbox account, a folder called <strong>Apps</strong> is automatically created for you.  When you go to Dropbox from DiogenesWeb for the first time and enter your password, Dropbox will create a folder within <strong>Apps</strong> called <strong>DiogenesWeb</strong>.  That is where you should put your XML files (and/or folders).  DiogenesWeb cannot access files outside this folder.
+  </p>
+  <p>
+    Once you have put new files in your <strong>Apps/Dropbox</strong> folder, you have to click on the "refresh" button in DiogenesWeb to make the application aware of them.
+  </p>
+
+  <h2>Is it safe to enter my Dropbox password?</h2>
+  <p>
+    Your password is sent directly to Dropbox without passing through DiogenesWeb, which never sees the password.  Dropbox then sends back a time-limited token that permits access only to the DiogenesWeb folder within your private storage.  That token is stored in your browser, not in the DiogenesWeb server.
+  </p>
+
+  <h2>Why are some files slow to load?</h2>
+  <p>
+    Your browser has to convert the entire XML file it has loaded into HTML for display.  If the text you are loading is very long — say, one of the commentaries of Eustathius — this may take a while, depending upoon the speed of your device.
+  </p>
+
+  <h2>Why is the formatting of some texts odd?</h2>
+  <p>
+    DiogenesWeb is set up to display XML files encoded according to the specifications of the Text Encoding Initiative.  But those specifications are subject to many interpretations and TEI-compliant XML files can differ radically in their markup.  It is not possible to come up with one HTML representation that is perfect for all of them.  On the other hand, if there is something really odd in the display of a particular text, please do send feedback.
+  </p>
+
+  <h2>Why are some texts divided into tiny chunks and others not?</h2>
+  <p>
+    DiogenesWeb displays XML texts with their div elements folded up for ease of navigation.  The smallest div in some XML files may be very small indeed, while others may put the whole text in a single div.
+  </p>
+
+  <h2>How do I change my user type?</h2>
+  <p>
+    When you first start using DiogenesWeb, it stores the category of user you belong to: professional researcher, student or other.  This data is important for the continued funding of the project.  If you change category, please revisit the <a href="https://d.iogen.es/web">initial page</a>.
+  </p>
+
+  <h2>How do I search for something in the current page?</h2>
+  <p>
+    This functionality should be provided by your browser.  It can be difficult to find the text you want in a long list, or to find a word in a long text.  Sometimes it is not easy to find the "find in page" function.  On Apple iOS devices, you have to click on the "share" icon and then scroll to find it.
+  </p>
+
+
+</body>
+</html>

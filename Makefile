@@ -23,6 +23,7 @@ upload:
 	rclone -v copy public/images diogenes-s3:d.iogen.es/static/images
 	rclone -v copy public/js diogenes-s3:d.iogen.es/static/js
 	rclone -v copy public/css diogenes-s3:d.iogen.es/static/css
+	rclone -v copy public/static-html diogenes-s3:d.iogen.es/static/html
 
 upload-texts:
 	rclone -v --include "*[^_].xml" copy public/texts diogenes-s3:d.iogen.es/static/texts

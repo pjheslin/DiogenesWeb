@@ -37,10 +37,10 @@ var sendFileOptions = {
 }
 
 // Log all requests first
-app.use(function (req, res, next) {
-  console.log("Request: "+req.url);
-  next();
-});
+// app.use(function (req, res, next) {
+  // console.log("Request: "+req.url);
+  // next();
+// });
 
 // For misc assets (still used?)
 app.use(express.static('public'))
@@ -58,7 +58,7 @@ app.use(express.json());
 app.get('*', (req, res, next) => {
   // console.log('Getting: ' + req.path)
   if (req.query && req.query.user) {
-    console.log('User type: ' + req.query.user)
+    // console.log('User type: ' + req.query.user)
     next()
   }
   else if (req.path == '/web/authDropbox') {
@@ -66,7 +66,7 @@ app.get('*', (req, res, next) => {
     next()
   }
   else {
-    console.log("No user type given")
+    // console.log("No user type given")
     res.sendFile('identify.html', sendFileOptions)
   }
 })
@@ -83,7 +83,7 @@ app.get('/web/authorizeDropbox', (req, res, next) => {
   var authRedirect = 'https://d.iogen.es/web/authDropbox'
   var dropboxClientId = process.env.DROPBOX_APP_KEY;
   var dropboxAuthURL = "https://www.dropbox.com/oauth2/authorize?client_id=" + dropboxClientId + "&response_type=token&redirect_uri=" + authRedirect
-  console.log(dropboxAuthURL)
+  // console.log(dropboxAuthURL)
   res.redirect(dropboxAuthURL)
 })
 
@@ -126,7 +126,7 @@ app.get('/web/serveXml', (req, res) => {
       console.log(err)
       next(err)
     } else {
-      console.log('Sent:'+path)
+      // console.log('Sent:'+path)
     }
   })
 })
@@ -134,14 +134,14 @@ app.get('/web/serveXml', (req, res) => {
 // Get author and work names from list of filenames.
 app.post('/web/getMetadata', (req, res) => {
   var files = req.body
-  console.log(req.body)
+  // console.log(req.body)
   var metadata = []
   files.forEach(fullPath => {
     var filename = path.parse(fullPath).base;
     var data
     if (index[filename]) {
       data = index[filename].slice() // clone array
-      console.log('D: '+data)
+      // console.log('D: '+data)
     }
     else {
       data = ["???", "???"]
@@ -149,7 +149,7 @@ app.post('/web/getMetadata', (req, res) => {
     data.unshift(fullPath)
     metadata.push(data)
   })
-  console.log(JSON.stringify(metadata))
+  // console.log(JSON.stringify(metadata))
   res.json(JSON.stringify(metadata))
 })
 

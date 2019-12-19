@@ -1,1 +1,3 @@
-This is a work-in-progress.  It is not yet ready for use.
+DiogenesWeb is a webapp for reading XML texts in Latin and Ancient Greek, optimised for handheld devices.
+
+Try it out here: https://d.iogen.es/web

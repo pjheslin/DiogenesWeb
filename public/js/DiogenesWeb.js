@@ -83,10 +83,6 @@ function goHome () {
   window.location.href = href
 }
 
-function goSettings () {
-  // FIXME
-}
-
 function isVisible (el) {
     var rect = el.getBoundingClientRect()
     var elemTop = rect.top
@@ -103,10 +99,12 @@ var hamburgerNavbar =
 `<div id="mySidenav" class="sidenav">
   <a href="javascript:void(0)" id="navCloseBtn"
   onclick="closeNav()">&times;</a>
-  <a href="#" onclick="collapseAll()">Collapse&nbsp;All</a>
-  <a href="#" onclick="expandAll()">Expand&nbsp;All</a>
+  <a href="#" onclick="expandAll()">Unfold&nbsp;All</a>
+  <a href="#" onclick="collapseAll()">Fold&nbsp;All</a>
   <a href="#" onclick="goHome()">Home</a>
-  <a href="#" onclick="goSettings()">Settings</a>
+  <a href="https://d.iogen.es/static/html/about.html" target="_blank">About</a>
+  <a href="https://d.iogen.es/static/html/faqs.html" target="_blank">FAQs</a>
+  <a href="https://github.com/pjheslin/DiogenesWeb" target="_blank">GitHub</a>
 </div>
 
 <div class="hamburger" id="hamburger" onclick="openNav()">

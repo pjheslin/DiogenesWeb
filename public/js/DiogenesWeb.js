@@ -104,6 +104,7 @@ var hamburgerNavbar =
   <a href="#" onclick="goHome()">Home</a>
   <a href="https://d.iogen.es/static/html/about.html" target="_blank">About</a>
   <a href="https://d.iogen.es/static/html/faqs.html" target="_blank">FAQs</a>
+  <a href="https://d.iogen.es/static/html/dropbox.html" target="_blank">Dropbox</a>  
   <a href="https://github.com/pjheslin/DiogenesWeb" target="_blank">GitHub</a>
 </div>
 

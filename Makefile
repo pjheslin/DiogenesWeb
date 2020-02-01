@@ -9,8 +9,8 @@ DIOGENESXML = $(HOME)/Diogenes-Resources/xml
 all: perseus file-list index
 
 perseus:
-	cd $(PERSEUSGREEKLIT) && git pull
-	cd $(PERSEUSLATINLIT) && git pull
+	cd $(PERSEUSGREEKLIT) && git stash && git pull
+	cd $(PERSEUSLATINLIT) && git stash && git pull
 	utils/fix-perseus-entities.pl
 
 file-list: perseus

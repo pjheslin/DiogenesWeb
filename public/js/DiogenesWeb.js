@@ -18,6 +18,7 @@ function openNav () {
 function closeNav () {
   document.getElementById("mySidenav").style.width = "0";
   document.getElementById("navCloseBtn").style.display = "none";
+  return true;
 }
 
 function toggleFold (el) {
@@ -102,10 +103,10 @@ var hamburgerNavbar =
   <a href="#" onclick="expandAll()">Unfold&nbsp;All</a>
   <a href="#" onclick="collapseAll()">Fold&nbsp;All</a>
   <a href="#" onclick="goHome()">Home</a>
-  <a href="https://d.iogen.es/static/html/about.html" target="_blank">About</a>
-  <a href="https://d.iogen.es/static/html/faqs.html" target="_blank">FAQs</a>
-  <a href="https://d.iogen.es/static/html/dropbox.html" target="_blank">Dropbox</a>  
-  <a href="https://github.com/pjheslin/DiogenesWeb" target="_blank">GitHub</a>
+  <a onclick="closeNav()" href="https://d.iogen.es/static/html/about.html" target="_blank">About</a>
+  <a onclick="closeNav()" href="https://d.iogen.es/static/html/faqs.html" target="_blank">FAQs</a>
+  <a onclick="closeNav()" href="https://d.iogen.es/static/html/dropbox.html" target="_blank">Using Dropbox</a>
+  <a onclick="closeNav()" href="https://github.com/pjheslin/DiogenesWeb" target="_blank">GitHub</a>
 </div>
 
 <div class="hamburger" id="hamburger" onclick="openNav()">

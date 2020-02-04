@@ -8,6 +8,14 @@ DIOGENESXML = $(HOME)/Diogenes-Resources/xml
 
 all: perseus file-list index
 
+update-version:
+
+# Change version.js
+# Generate new html from templates
+# Make new file-list from template
+# Change static directory name
+# Upload new directory
+
 perseus:
 	cd $(PERSEUSGREEKLIT) && git stash && git pull
 	cd $(PERSEUSLATINLIT) && git stash && git pull

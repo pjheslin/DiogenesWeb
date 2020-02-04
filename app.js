@@ -64,10 +64,10 @@ app.get('/web/authorizeDropbox', (req, res, next) => {
   if (req.get('Host').match(/localhost/)) {
     protocol = 'http'
   }
-  // var origUrl = protocol + '://' + req.get('Host');
+  var origUrl = protocol + '://' + req.get('Host');
   // console.log('origURL: '+origUrl)
-  // var authRedirect = origUrl+'/authDropbox'
-  var authRedirect = 'https://d.iogen.es/web/authDropbox'
+  var authRedirect = origUrl+'/web/authDropbox'
+  // var authRedirect = 'https://d.iogen.es/web/authDropbox'
   var dropboxClientId = process.env.DROPBOX_APP_KEY;
   var dropboxAuthURL = "https://www.dropbox.com/oauth2/authorize?client_id=" + dropboxClientId + "&response_type=token&redirect_uri=" + authRedirect
   // console.log(dropboxAuthURL)

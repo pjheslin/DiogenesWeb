@@ -42,10 +42,14 @@ var sendFileOptions = {
   // next();
 // });
 
+// For speed, static files are not served by this server. 
+
 // For misc assets (still used?)
-app.use(express.static('public'))
+// app.use(express.static('public'))
 // For sidebar (not used anymore)
-app.use('/images', express.static(path.join(__dirname, 'public/images')))
+// app.use('/images', express.static(path.join(__dirname, 'public/images')))
+
+
 // For metdata
 app.use(express.json());
 

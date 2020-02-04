@@ -29,6 +29,9 @@ require('dotenv').config()
 
 // For speed, static files are not served by this server.
 
+// Version in query string is ignored; it is only to force the browser not to
+// use a cached version after upgradeœ 
+
 // For HTML served from here, generated from templates
 var htmlFileOptions = {
   root: path.join(__dirname, 'generated'),

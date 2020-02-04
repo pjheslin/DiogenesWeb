@@ -27,8 +27,11 @@ app.engine('hbs', function (filePath, options, callback) { // define the templat
 // Get environment variables
 require('dotenv').config()
 
-var sendFileOptions = {
-  root: path.join(__dirname, 'static'),
+// For speed, static files are not served by this server.
+
+// For HTML served from here, generated from templates
+var htmlFileOptions = {
+  root: path.join(__dirname, 'generated-html'),
   dotfiles: 'deny',
   headers: {
     'x-timestamp': Date.now(),
@@ -36,7 +39,15 @@ var sendFileOptions = {
   }
 }
 
-// For speed, static files are not served by this server.
+// For XML texts
+var staticFileOptions = {
+  root: path.join(__dirname, 'static'),
+  dotfiles: 'deny',
+  headers: {
+    'x-timestamp': Date.now(),
+    'x-sent': true
+  }
+}
 
 // For metdata
 app.use(express.json());
@@ -49,12 +60,15 @@ app.get('*', (req, res, next) => {
     next()
   }
   else if (req.path == '/web/authDropbox') {
-    // Any pages that should be loaded without the user param.
+    // Any pages that should be loaded without the user param go here.
     next()
+  }
+  else if (req.path == '/web/identify') {
+    res.sendFile('identify.html', htmlFileOptions)
   }
   else {
     // console.log("No user type given")
-    res.sendFile('identify.html', sendFileOptions)
+    res.sendFile('identify.html', htmlFileOptions)
   }
 })
 
@@ -84,12 +98,12 @@ app.get('/web/authDropbox', (req, res) => {
   } else {
     //    console.log(req.query.dropbox_token)
     //    res.render('auth_success', {token: req.query.dropbox_token})
-    res.sendFile('dropbox_success.html', sendFileOptions)
+    res.sendFile('dropbox_success.html', htmlFileOptions)
   }
 })
 
 app.get('/web/listDropbox', (req, res) => {
-  res.sendFile('file-list-dropbox.html', sendFileOptions)
+  res.sendFile('file-list-dropbox.html', htmlFileOptions)
 })
 
 app.get('/web/fileDisplay', (req, res) => {
@@ -101,14 +115,14 @@ app.get('/web/fileDisplay', (req, res) => {
 
 // Send home page otherwise
 app.get('/web/', (req, res) => {
-  res.sendFile('file-list-public.html', sendFileOptions)
+  res.sendFile('file-list-public.html', htmlFileOptions)
 })
 
 // For Ajax requests of XML files
 app.get('/web/serveXml', (req, res) => {
   var path = req.query.xmlPath
   path = path.replace(/^static\//, '')
-  res.sendFile(path, sendFileOptions, function (err) {
+  res.sendFile(path, staticFileOptions, function (err) {
     if (err) {
       console.log(err)
       next(err)
@@ -138,6 +152,10 @@ app.post('/web/getMetadata', (req, res) => {
   })
   // console.log(JSON.stringify(metadata))
   res.json(JSON.stringify(metadata))
+})
+
+app.get('/web/favicon.ico', (req, res) => {
+  res.sendFile('images/favicon.ico', staticFileOptions)
 })
 
 // var os = require( 'os' );

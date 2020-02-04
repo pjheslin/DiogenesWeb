@@ -1,7 +1,7 @@
 .git
 .env
-public/css
-public/images
-public/js
-public/texts
-public/html
+static/css
+static/images
+static/js
+static/texts
+static/html

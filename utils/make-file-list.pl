@@ -269,7 +269,7 @@ foreach my $corpus (@corpora) {
 }
 
 # print $out;
-my $template_file = 'utils/file-list-template.html';
+my $template_file = 'source/templates/file-list-template.html';
 open my $fh, "<$template_file" or die $!;
 my $template;
 {
@@ -278,6 +278,6 @@ my $template;
 }
 close $fh;
 my ($prefix, $suffix) = split /INSERT HERE/, $template;
-open $fh, ">static/file-list-public.html" or die $!;
+open $fh, ">generated/file-list-public.html" or die $!;
 print $fh $prefix, $out, $suffix;
 close $fh;

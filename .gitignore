@@ -1,8 +1,7 @@
 /.env
 /.ebextensions/env.config
-/static/texts
-/static/file-list-public.html
-/utils/index.json
+/static
+/generated
 /Dockerrun.zip
 
 # Elastic Beanstalk Files

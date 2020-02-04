@@ -8,7 +8,7 @@ const port = 8989
 const handlebars = require('handlebars')
 
 // Read metadata index
-var index = JSON.parse(fs.readFileSync('utils/index.json', 'utf8'))
+var index = JSON.parse(fs.readFileSync('generated/index.json', 'utf8'))
 
 // Set up handlebars
 app.set('views', './views')
@@ -31,7 +31,7 @@ require('dotenv').config()
 
 // For HTML served from here, generated from templates
 var htmlFileOptions = {
-  root: path.join(__dirname, 'generated-html'),
+  root: path.join(__dirname, 'generated'),
   dotfiles: 'deny',
   headers: {
     'x-timestamp': Date.now(),

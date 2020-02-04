@@ -47,7 +47,7 @@ foreach my $authtab (@authtabs) {
 $out =~ s/,\n$//;
 $out .= "\n}\n";
 
-chdir "utils" or die $!;
+chdir "generated" or die $!;
 open my $fh, ">index.json" or die $!;
 print $fh $out;
 close $fh;

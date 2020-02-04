@@ -19,68 +19,68 @@ DigiLibLT => '/dlt.*\\.xml$',
 Misc => '\\.xml$'
 );
 my %missing_authors = (
-'public/texts/DigiLibLT/dlt000007/dlt000007.xml' => 'Corpus Hermeticum',
-'public/texts/DigiLibLT/dlt000036/dlt000036.xml' => 'Grammatici Latini',
-'public/texts/DigiLibLT/dlt000037/dlt000037.xml' => 'Grammatici Latini',
-'public/texts/DigiLibLT/dlt000097/dlt000097.xml' => 'Anonymus',
-'public/texts/DigiLibLT/dlt000116/dlt000116.xml' => 'Rhetores Latini Minores',
-'public/texts/DigiLibLT/dlt000143/dlt000143.xml' => 'Anonymus',
-'public/texts/DigiLibLT/dlt000149/dlt000149.xml' => 'Grammatici Latini',
-'public/texts/DigiLibLT/dlt000178/dlt000178.xml' => 'Rhetores Latini Minores',
-'public/texts/DigiLibLT/dlt000180/dlt000180.xml' => 'Anonymus',
-'public/texts/DigiLibLT/dlt000196/dlt000196.xml' => 'Grammatici Latini',
-'public/texts/DigiLibLT/dlt000207/dlt000207.xml' => 'Grammatici Latini',
-'public/texts/DigiLibLT/dlt000208/dlt000208.xml' => 'Grammatici Latini',
-'public/texts/DigiLibLT/dlt000209/dlt000209.xml' => 'Grammatici Latini',
-'public/texts/DigiLibLT/dlt000214/dlt000214.xml' => 'Grammatici Latini',
-'public/texts/DigiLibLT/dlt000219/dlt000219.xml' => 'Grammatici Latini',
-'public/texts/DigiLibLT/dlt000220/dlt000220.xml' => 'Grammatici Latini',
-'public/texts/DigiLibLT/dlt000221/dlt000221.xml' => 'Grammatici Latini',
-'public/texts/DigiLibLT/dlt000253/dlt000253.xml' => 'Anonymus',
-'public/texts/DigiLibLT/dlt000292/dlt000292.xml' => 'Anonymus',
-'public/texts/DigiLibLT/dlt000296/dlt000296.xml' => 'Anonymus',
-'public/texts/DigiLibLT/dlt000298/dlt000298.xml' => 'Anonymus',
-'public/texts/DigiLibLT/dlt000300/dlt000300.xml' => 'Anonymus',
-'public/texts/DigiLibLT/dlt000344/dlt000344.xml' => 'Mallius Theodorus',
-'public/texts/DigiLibLT/dlt000364/dlt000364.xml' => 'Vatican Mythographer',
-'public/texts/DigiLibLT/dlt000374/dlt000374.xml' => 'Geographi latini minores',
-'public/texts/DigiLibLT/dlt000386/dlt000386.xml' => 'Panegyrici Latini',
-'public/texts/DigiLibLT/dlt000390/dlt000390.xml' => 'Panegyrici Latini',
-'public/texts/DigiLibLT/dlt000391/dlt000391.xml' => 'Panegyrici Latini',
-'public/texts/DigiLibLT/dlt000392/dlt000392.xml' => 'Panegyrici Latini',
-'public/texts/DigiLibLT/dlt000394/dlt000394.xml' => 'Panegyrici Latini',
-'public/texts/DigiLibLT/dlt000397/dlt000397.xml' => 'Panegyrici Latini',
-'public/texts/DigiLibLT/dlt000405/dlt000405.xml' => 'Egeria',
-'public/texts/DigiLibLT/dlt000406/dlt000406.xml' => '[Livy]',
-'public/texts/DigiLibLT/dlt000410/dlt000410.xml' => 'Physiologus latinus',
-'public/texts/DigiLibLT/dlt000426/dlt000426.xml' => '[Priscian]',
-'public/texts/DigiLibLT/dlt000431/dlt000431.xml' => 'Geographi latini minores',
-'public/texts/DigiLibLT/dlt000433/dlt000433.xml' => 'Rufinus',
-'public/texts/DigiLibLT/dlt000444/dlt000444.xml' => 'Scholia',
-'public/texts/DigiLibLT/dlt000452/dlt000452.xml' => 'Scholia',
-'public/texts/DigiLibLT/dlt000453/dlt000453.xml' => 'Scholia',
-'public/texts/DigiLibLT/dlt000454/dlt000454.xml' => 'Scholia',
-'public/texts/DigiLibLT/dlt000458/dlt000458.xml' => 'Scholia',
-'public/texts/DigiLibLT/dlt000459/dlt000459.xml' => 'Scholia',
-'public/texts/DigiLibLT/dlt000463/dlt000463.xml' => 'Lactantius Placidus',
-'public/texts/DigiLibLT/dlt000470/dlt000470.xml' => 'Servius',
-'public/texts/DigiLibLT/dlt000487/dlt000487.xml' => 'Anonymus',
-'public/texts/DigiLibLT/dlt000493/dlt000493.xml' => 'Gromatici Veteres',
-'public/texts/DigiLibLT/dlt000524/dlt000524.xml' => 'Anonymus',
-'public/texts/DigiLibLT/dlt000538/dlt000538.xml' => 'Probus',
-'public/texts/DigiLibLT/dlt000542/dlt000542.xml' => 'Anonymus',
-'public/texts/DigiLibLT/dlt000544/dlt000544.xml' => 'Justin',
-'public/texts/DigiLibLT/dlt000555/dlt000555.xml' => 'Scholia',
-'public/texts/DigiLibLT/dlt000566/dlt000566.xml' => 'Vatican Mythographer',
-'public/texts/DigiLibLT/dlt000573/dlt000573.xml' => '[Augustine]',
-'public/texts/DigiLibLT/dlt000579/dlt000579.xml' => 'Rufinus',
-'public/texts/DigiLibLT/dlt000583/dlt000583.xml' => 'Scholia',
-'public/texts/DigiLibLT/dlt000592/dlt000592.xml' => 'Perpetua',
-'public/texts/DigiLibLT/dlt000595/dlt000595.xml' => 'Anonymus',
-'public/texts/DigiLibLT/dlt000603/dlt000603.xml' => 'Grammatici Latini',
-'public/texts/DigiLibLT/dlt000604/dlt000604.xml' => 'Grammatici Latini',
-'public/texts/DigiLibLT/dlt000605/dlt000605.xml' => 'Grammatici Latini',
-'public/texts/DigiLibLT/dlt000610/dlt000610.xml' => 'Anonymus',
+'static/texts/DigiLibLT/dlt000007/dlt000007.xml' => 'Corpus Hermeticum',
+'static/texts/DigiLibLT/dlt000036/dlt000036.xml' => 'Grammatici Latini',
+'static/texts/DigiLibLT/dlt000037/dlt000037.xml' => 'Grammatici Latini',
+'static/texts/DigiLibLT/dlt000097/dlt000097.xml' => 'Anonymus',
+'static/texts/DigiLibLT/dlt000116/dlt000116.xml' => 'Rhetores Latini Minores',
+'static/texts/DigiLibLT/dlt000143/dlt000143.xml' => 'Anonymus',
+'static/texts/DigiLibLT/dlt000149/dlt000149.xml' => 'Grammatici Latini',
+'static/texts/DigiLibLT/dlt000178/dlt000178.xml' => 'Rhetores Latini Minores',
+'static/texts/DigiLibLT/dlt000180/dlt000180.xml' => 'Anonymus',
+'static/texts/DigiLibLT/dlt000196/dlt000196.xml' => 'Grammatici Latini',
+'static/texts/DigiLibLT/dlt000207/dlt000207.xml' => 'Grammatici Latini',
+'static/texts/DigiLibLT/dlt000208/dlt000208.xml' => 'Grammatici Latini',
+'static/texts/DigiLibLT/dlt000209/dlt000209.xml' => 'Grammatici Latini',
+'static/texts/DigiLibLT/dlt000214/dlt000214.xml' => 'Grammatici Latini',
+'static/texts/DigiLibLT/dlt000219/dlt000219.xml' => 'Grammatici Latini',
+'static/texts/DigiLibLT/dlt000220/dlt000220.xml' => 'Grammatici Latini',
+'static/texts/DigiLibLT/dlt000221/dlt000221.xml' => 'Grammatici Latini',
+'static/texts/DigiLibLT/dlt000253/dlt000253.xml' => 'Anonymus',
+'static/texts/DigiLibLT/dlt000292/dlt000292.xml' => 'Anonymus',
+'static/texts/DigiLibLT/dlt000296/dlt000296.xml' => 'Anonymus',
+'static/texts/DigiLibLT/dlt000298/dlt000298.xml' => 'Anonymus',
+'static/texts/DigiLibLT/dlt000300/dlt000300.xml' => 'Anonymus',
+'static/texts/DigiLibLT/dlt000344/dlt000344.xml' => 'Mallius Theodorus',
+'static/texts/DigiLibLT/dlt000364/dlt000364.xml' => 'Vatican Mythographer',
+'static/texts/DigiLibLT/dlt000374/dlt000374.xml' => 'Geographi latini minores',
+'static/texts/DigiLibLT/dlt000386/dlt000386.xml' => 'Panegyrici Latini',
+'static/texts/DigiLibLT/dlt000390/dlt000390.xml' => 'Panegyrici Latini',
+'static/texts/DigiLibLT/dlt000391/dlt000391.xml' => 'Panegyrici Latini',
+'static/texts/DigiLibLT/dlt000392/dlt000392.xml' => 'Panegyrici Latini',
+'static/texts/DigiLibLT/dlt000394/dlt000394.xml' => 'Panegyrici Latini',
+'static/texts/DigiLibLT/dlt000397/dlt000397.xml' => 'Panegyrici Latini',
+'static/texts/DigiLibLT/dlt000405/dlt000405.xml' => 'Egeria',
+'static/texts/DigiLibLT/dlt000406/dlt000406.xml' => '[Livy]',
+'static/texts/DigiLibLT/dlt000410/dlt000410.xml' => 'Physiologus latinus',
+'static/texts/DigiLibLT/dlt000426/dlt000426.xml' => '[Priscian]',
+'static/texts/DigiLibLT/dlt000431/dlt000431.xml' => 'Geographi latini minores',
+'static/texts/DigiLibLT/dlt000433/dlt000433.xml' => 'Rufinus',
+'static/texts/DigiLibLT/dlt000444/dlt000444.xml' => 'Scholia',
+'static/texts/DigiLibLT/dlt000452/dlt000452.xml' => 'Scholia',
+'static/texts/DigiLibLT/dlt000453/dlt000453.xml' => 'Scholia',
+'static/texts/DigiLibLT/dlt000454/dlt000454.xml' => 'Scholia',
+'static/texts/DigiLibLT/dlt000458/dlt000458.xml' => 'Scholia',
+'static/texts/DigiLibLT/dlt000459/dlt000459.xml' => 'Scholia',
+'static/texts/DigiLibLT/dlt000463/dlt000463.xml' => 'Lactantius Placidus',
+'static/texts/DigiLibLT/dlt000470/dlt000470.xml' => 'Servius',
+'static/texts/DigiLibLT/dlt000487/dlt000487.xml' => 'Anonymus',
+'static/texts/DigiLibLT/dlt000493/dlt000493.xml' => 'Gromatici Veteres',
+'static/texts/DigiLibLT/dlt000524/dlt000524.xml' => 'Anonymus',
+'static/texts/DigiLibLT/dlt000538/dlt000538.xml' => 'Probus',
+'static/texts/DigiLibLT/dlt000542/dlt000542.xml' => 'Anonymus',
+'static/texts/DigiLibLT/dlt000544/dlt000544.xml' => 'Justin',
+'static/texts/DigiLibLT/dlt000555/dlt000555.xml' => 'Scholia',
+'static/texts/DigiLibLT/dlt000566/dlt000566.xml' => 'Vatican Mythographer',
+'static/texts/DigiLibLT/dlt000573/dlt000573.xml' => '[Augustine]',
+'static/texts/DigiLibLT/dlt000579/dlt000579.xml' => 'Rufinus',
+'static/texts/DigiLibLT/dlt000583/dlt000583.xml' => 'Scholia',
+'static/texts/DigiLibLT/dlt000592/dlt000592.xml' => 'Perpetua',
+'static/texts/DigiLibLT/dlt000595/dlt000595.xml' => 'Anonymus',
+'static/texts/DigiLibLT/dlt000603/dlt000603.xml' => 'Grammatici Latini',
+'static/texts/DigiLibLT/dlt000604/dlt000604.xml' => 'Grammatici Latini',
+'static/texts/DigiLibLT/dlt000605/dlt000605.xml' => 'Grammatici Latini',
+'static/texts/DigiLibLT/dlt000610/dlt000610.xml' => 'Anonymus',
 
 );
 
@@ -112,10 +112,10 @@ foreach my $corpus (@corpora) {
   my %seen;
   my @dirs;
   if ($corpus eq 'Perseus_Translations') {
-    @dirs = ('public/texts/Perseus_Greek', 'public/texts/Perseus_Latin');
+    @dirs = ('static/texts/Perseus_Greek', 'static/texts/Perseus_Latin');
   }
   else {
-    @dirs = ("public/texts/$corpus");
+    @dirs = ("static/texts/$corpus");
   }
   while (my $pwd = shift @dirs) {
     opendir(DIR,"$pwd") or die "Cannot open $pwd\n";
@@ -168,7 +168,7 @@ foreach my $corpus (@corpora) {
     open my $fh, "<$path" or die "$!";
     # For d.iogen.es
     my $real_path = $path;
-    $real_path =~ s/^public\///;
+    $real_path =~ s/^static\///;
     while (my $line = <$fh>) {
       # Get rid of namespaces to make xpath easier
       $line =~ s/\s+xmlns="[^"]*"//g;
@@ -278,6 +278,6 @@ my $template;
 }
 close $fh;
 my ($prefix, $suffix) = split /INSERT HERE/, $template;
-open $fh, ">public/file-list-public.html" or die $!;
+open $fh, ">static/file-list-public.html" or die $!;
 print $fh $prefix, $out, $suffix;
 close $fh;

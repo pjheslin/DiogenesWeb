@@ -28,7 +28,7 @@ app.engine('hbs', function (filePath, options, callback) { // define the templat
 require('dotenv').config()
 
 var sendFileOptions = {
-  root: path.join(__dirname, 'public'),
+  root: path.join(__dirname, 'static'),
   dotfiles: 'deny',
   headers: {
     'x-timestamp': Date.now(),
@@ -36,27 +36,10 @@ var sendFileOptions = {
   }
 }
 
-// Log all requests first
-// app.use(function (req, res, next) {
-  // console.log("Request: "+req.url);
-  // next();
-// });
-
-// For speed, static files are not served by this server. 
-
-// For misc assets (still used?)
-// app.use(express.static('public'))
-// For sidebar (not used anymore)
-// app.use('/images', express.static(path.join(__dirname, 'public/images')))
-
+// For speed, static files are not served by this server.
 
 // For metdata
 app.use(express.json());
-
-// Doesn't work for increasing post limit
-// var bodyParser = require('body-parser');
-// app.use(bodyParser.json({limit: "50mb"}));
-// app.use(bodyParser.urlencoded({limit: "50mb", extended: true, parameterLimit:50000}));
 
 // Send user identification page unless param set
 app.get('*', (req, res, next) => {
@@ -124,7 +107,7 @@ app.get('/web/', (req, res) => {
 // For Ajax requests of XML files
 app.get('/web/serveXml', (req, res) => {
   var path = req.query.xmlPath
-  path = path.replace(/^public\//, '')
+  path = path.replace(/^static\//, '')
   res.sendFile(path, sendFileOptions, function (err) {
     if (err) {
       console.log(err)

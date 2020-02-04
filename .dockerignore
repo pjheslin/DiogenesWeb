@@ -1,7 +1,3 @@
 .git
 .env
-static/css
-static/images
-static/js
-static/texts
-static/html
+static/

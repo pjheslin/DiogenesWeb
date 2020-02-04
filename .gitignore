@@ -3,6 +3,7 @@
 /static
 /generated
 /Dockerrun.zip
+/source/templates/file-list-public.html
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*

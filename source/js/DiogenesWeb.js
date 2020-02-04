@@ -103,9 +103,9 @@ var hamburgerNavbar =
   <a href="#" onclick="expandAll()">Unfold&nbsp;All</a>
   <a href="#" onclick="collapseAll()">Fold&nbsp;All</a>
   <a href="#" onclick="goHome()">Home</a>
-  <a onclick="closeNav()" href="../static/html/about.html" target="_blank">About</a>
-  <a onclick="closeNav()" href="../static/html/faqs.html" target="_blank">FAQs</a>
-  <a onclick="closeNav()" href="../static/html/dropbox.html" target="_blank">Using Dropbox</a>
+  <a onclick="closeNav()" href="../static/ver/`+Version+`/html/about.html" target="_blank">About</a>
+  <a onclick="closeNav()" href="../static/ver/`+Version+`/html/faqs.html" target="_blank">FAQs</a>
+  <a onclick="closeNav()" href="../static/ver/`+Version+`/html/dropbox.html" target="_blank">Using Dropbox</a>
   <a onclick="closeNav()" href="https://github.com/pjheslin/DiogenesWeb" target="_blank">GitHub</a>
 </div>
 

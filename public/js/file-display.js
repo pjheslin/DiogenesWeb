@@ -27,7 +27,7 @@ function getFileLocal (path) {
   var req = new XMLHttpRequest();
   req.addEventListener("load", reqListener);
   // var url = window.location.origin + '/serveXml' + "?user=" + localStorage.getItem("user") + '&xmlPath=' + path
-  var url = 'https://d.iogen.es/static/' + path
+  var url = '../static/' + path
   // console.log(url)
   XMLurl = url
   req.open("GET", url);

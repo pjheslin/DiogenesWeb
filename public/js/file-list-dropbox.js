@@ -87,7 +87,7 @@ function getMetadata (files) {
         })
       }
     }
-    var url = window.location.origin + '/web/getMetadata' + "?user=" + localStorage.getItem("user")
+    var url = '../web/getMetadata' + "?user=" + localStorage.getItem("user")
     req.open("POST", url);
     req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
     req.responseType = 'json'
@@ -182,13 +182,13 @@ function openDropboxFile (path) {
 
   var href
   if (localStorage.getItem("user")) {
-    href = window.location.origin + '/web/fileDisplay' +
+    href = '../web/fileDisplay' +
     "?user=" + localStorage.getItem("user") +
     '&host=dropbox' +
     '&filePath=' + path
   }
   else {
-    href = window.location.origin + '/web'
+    href = '../web/identify'
   }
   window.location.href = href
 }

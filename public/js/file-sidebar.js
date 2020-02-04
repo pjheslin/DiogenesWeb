@@ -1,4 +1,5 @@
-const parseURL = window.origin + '/parse' + "?user=" + localStorage.getItem("user")
+// const parseURL = window.origin + '/parse' + "?user=" + localStorage.getItem("user")
+const parseURL = '../parse' + "?user=" + localStorage.getItem("user")
 
 // const parseURL = 'http://localhost:8990/parse?'
 // const parseURL = 'https://d.iogen.es/parse?'

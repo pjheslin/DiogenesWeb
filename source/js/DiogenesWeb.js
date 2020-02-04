@@ -75,11 +75,11 @@ function collapseAll () {
 function goHome () {
   var href
   if (localStorage.getItem("user")) {
-    href = '../web' +
-    "?user=" + localStorage.getItem("user")
+    href = '../web?ver='+Version +
+    "&user=" + localStorage.getItem("user")
   }
   else {
-    href = '../web/identify'
+    href = '../web/identify?ver='+Version
   }
   window.location.href = href
 }
@@ -133,10 +133,10 @@ function connectDropbox () {
   }
 
   if (localStorage.getItem("user")) {
-    newUrl = newUrl + "?user=" + localStorage.getItem("user")
+    newUrl = newUrl + "?ver="+Version+"&user=" + localStorage.getItem("user")
   }
   else {
-    newUrl = '../web/identify'
+    newUrl = '../web/identify?ver='+Version
   }
   // console.log(newUrl)
   window.location.href = newUrl
@@ -150,12 +150,13 @@ function openLocalFile (path) {
   var href
   if (localStorage.getItem("user")) {
     href = '../web/fileDisplay' +
-    "?user=" + localStorage.getItem("user") +
+    '?ver='+Version+
+    "&user=" + localStorage.getItem("user") +
     '&host=local' +
     '&filePath=' + path
   }
   else {
-    href = '../web/identify'
+    href = '../web/identify?ver='+Version
   }
   window.location.href = href
 }

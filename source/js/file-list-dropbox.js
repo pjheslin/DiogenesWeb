@@ -182,8 +182,8 @@ function openDropboxFile (path) {
 
   var href
   if (localStorage.getItem("user")) {
-    href = '../web/fileDisplay' +
-    "?user=" + localStorage.getItem("user") +
+    href = '../web/fileDisplay?ver=' + Version +
+    "&user=" + localStorage.getItem("user") +
     '&host=dropbox' +
     '&filePath=' + path
   }

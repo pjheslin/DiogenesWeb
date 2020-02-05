@@ -3,9 +3,10 @@ NodeList.prototype.forEach = Array.prototype.forEach
 NamedNodeMap.prototype.forEach = Array.prototype.forEach
 
 window.addEventListener('DOMContentLoaded', (event) => {
-  makeHamburgerMenu();
+  makeHamburgerMenu()
   // We may need to do this again after modifying the DOM.
   // setupFolding();
+  setupEnterKey()
 })
 
 /* Set the width of the side navigation to 250px */
@@ -16,8 +17,8 @@ function openNav () {
 
 /* Set the width of the side navigation to 0 */
 function closeNav () {
-  document.getElementById("mySidenav").style.width = "0";
-  document.getElementById("navCloseBtn").style.display = "none";
+  document.getElementById("mySidenav").style.width = "0"
+  document.getElementById("navCloseBtn").style.display = "none"
   return true;
 }
 
@@ -159,4 +160,36 @@ function openLocalFile (path) {
     href = '../web/identify?ver='+Version
   }
   window.location.href = href
+}
+
+
+function setupEnterKey () {
+  var input = document.getElementById("lookupText");
+  input.addEventListener("keyup", function(event) {
+    if (event.keyCode === 13) {
+      event.preventDefault();
+      // document.getElementById("lookupGo").click();
+      lookupWord()
+    }
+  })
+}
+
+function latinOrGreek (text) {
+  const grk = /[\u0370-\u03FF\u1F00-\u1FFF]/;
+  if (grk.test(text)) {
+    return 'grk'
+    sendRequest(action, "grk", query, 'utf8');
+  } else {
+    return 'lat'
+  }
+}
+
+// We need to specify this path here and in file-sidebar.js
+const parseURLbis = '../parse' + "?user=" + localStorage.getItem("user")
+function lookupWord () {
+  var text = document.getElementById('lookupText').value
+  var lang = latinOrGreek(text)
+  var url = parseURLbis + "&dweb="+Version+"&popup=1&do=parse" + "&lang=" + lang + "&q="+ text
+  window.open(url, '_blank')
+  return false
 }

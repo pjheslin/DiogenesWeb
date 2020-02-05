@@ -154,6 +154,11 @@ h3 {
   /* font-size: 100%; */
 }
 
+.lookup-field {
+  text-align: left;
+  font-size: 100%;
+}
+
 #none-button:hover {
   text-decoration: underline;
 }

@@ -18,14 +18,22 @@ function sendRequest(action, lang, query, enc) {
   req.onreadystatechange = stateHandler;
   // For safety, we should really use encodeURIComponent() to
   // encode these params and then decode them in Perseus.cgi.
-  var uri = parseURL + "&dweb=1&do=" + action + "&lang=" + lang + "&q="+ query
+  var uri = parseURL + "&dweb="+Version+"&do=" + action + "&lang=" + lang + "&q="+ query
   if (enc) {
     // Send utf8 from user input (as opposed to text links, which use transliteration)
     uri = uri + "&inp_enc=" + enc
   }
-  req.open("GET", uri);
-  req.send();
+  if (document.getElementsByName('popupParse').length) {
+    // Persist as popup when we have opened as a popup.
+    uri = uri + "&popup=1"
+    window.location.href = uri
+  }
+  else {
+    req.open("GET", uri)
+    req.send()
+  }
 }
+
 function stateHandler() {
   if (req.readyState == 4) {
     if (req.status && req.status == 200) {

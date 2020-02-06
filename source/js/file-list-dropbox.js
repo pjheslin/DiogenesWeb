@@ -102,6 +102,7 @@ function sortFiles (files) {
   var presortObj = tree()
   for (var i = 0; i < files.length; i++) {
     var [filename, author, work] = files[i]
+    // console.log(filename +' '+ author +' '+ work)
     var corpus
     var res = filename.match(/([a-z]+)\d+\.xml$/);
     if (res) {
@@ -115,6 +116,7 @@ function sortFiles (files) {
       corpus = "unknown"
       author = filename
     }
+
     presortObj[corpus][author][work] = filename
   }
   // console.log(presortObj)
@@ -123,7 +125,8 @@ function sortFiles (files) {
   Object.keys(presortObj).sort().forEach(function (corpus) {
     var corpusArr = [corpus]
     if (corpus == "unknown") {
-      unknownArr = Object.keys(presortObj[corpus]).sort()
+      unknownArr = [corpus]
+      unknownArr.push(Object.keys(presortObj[corpus]).sort())
       return
     }
     Object.keys(presortObj[corpus]).sort().forEach(function (author) {
@@ -154,8 +157,8 @@ function showDropboxList (sortedArr) {
     html += `<button type="button" class="collapsible" onClick="toggleFold(this)">${corpus_display}</button>\n`
     html += `<div type="corpus" class="content">\n`
     if (corpus == "unknown") {
-      corpusArr.foreach(filename => {
-        //FIXME
+      corpusArr.forEach(filename => {
+        html += `<button type="button" class="uncollapsible fileName"  onClick="openDropboxFile('${filename}')">${filename}</button>\n`
       })
       return
     }

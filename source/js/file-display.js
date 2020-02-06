@@ -355,7 +355,10 @@ function translateNode (node) {
         return document.createElement('blockquote')
       }
       else {
-        return document.createElement('q')
+        // In verse, the next line will be in a div, which will put it on
+        // separate lines from the quote marks, which looks odd
+        // return document.createElement('q')
+        return document.createElement('blockquote')
       }
     }
     case 'graphic': {

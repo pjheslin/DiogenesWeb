@@ -165,13 +165,15 @@ function openLocalFile (path) {
 
 function setupEnterKey () {
   var input = document.getElementById("lookupText");
-  input.addEventListener("keyup", function(event) {
-    if (event.keyCode === 13) {
-      event.preventDefault();
-      // document.getElementById("lookupGo").click();
-      lookupWord()
-    }
-  })
+  if (input) {
+    input.addEventListener("keyup", function(event) {
+      if (event.keyCode === 13) {
+        event.preventDefault();
+        // document.getElementById("lookupGo").click();
+        lookupWord()
+      }
+    })
+  }
 }
 
 function latinOrGreek (text) {

@@ -30,7 +30,7 @@ require('dotenv').config()
 // For speed, static files are not served by this server.
 
 // Version in query string is ignored; it is only to force the browser not to
-// use a cached version after upgradeœ 
+// use a cached version after upgrade
 
 // For HTML served from here, generated from templates
 var htmlFileOptions = {
@@ -77,14 +77,15 @@ app.get('*', (req, res, next) => {
 
 // We are sent here after choosing cloud host, to which we now redirect
 app.get('/web/authorizeDropbox', (req, res, next) => {
-  var protocol = 'https'
+  // AWS sometimes wrongly gives an elasticbeanstalk url, so we specify the two
+  // legal urls here.
+    var authRedirect
   if (req.get('Host').match(/localhost/)) {
-    protocol = 'http'
+    authRedirect = 'http://localhost/web/authDropbox'
   }
-  var origUrl = protocol + '://' + req.get('Host');
-  // console.log('origURL: '+origUrl)
-  var authRedirect = origUrl+'/web/authDropbox'
-  // var authRedirect = 'https://d.iogen.es/web/authDropbox'
+  else {
+    authRedirect = 'https://d.iogen.es/web/authDropbox'
+  }
   var dropboxClientId = process.env.DROPBOX_APP_KEY;
   var dropboxAuthURL = "https://www.dropbox.com/oauth2/authorize?client_id=" + dropboxClientId + "&response_type=token&redirect_uri=" + authRedirect
   // console.log(dropboxAuthURL)

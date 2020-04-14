@@ -389,8 +389,12 @@ function translateNode (node) {
 }
 
 function fixDltUrl (url) {
-  var num = url.match(/dlt\d\d\d\d\d\d/)[0]
-  return 'texts/DigiLibLT/'+num+'\/'+url
+  var match = url.match(/dlt\d\d\d\d\d\d/)
+  if (match) {
+    var num = match[0]
+    return 'texts/DigiLibLT/'+num+'\/'+url
+  }
+  return url
 }
 
 function capitalizeFirstLetter(string) {

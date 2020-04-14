@@ -2,6 +2,7 @@
 /.ebextensions/env.config
 /static
 /generated
+/views
 /Dockerrun.zip
 /source/templates/file-list-public.html
 

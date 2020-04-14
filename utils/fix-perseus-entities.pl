@@ -131,7 +131,7 @@ my %entities = (
 "&yuml;" => "ÿ"
 );
 
-my @files = (`find public/texts/Perseus_Greek public/texts/Perseus_Latin -name "*[0-9].xml" -print |xargs pcregrep --buffer-size 16M -l "&[^;]+;|PersProse"`);
+my @files = (`find static/texts/Perseus_Greek static/texts/Perseus_Latin -name "*[0-9].xml" -print |xargs pcregrep --buffer-size 16M -l "&[^;]+;|PersProse"`);
 
 foreach my $file (@files) {
   # print STDERR "$file\n";

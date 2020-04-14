@@ -254,7 +254,7 @@ foreach my $corpus (@corpora) {
       $author =~ s/^>//;
       # say "Author: $author";
     } else {
-      warn "No author: $path";
+      # warn "No author: $path";
       $author = 'Anonymous';
     }
 
@@ -282,6 +282,7 @@ my $out = '';
 foreach my $corpus (@corpora) {
   my $corpus_display = $corpus;
   $corpus_display =~ s/_/ /g;
+  $corpus_display = '1000 Years of Greek' if $corpus_display eq 'First1KGreek';
   $out .= qq{<button type="button" class="collapsible" onClick="toggleFold(this)">$corpus_display</button>\n};
   $out .= qq{<div type="corpus" class="content">\n};
   foreach my $author (sort natural_sort keys %{ $titles{$corpus} }) {

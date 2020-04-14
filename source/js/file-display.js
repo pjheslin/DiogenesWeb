@@ -510,7 +510,7 @@ function setupTooltips () {
     allowHTML: true,
     arrow: true,
     hideOnClick: true,
-    // trigger: 'click',
+    trigger: 'click',
     placement: 'auto'
   })
   for (let n = 1; n <= noteNum; n++) {

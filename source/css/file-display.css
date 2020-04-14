@@ -69,6 +69,11 @@ img.prev {
   vertical-align: baseline;
 }
 
+.logeion-link {
+  text-decoration: none;
+  color: #28709a;
+}
+
 .divLevel1 {
   padding-left: 5px;
   padding-right: 5px;

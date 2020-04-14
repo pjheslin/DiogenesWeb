@@ -157,10 +157,9 @@ function walkTheDOM(node, func) {
   node = node.firstChild;
   while (node) {
     name = node.nodeName
-    // Some nodes we want to suppress with all children
-    if (name != 'note' && name != 'bibl' && name != 'ref') {
-      walkTheDOM(node, func);
-    }
+    // If there are nodes we want to suppress with all children, we just need to
+    // skip the following line.
+    walkTheDOM(node, func);
     node = node.nextSibling;
   }
   current = oldCurrent
@@ -168,6 +167,7 @@ function walkTheDOM(node, func) {
 }
 
 var unsupported = {}
+var noteNum = 0
 /* Process each XML node and return an HTML node */
 function translateNode (node) {
   switch (node.nodeName) {
@@ -368,12 +368,35 @@ function translateNode (node) {
       img.setAttribute('class', 'dlt-img')
       return img
     }
+    case 'list': {
+      return document.createElement('ul')
+    }
+    case 'item': {
+      return document.createElement('li')
+    }
+    case 'note': {
+      noteNum += 1
+      var mark = document.createElement('span')
+      mark.setAttribute('class', 'noteMark')
+      mark.setAttribute('id', 'noteMark-' + noteNum)
+      mark.appendChild(document.createTextNode('*'))
+      // mark.setAttribute('onclick', 'toggleNext(this)')
+      var div = document.createElement('div')
+      div.setAttribute('class', 'noteText')
+      div.setAttribute('id', 'noteText-' + noteNum)
+      // div.setAttribute('style', 'display: none;')
+      div.style.display = 'none';
+      // div.setAttribute('onclick', 'toggleNote(this)')
+      return [mark, div, undefined]
+    }
     case 'figure':
     case 'choice':
     case 'surname':
     case 'persName':
     case 'placeName':
     case 'name':
+    case 'bibl':
+    case 'ref':
     case 'foreign': {
       return
     }
@@ -449,8 +472,18 @@ function processNode (node) {
      // console.log('>'+name)
     // console.log(current)
     // console.log(nodes[str])
-    var htmlNode
-    htmlNode = translateNode(node)
+    let [prefix, htmlNode, suffix] = [undefined, undefined, undefined]
+    let ret = translateNode(node)
+    if (Array.isArray(ret)) {
+      [prefix, htmlNode, suffix] = ret
+    }
+    else {
+      htmlNode = ret
+    }
+    if (prefix) {
+      current.appendChild(prefix)
+    }
+    //htmlNode = translateNode(node)
     if (htmlNode && htmlNode.nodeType != 3) {
       // console.log(htmlNode.nodeName, htmlNode.nodeType, node.nodeName)
       var rend = node.getAttribute('rend')
@@ -460,6 +493,10 @@ function processNode (node) {
         htmlNode.setAttribute('class', rend)
       }
       current.appendChild(htmlNode)
+      if (suffix) {
+        current.appendChild(suffix)
+      }
+
       if (node.firstChild && htmlNode.nodeName != 'BR') {
         // Make current element the new parent, unless XML node is empty or we want to force the htmlNode to be empty.
         current = htmlNode
@@ -468,8 +505,25 @@ function processNode (node) {
   }
 }
 
+function setupTooltips () {
+  tippy.setDefaultProps({
+    allowHTML: true,
+    arrow: true,
+    hideOnClick: true,
+    // trigger: 'click',
+    placement: 'auto'
+  })
+  for (let n = 1; n <= noteNum; n++) {
+    let mark = document.getElementById('noteMark-'+n)
+    let content = document.getElementById('noteText-'+n)
+    content.style.display = 'block';
+    tippy(mark, {content: content})
+  }
+}
+
 function processingFinished () {
   // setupFolding ()
+  setupTooltips()
   var body = document.getElementsByTagName("BODY")[0]
   body.classList.remove("waiting")
   var loading = document.getElementById('loading')

@@ -59,6 +59,16 @@ img.prev {
          float: left;
 }
 
+.noteMark {
+  /* color: #a41e22; */
+  color: #28709a;
+  font-size: 200%;
+  line-height: 0;
+  position: relative;
+  top: 0.2em;
+  vertical-align: baseline;
+}
+
 .divLevel1 {
   padding-left: 5px;
   padding-right: 5px;
@@ -124,7 +134,7 @@ sourceDesc title::after {
   content: "\00a0\00a0";
 }
 .xmlLink {
-  color: grey;  
+  color: grey;
 }
 
 h1 {

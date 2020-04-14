@@ -443,7 +443,7 @@ function smartquotesString(str) {
 
 /* Create parsing links for each word */
 const latinRegex = /[a-zA-Z]+/g
-const greekRegex = /[\u0370-\u03FF\u1F00-\u1FFF]+/g
+const greekRegex = /[\u0027\u2019\u0370-\u03FF\u1F00-\u1FFF]+/g
 function parseReplace (match) {
   // return '<a onclick="parse_'+parseLang+'(\''+match+'\')">'+match+'</a>'
   return '<a onclick="p(this)">'+match+'</a>'

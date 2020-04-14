@@ -5,10 +5,12 @@ use feature qw/say/;
 use XML::LibXML qw(:libxml);
 use File::Path qw(remove_tree);
 use open qw( :utf8 :std );
+use utf8;
 
 # chdir "../" or die $!;
 
-my @corpora = ('Perseus_Greek', 'Perseus_Latin', 'Perseus_Translations', 'DigiLibLT');
+my @corpora = ('Perseus_Greek', 'Perseus_Latin', 'Perseus_Translations', 'First1KGreek', 'DigiLibLT');
+# my @corpora = ('First1KGreek');
 # my @corpora = ('Perseus_Latin');
 my %fileRegex = (
 # Perseus_Greek => '-grc\\d*\\.xml$',
@@ -16,7 +18,8 @@ Perseus_Greek => '-grc\\d*\\.xml$',
 Perseus_Latin => '-lat\\d*\\.xml$',
 Perseus_Translations => '-eng\\d*\\.xml$',
 DigiLibLT => '/dlt.*\\.xml$',
-Misc => '\\.xml$'
+Misc => '\\.xml$',
+First1KGreek => '-grc\\d*\\.xml$',
 );
 my %missing_authors = (
 'static/texts/DigiLibLT/dlt000007/dlt000007.xml' => 'Corpus Hermeticum',
@@ -140,7 +143,7 @@ foreach my $corpus (@corpora) {
 }
 
 # Remove older versions of Perseus Lat/Grc texts.  Varian English texts are more often entirely different translations.
-foreach my $corpus ('Perseus_Greek', 'Perseus_Latin') {
+foreach my $corpus ('Perseus_Greek', 'Perseus_Latin', 'First1KGreek') {
   foreach my $path (sort keys %{ $paths{$corpus} }) {
     # For the Greek Anthology, the numbered files indicate Loeb volumes rather than file versions (!)
     next if $path =~ m/tlg7000.tlg001.perseus-grc\d.xml$/;
@@ -222,14 +225,38 @@ foreach my $corpus (@corpora) {
         $author = 'Zonaras, Iohannes' if $other_title =~ m/IOANNIS ZONARAE/;
       }
     }
-    $author = 'Servius' if $author eq 'Seruius';
-    $author = 'Donatus, Aelius' if $author eq 'Aelius Donatus';
-    $author = 'Boethius' if $author eq 'Boethius (Anicius Manlius Seuerinus Boethius)';
-    $author = 'Cassiodorus' if $author eq 'Cassiodorus (Flauius Magnus Aurelius Cassiodorus Senator)';
-    die "No author: $path" unless $author;
-    $author =~ s/^\s+//;
-    $author =~ s/\s+$//;
-    # say "Author: $author";
+    if ($author) {
+      $author = 'Anonymous' if $author eq 'Anonymus';
+      $author = 'Servius' if $author eq 'Seruius';
+      $author = 'Donatus, Aelius' if $author eq 'Aelius Donatus';
+      $author = 'Boethius' if $author eq 'Boethius (Anicius Manlius Seuerinus Boethius)';
+      $author = 'Cassiodorus' if $author eq 'Cassiodorus (Flauius Magnus Aurelius Cassiodorus Senator)';
+      $author = 'Archimedes' if $author eq 'Archimède';
+      $author = 'Anna Comnena' if $author eq 'Annae Comnenae';
+      $author = 'Aristotle' if $author eq 'Aristoteles';
+      $author = 'Euclid' if $author eq 'Euclides';
+      $author = 'Gregorius Nazianzenus' if $author eq 'Gregory Nazianzus';
+      $author = 'Anonymous' if $author eq 'Hermannus Diels';
+      $author = 'Athanasius' if $author eq 'Athanasius of Alexandria';
+      $author = 'Justin Martyr' if $author eq 'Justinus Martyr';
+      $author = 'Lucian of Samosata' if $author eq 'Lucianus Samosatenus';
+      $author = 'Michaelis Ephesius' if $author eq 'Michael Ephesius';
+      $author = 'Nichomachus of Gerasa' if $author eq 'Nichomachus Gerasenus';
+      $author = 'Nichomachus of Gerasa' if $author eq 'Nicomachus Gerasenus';
+      $author = 'Origen' if $author eq 'Origenes';
+      $author = 'Scholia in Pindarum' if $author eq 'Pindar Scholia';
+      $author = 'Porphyry' if $author eq 'Porphyrius';
+      $author = 'Scholia in Euripidem' if $author eq 'Scholia Euripidem';
+      $author = 'Theodoretus' if $author eq 'Theodoret, Bishop of Cyrus';
+      $author =~ s/^Pseudo[- ]/pseudo-/;
+      $author =~ s/^\s+//;
+      $author =~ s/\s+$//;
+      $author =~ s/^>//;
+      # say "Author: $author";
+    } else {
+      warn "No author: $path";
+      $author = 'Anonymous';
+    }
 
     foreach my $title_node ($dom->findnodes("//titleStmt/title")) {
       # Skip subtitles (except for Sallust and Seneca, where the title is the subtitle)
@@ -269,6 +296,8 @@ foreach my $corpus (@corpora) {
 }
 
 # print $out;
+# exit;
+
 my $template_file = 'source/file-list-prototype.html';
 open my $fh, "<$template_file" or die $!;
 my $template;

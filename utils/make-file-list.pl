@@ -142,7 +142,7 @@ foreach my $corpus (@corpora) {
   }
 }
 
-# Remove older versions of Perseus Lat/Grc texts.  Varian English texts are more often entirely different translations.
+# Remove older versions of Perseus Lat/Grc texts.  Variant English texts are more often entirely different translations.
 foreach my $corpus ('Perseus_Greek', 'Perseus_Latin', 'First1KGreek') {
   foreach my $path (sort keys %{ $paths{$corpus} }) {
     # For the Greek Anthology, the numbered files indicate Loeb volumes rather than file versions (!)

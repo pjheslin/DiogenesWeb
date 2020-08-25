@@ -135,6 +135,12 @@ function showRawXML () {
   URL.revokeObjectURL(url); //Releases the resources
 }
 
+// For use outside the browser
+exports.xml2html = function (xml) {
+  console.log(document)
+  processXML(xml)
+}
+
 function processXML (xml) {
   // console.log(xml)
   rawXML = xml
@@ -226,7 +232,8 @@ function translateNode (node) {
       }
       var div = document.createElement('div')
       if (node.hasAttributes) {
-        node.attributes.forEach(function (item) {
+        var attrs = Array.prototype.slice.call(node.attributes);
+        attrs.forEach(function (item) {
           div.setAttribute(item.name, item.value)
         })
       }

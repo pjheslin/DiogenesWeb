@@ -449,11 +449,18 @@ function smartquotesString(str) {
 };
 
 /* Create parsing links for each word */
+var noLinks = false
+exports.stopLinks = function () { noLinks = true }
 const latinRegex = /[a-zA-Z]+/g
 const greekRegex = /[\u0027\u2019\u0370-\u03FF\u1F00-\u1FFF]+/g
 function parseReplace (match) {
   // return '<a onclick="parse_'+parseLang+'(\''+match+'\')">'+match+'</a>'
-  return '<a onclick="p(this)">'+match+'</a>'
+  if (noLinks) {
+    return match
+  }
+  else {
+    return '<a onclick="p(this)">'+match+'</a>'
+  }
 }
 function addParseLinks (text) {
   text = text.replace(latinRegex, parseReplace)

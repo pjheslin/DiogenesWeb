@@ -192,9 +192,10 @@ h2 {
 }
 
 .Marginalia {
+  /* Does not work well (see Iliad)
   display:block;
   text-indent: -20em;
-  padding-left: 20em;
+  padding-left: 20em; */
 }
 
 .italic {

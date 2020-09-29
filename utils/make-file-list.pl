@@ -9,7 +9,7 @@ use utf8;
 
 # chdir "../" or die $!;
 
-my @corpora = ('Perseus_Greek', 'Perseus_Latin', 'Perseus_Translations', 'First1KGreek', 'DigiLibLT');
+my @corpora = ('Perseus_Greek', 'Perseus_Latin', 'Perseus_Translations', 'First1KGreek', 'DigiLibLT', 'CSEL');
 # my @corpora = ('First1KGreek');
 # my @corpora = ('Perseus_Latin');
 my %fileRegex = (
@@ -20,6 +20,7 @@ Perseus_Translations => '-eng\\d*\\.xml$',
 DigiLibLT => '/dlt.*\\.xml$',
 Misc => '\\.xml$',
 First1KGreek => '-grc\\d*\\.xml$',
+CSEL => '-lat\\d*\\.xml$',
 );
 my %missing_authors = (
 'static/texts/DigiLibLT/dlt000007/dlt000007.xml' => 'Corpus Hermeticum',
@@ -200,13 +201,19 @@ foreach my $corpus (@corpora) {
       next unless $author_node->to_literal();
       $author = $author_node->to_literal();
     }
-    # say $author;
-    # say $path;
+    unless ($author) {
+      foreach my $author_node ($dom->findnodes("//sourceDesc//author")) {
+        next unless $author_node->to_literal();
+        $author = $author_node->to_literal();
+      }
+    }
     unless ($author) {
       if (exists $missing_authors{$path}) {
         $author = $missing_authors{$path};
       }
     }
+    # say $author;
+    # say $path;
     unless ($author) {
       my $other_title_nodes = $dom->findnodes("//sourceDesc//title");
       my $other_title;
@@ -265,12 +272,43 @@ foreach my $corpus (@corpora) {
       $title =~ s/Machine readable text//i;
       last if $title;
     }
+    # These have a header that lists all of the works in the print volume and
+    # then we need to match the main div against that list to find out the title
+    # of the work in this file. Really helpful.
+    my %csel_titles;
+    if ($title =~ m/Corpus Scriptorum Ecclesiasticorum Latinorum/) {
+      foreach my $title_node ($dom->findnodes("//sourceDesc//title")) {
+        my $ref = $title_node->getAttribute('ref');
+        if ($ref) {
+          $ref =~ m/(urn:cts:.*$)/;
+          my $key = $1;
+          $csel_titles{$key} = $title_node->to_literal();
+          # say 'csel title: ' . $title_node->to_literal() .': '.$key;
+        }
+      }
+      open my $fh, "<$path" or die "$!";
+      while (my $line = <$fh>) {
+        if ($line =~ m/<div type="edition"/) {
+          $line =~ m/n="(urn:cts:.*).opp/;
+          my $key = $1;
+          if (exists $csel_titles{$key}) {
+            $title = $csel_titles{$key};
+          }
+          else {
+            # say "No csel title: $line : $key : $path";
+            $title = $key
+          }
+          last;
+        }
+      }
+    }
+
     die "No title: $path" unless $title;
     $title =~ s/^\s+//;
     $title =~ s/\s+$//;
     $title =~ s/Ab urbe condita,/Ab Urbe Condita,/g;
 
-    # say "Title: $title";
+    say "Title: $title";
     # print "\n";
     # die unless $title_string;
     $titles{$corpus}{$author}{$title} = $real_path;

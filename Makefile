@@ -1,7 +1,7 @@
 # Building DiogenesWeb
 # DigilibLT has to be downloaded manually
 
-VERSION = 1.003
+VERSION = 1.004
 
 TEXTS = static/texts
 PERSEUSGREEKLIT = $(TEXTS)/Perseus_Greek/

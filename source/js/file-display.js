@@ -136,9 +136,11 @@ function showRawXML () {
 }
 
 // For use outside the browser
-exports.xml2html = function (xml) {
-  console.log(document)
-  processXML(xml)
+if (typeof module !== 'undefined' && module.exports) {
+  exports.xml2html = function (xml) {
+    console.log(document)
+    processXML(xml)
+  }
 }
 
 function processXML (xml) {
@@ -450,7 +452,9 @@ function smartquotesString(str) {
 
 /* Create parsing links for each word */
 var noLinks = false
-exports.stopLinks = function () { noLinks = true }
+if (typeof module !== 'undefined' && module.exports) {
+  exports.stopLinks = function () { noLinks = true }
+}
 const latinRegex = /[a-zA-Z]+/g
 const greekRegex = /[\u0027\u2019\u0370-\u03FF\u1F00-\u1FFF]+/g
 function parseReplace (match) {

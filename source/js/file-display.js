@@ -56,10 +56,11 @@ function getFileDropbox (path) {
   });
 }
 
-function processFile (data) {
-  // console.log(data.fileBlob)
+function processFile (response) {
+  // console.log(response)
+  // console.log(response.fileBlob)
   // filBlob.text() is only implemented in Chrome
-  // data.fileBlob.text()
+  // response.fileBlob.text()
   // .then()
   // So we use this interface instead
   var reader = new FileReader()
@@ -68,7 +69,7 @@ function processFile (data) {
     text = reader.result;
     parseXML(text)
   }
-  reader.readAsText(data.fileBlob);
+  reader.readAsText(response.result.fileBlob);
 }
 
 function parseXML (xmlDoc) {

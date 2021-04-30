@@ -27,6 +27,7 @@ function showSavedDropbox () {
 
 var dbxMetadata = []
 const addEntries = async (entries) => {
+  // console.log(entries)
   // Filter out folders
   entries = entries.filter(ent => {return ent[".tag"] == "file"})
   // Filter out non-XML files
@@ -42,22 +43,24 @@ const addEntries = async (entries) => {
 const getMoreFiles = async (cursor) => {
   fileList.innerHTML += '<div class="centering">Loading more entries ...<br/></div>'
   var response = await dbx.filesListFolderContinue({ cursor })
-
-  await addEntries(response.entries)
+  var result = response.result
+  await addEntries(result.entries)
 
   // Recursive call
-  if (response.has_more) {
-    await getMoreFiles(response.cursor)
+  if (result.has_more) {
+    await getMoreFiles(result.cursor)
   }
 }
 
 const getFiles = async () => {
   var response = await dbx.filesListFolder({path: '', recursive: true, include_deleted: false})
+  // console.log(response)
+  var result = response.result
 
-  await addEntries(response.entries)
+  await addEntries(result.entries)
 
-  if (response.has_more) {
-    await getMoreFiles(response.cursor)
+  if (result.has_more) {
+    await getMoreFiles(result.cursor)
   }
 }
 

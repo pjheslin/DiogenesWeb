@@ -1,5 +1,5 @@
 var token = localStorage.getItem("dropbox_token")
-var dbx = new Dropbox.Dropbox({ accessToken: token, fetch: fetch })
+var dbx = new Dropbox.Dropbox({ accessToken: token })
 
 const corpusNames = {
   phi: "PHI Latin Texts",

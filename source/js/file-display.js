@@ -12,7 +12,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     getFileLocal(path)
   }
   else if (host == "dropbox") {
-    dbx = new Dropbox.Dropbox({ accessToken: token, fetch: fetch });
+    dbx = new Dropbox.Dropbox({ accessToken: token });
     // console.log('dbx', dbx)
     //function getFile () {getFileDropbox()}
     getFileDropbox(path)

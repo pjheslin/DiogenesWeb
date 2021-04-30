@@ -255,6 +255,7 @@ foreach my $corpus (@corpora) {
       $author = 'Porphyry' if $author eq 'Porphyrius';
       $author = 'Scholia in Euripidem' if $author eq 'Scholia Euripidem';
       $author = 'Theodoretus' if $author eq 'Theodoret, Bishop of Cyrus';
+      $author = 'Ambrosius' if $author eq 'Ambrose';
       $author =~ s/^Pseudo[- ]/pseudo-/;
       $author =~ s/^\s+//;
       $author =~ s/\s+$//;
@@ -276,14 +277,25 @@ foreach my $corpus (@corpora) {
     # then we need to match the main div against that list to find out the title
     # of the work in this file. Really helpful.
     my %csel_titles;
+    my %csel_authors;
     if ($title =~ m/Corpus Scriptorum Ecclesiasticorum Latinorum/) {
       foreach my $title_node ($dom->findnodes("//sourceDesc//title")) {
         my $ref = $title_node->getAttribute('ref');
         if ($ref) {
           $ref =~ m/(urn:cts:.*$)/;
           my $key = $1;
+          $key = 'urn:cts:latinLit:stoa0034.stoa001' if $key eq 'urn:cts:latinLit:stoa0034-stoa001';
           $csel_titles{$key} = $title_node->to_literal();
           # say 'csel title: ' . $title_node->to_literal() .': '.$key;
+
+          my $prev = $title_node->previousNonBlankSibling();
+          if ($prev->nodeName() eq 'author') {
+            $csel_authors{$key} = $prev->to_literal();
+            # print "prevAuth: ".$prev->to_literal()."\n";
+          }
+        }
+        else {
+          say $title_node->to_literal() .': '. $path;
         }
       }
       open my $fh, "<$path" or die "$!";
@@ -293,6 +305,9 @@ foreach my $corpus (@corpora) {
           my $key = $1;
           if (exists $csel_titles{$key}) {
             $title = $csel_titles{$key};
+            if (exists $csel_authors{$key}) {
+              $author = $csel_authors{$key}
+            }
           }
           else {
             # say "No csel title: $line : $key : $path";
@@ -308,7 +323,7 @@ foreach my $corpus (@corpora) {
     $title =~ s/\s+$//;
     $title =~ s/Ab urbe condita,/Ab Urbe Condita,/g;
 
-    say "Title: $title";
+    # say "Title: $title";
     # print "\n";
     # die unless $title_string;
     $titles{$corpus}{$author}{$title} = $real_path;
